@@ -93,6 +93,9 @@ module Decidim
         # Default to local development environment
         host = "http://localhost"
         port ||= 3000
+      elsif host !~ %r{^https?://}
+        protocol = url_options[:protocol] || "https"
+        host = "#{protocol}://#{host}"
       end
 
       return "#{host}:#{port}" if port && ![80, 443].include?(port.to_i)
