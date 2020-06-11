@@ -199,9 +199,9 @@ GIT
 
 GIT
   remote: https://github.com/mainio/omniauth-tunnistamo.git
-  revision: 226c5147068517b10670b6d693b8c79ae5f88ba9
+  revision: 42ad3cfc874ea556f96c140b13b787150e06675a
   specs:
-    omniauth-tunnistamo (0.1.0)
+    omniauth-tunnistamo (0.1.1)
       omniauth_openid_connect (~> 0.3)
 
 PATH
@@ -453,7 +453,7 @@ GEM
     jquery-tmpl-rails (1.1.0)
       rails (>= 3.1.0)
     json (2.3.0)
-    json-jwt (1.11.0)
+    json-jwt (1.13.0)
       activesupport (>= 4.2)
       aes_key_wrap
       bindata
@@ -543,11 +543,11 @@ GEM
     omniauth-twitter (1.4.0)
       omniauth-oauth (~> 1.1)
       rack
-    omniauth_openid_connect (0.3.3)
+    omniauth_openid_connect (0.3.5)
       addressable (~> 2.5)
       omniauth (~> 1.9)
       openid_connect (~> 1.1)
-    openid_connect (1.1.8)
+    openid_connect (1.2.0)
       activemodel
       attr_required (>= 1.0.0)
       json-jwt (>= 1.5.0)
@@ -583,7 +583,7 @@ GEM
       rack (>= 1.0, < 3)
     rack-cors (1.1.1)
       rack (>= 2.0.0)
-    rack-oauth2 (1.11.0)
+    rack-oauth2 (1.14.0)
       activesupport
       attr_required
       httpclient
@@ -740,7 +740,7 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
-    swd (1.1.2)
+    swd (1.2.0)
       activesupport (>= 3)
       attr_required (>= 0.0.5)
       httpclient (>= 2.4)
@@ -772,7 +772,7 @@ GEM
     validate_email (0.1.6)
       activemodel (>= 3.0)
       mail (>= 2.2.5)
-    validate_url (1.0.8)
+    validate_url (1.0.11)
       activemodel (>= 3.0.0)
       public_suffix
     virtus (1.0.5)
