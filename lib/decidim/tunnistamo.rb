@@ -26,6 +26,14 @@ module Decidim
     # In case this is not defined, the default is the organization's domain.
     config_accessor :auto_email_domain
 
+    # The requested OpenID scopes for the Omniauth strategy. The data returned
+    # by the authentication service can differ depending on the defined scopes.
+    #
+    # See: https://openid.net/specs/openid-connect-basic-1_0.html#Scopes
+    config_accessor :scope do
+      %i[openid email profile]
+    end
+
     # Allows customizing the authorization workflow e.g. for adding custom
     # workflow options or configuring an action authorizer for the
     # particular needs.
@@ -68,6 +76,7 @@ module Decidim
       auth_uri = URI.parse(server_uri)
       {
         issuer: "#{server_uri}/openid",
+        scope: scope,
         client_options: {
           port: auth_uri.port,
           scheme: auth_uri.scheme,
