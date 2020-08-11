@@ -3,7 +3,7 @@
 SimpleCov.start do
   root ENV["ENGINE_ROOT"]
 
-  add_filter "lib/decidim/mpassid/version.rb"
+  add_filter "lib/decidim/tunnistamo/version.rb"
   add_filter "/spec"
 end
 
