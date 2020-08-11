@@ -159,7 +159,7 @@ module Decidim
           metadata_collector.metadata
         end
 
-        # The digest that is created from the person identifier.
+        # The digest that is created from the person identifier (OpenID sub).
         def person_identifier_digest
           metadata_collector.person_identifier_digest
         end
