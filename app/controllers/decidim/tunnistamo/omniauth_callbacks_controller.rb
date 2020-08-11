@@ -13,7 +13,15 @@ module Decidim
       # This is called always after the user returns from the authentication
       # flow from the Tunnistamo identity provider.
       def tunnistamo
+        # This needs to be here in order to send the logout request to
+        # Tunnistamo in case the sign in fails. Note that the Tunnistamo sign
+        # out flow does not currently support the "post_logout_redirect_uri"
+        # parameter, so the user may be left at Tunnistamo after the sign out.
+        # This is more secure but may leave some users confused. Should only
+        # happen if the authentication validation fails.
         session["decidim-tunnistamo.signed_in"] = true
+
+        authenticator.validate!
 
         if user_signed_in?
           # The user is most likely returning from an authorization request
