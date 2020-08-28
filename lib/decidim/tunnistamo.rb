@@ -85,7 +85,7 @@ module Decidim
           secret: client_secret,
           redirect_uri: "#{application_host}/users/auth/tunnistamo/callback"
         },
-        post_logout_redirect_uri: application_host
+        post_logout_redirect_uri: "#{application_host}/users/auth/tunnistamo/post_logout"
       }
     end
 

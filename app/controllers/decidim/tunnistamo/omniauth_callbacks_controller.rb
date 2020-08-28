@@ -84,13 +84,13 @@ module Decidim
           scope: "decidim.tunnistamo.omniauth_callbacks"
         )
 
-        redirect_path = stored_location_for(resource || :user) || decidim.root_path
         if session.delete("decidim-tunnistamo.signed_in")
-          params = "?post_logout_redirect_uri=#{CGI.escape(redirect_path)}"
-
-          return redirect_to user_tunnistamo_omniauth_logout_path + params
+          return redirect_to(
+            decidim_tunnistamo.user_tunnistamo_omniauth_logout_path
+          )
         end
 
+        redirect_path = stored_location_for(resource || :user) || decidim.root_path
         redirect_to redirect_path
       end
 

@@ -32,6 +32,24 @@ module Decidim
             as: "user_tunnistamo_omniauth_logout",
             via: [:get, :post]
           )
+
+          match(
+            "/users/auth/tunnistamo/post_logout",
+            to: "sessions#post_logout",
+            as: "user_tunnistamo_omniauth_post_logout",
+            via: [:get]
+          )
+
+          # Manually map the sign out path in order to control the sign out
+          # flow through OmniAuth when the user signs out from the service.
+          # In these cases, the user needs to be also signed out from Suomi.fi
+          # which is handled by the OmniAuth strategy.
+          match(
+            "/users/sign_out",
+            to: "sessions#destroy",
+            as: "destroy_user_session",
+            via: [:delete, :post]
+          )
         end
       end
 

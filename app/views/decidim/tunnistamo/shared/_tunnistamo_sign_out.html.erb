@@ -2,27 +2,21 @@
 <script type="text/javascript">
 (function() {
   $(document).ready(function() {
-    var tunnistamoSignOutUrl = <%= decidim_tunnistamo.user_tunnistamo_omniauth_logout_path.to_json.html_safe %>;
+    // For re-authorization, sign out from Tunnistamo in order to allow the user
+    // to sign in again.
+    $("#authorizationModal").on("open.zf.reveal", function() {
+      setTimeout(() => {
+        $("#authorizationModal a[href^='/tunnistamo_idp/']").on("click.tunnistamo", function(ev) {
+          var $link = $(".sign-out-link");
 
-    $(".sign-out-link").on("click.tunnistamo", function(ev) {
-      ev.preventDefault();
-      ev.stopPropagation();
+          if ($link.length > 0) {
+            ev.preventDefault();
+            ev.stopPropagation();
 
-      var link = this;
-
-      var $frame = $("<iframe></iframe>");
-      $frame.css({
-        width: 10,
-        height: 10,
-        border: 0
-      });
-      $("body").append($frame);
-
-      $frame.on("load", function() {
-        $(link).off("click.tunnistamo");
-        link.click();
-      })
-      $frame.attr("src", tunnistamoSignOutUrl);
+            $(".sign-out-link")[0].click();
+          }
+        });
+      }, 500);
     });
   });
 })(jQuery);
