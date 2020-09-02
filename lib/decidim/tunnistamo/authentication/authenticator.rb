@@ -54,11 +54,6 @@ module Decidim
             provider: oauth_data[:provider],
             uid: user_identifier
           )
-          unless identity.user
-            identity.destroy!
-            identity = nil
-          end
-
           return identity if identity
 
           # Check that the identity is not already bound to another user.
