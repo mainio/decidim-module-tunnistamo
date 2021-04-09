@@ -25,3 +25,8 @@ sv:
             success: Du har godkänts med Tunnistamo
           destroy:
             success: Tillståndet återställs efterhand.
+    verifications:
+      authorizations:
+        first_login:
+          actions:
+            tunnistamo_idp: Tunnistamo-identifikation
