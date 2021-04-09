@@ -53,6 +53,7 @@ default: &default
     # ...
     tunnistamo:
       enabled: false
+      server_uri: <%= ENV["OMNIAUTH_TUNNISTAMO_SERVER_URI"] %>
       client_id: <%= ENV["OMNIAUTH_TUNNISTAMO_CLIENT_ID"] %>
       client_secret: <%= ENV["OMNIAUTH_TUNNISTAMO_CLIENT_SECRET"] %>
       icon: account-login
@@ -62,6 +63,7 @@ development:
     # ...
     tunnistamo:
       enabled: true
+      server_uri: <%= ENV["OMNIAUTH_TUNNISTAMO_SERVER_URI"] %>
       client_id: <%= ENV["OMNIAUTH_TUNNISTAMO_CLIENT_ID"] %>
       client_secret: <%= ENV["OMNIAUTH_TUNNISTAMO_CLIENT_SECRET"] %>
       icon: account-login
