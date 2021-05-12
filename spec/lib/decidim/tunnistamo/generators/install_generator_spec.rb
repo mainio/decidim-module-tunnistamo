@@ -9,28 +9,6 @@ describe Decidim::Tunnistamo::Generators::InstallGenerator do
 
   before { allow(subject).to receive(:options).and_return(options) }
 
-  describe "#copy_initializer" do
-    it "copies the initializer file" do
-      expect(subject).to receive(:copy_file).with(
-        "tunnistamo_initializer.rb",
-        "config/initializers/tunnistamo.rb"
-      )
-      subject.copy_initializer
-    end
-
-    context "with the test_initializer option set to true" do
-      let(:options) { { test_initializer: true } }
-
-      it "copies the test initializer file" do
-        expect(subject).to receive(:copy_file).with(
-          "tunnistamo_initializer_test.rb",
-          "config/initializers/tunnistamo.rb"
-        )
-        subject.copy_initializer
-      end
-    end
-  end
-
   describe "#enable_authentication" do
     let(:secrets_yml_template) do
       yml = "default: &default\n"
@@ -74,10 +52,15 @@ describe Decidim::Tunnistamo::Generators::InstallGenerator do
     let(:secrets_yml_modified) do
       default = "    tunnistamo:\n"
       default += "      enabled: false\n"
+      default += "      server_uri: <%= ENV[\"OMNIAUTH_TUNNISTAMO_SERVER_URI\"] %>\n"
+      default += "      client_id: <%= ENV[\"OMNIAUTH_TUNNISTAMO_CLIENT_ID\"] %>\n"
+      default += "      client_secret: <%= ENV[\"OMNIAUTH_TUNNISTAMO_CLIENT_SECRET\"] %>\n"
       default += "      icon: account-login\n"
       development = "    tunnistamo:\n"
       development += "      enabled: true\n"
-      development += "      mode: test\n"
+      development += "      server_uri: <%= ENV[\"OMNIAUTH_TUNNISTAMO_SERVER_URI\"] %>\n"
+      development += "      client_id: <%= ENV[\"OMNIAUTH_TUNNISTAMO_CLIENT_ID\"] %>\n"
+      development += "      client_secret: <%= ENV[\"OMNIAUTH_TUNNISTAMO_CLIENT_SECRET\"] %>\n"
       development += "      icon: account-login\n"
 
       secrets_yml_template.gsub(

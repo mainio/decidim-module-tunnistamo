@@ -12,6 +12,9 @@ if ENV["CODECOV"]
 end
 
 ENV["ENGINE_ROOT"] = File.dirname(__dir__)
+ENV["OMNIAUTH_TUNNISTAMO_SERVER_URI"] = "https://auth.tunnistamo-test.fi"
+ENV["OMNIAUTH_TUNNISTAMO_CLIENT_ID"] = "client_id"
+ENV["OMNIAUTH_TUNNISTAMO_CLIENT_SECRET"] = "client_secret"
 
 Decidim::Dev.dummy_app_path =
   File.expand_path(File.join(__dir__, "decidim_dummy_app"))
