@@ -28,7 +28,10 @@ module Decidim
         end
 
         def append_tunnistamo_sign_out_iframe
-          head_extra_file = Rails.application.root.join("app/views/layouts/decidim/_head_extra.html.erb")
+          layout_dir = Rails.application.root.join("app/views/layouts/decidim")
+          FileUtils.mkdir_p(layout_dir) unless File.directory?(layout_dir)
+
+          head_extra_file = layout_dir.join("_head_extra.html.erb")
           unless File.exist?(head_extra_file)
             FileUtils.touch(head_extra_file)
             say_status :create, "app/views/layouts/decidim/_head_extra.html.erb", :green
