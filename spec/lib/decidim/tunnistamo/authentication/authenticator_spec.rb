@@ -31,7 +31,9 @@ describe Decidim::Tunnistamo::Authentication::Authenticator do
       name: "Marja Mirja Mainio",
       given_name: "Marja",
       family_name: "Mainio",
-      birthdate: "1985-07-15"
+      birthdate: "1985-07-15",
+      amr: "google"
+
     }
   end
 
@@ -46,7 +48,7 @@ describe Decidim::Tunnistamo::Authentication::Authenticator do
 
     context "when email is not available in the SAML attributes" do
       it "auto-creates the email using the known pattern" do
-        expect(subject.verified_email).to match(/tunnistamo-[a-z0-9]{32}@1.lvh.me/)
+        expect(subject.verified_email).to match(/tunnistamo-[a-z0-9]{32}@[0-9]+.lvh.me/)
       end
 
       context "and auto_email_domain is not defined" do
@@ -72,7 +74,6 @@ describe Decidim::Tunnistamo::Authentication::Authenticator do
         provider: oauth_provider,
         uid: oauth_uid,
         name: "Marja Mainio",
-        nickname: "Marja Mainio",
         oauth_signature: signature,
         avatar_url: nil,
         raw_data: oauth_hash
@@ -92,23 +93,6 @@ describe Decidim::Tunnistamo::Authentication::Authenticator do
 
       it "returns nil" do
         expect(subject.user_params_from_oauth_hash).to be_nil
-      end
-    end
-
-    context "when given name does not exist" do
-      let(:oauth_name) { nil }
-      let(:saml_attributes) do
-        {
-          first_name: "Mikko Mika",
-          last_name: "Mallikas"
-        }
-      end
-
-      it "uses both first names as the first name" do
-        expect(subject.user_params_from_oauth_hash).to include(
-          name: "Mikko Mika Mallikas",
-          nickname: "Mikko Mika Mallikas"
-        )
       end
     end
   end
@@ -187,8 +171,7 @@ describe Decidim::Tunnistamo::Authentication::Authenticator do
       expect(auth.metadata).to include(
         "name" => "Marja Mirja Mainio",
         "given_name" => "Marja",
-        "family_name" => "Mainio",
-        "birthdate" => "1985-07-15"
+        "family_name" => "Mainio"
       )
     end
 
@@ -208,8 +191,7 @@ describe Decidim::Tunnistamo::Authentication::Authenticator do
         expect(auth.metadata).to include(
           "name" => "Marja Mirja Mainio",
           "given_name" => "Marja",
-          "family_name" => "Mainio",
-          "birthdate" => "1985-07-15"
+          "family_name" => "Mainio"
         )
       end
     end

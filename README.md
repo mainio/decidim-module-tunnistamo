@@ -1,5 +1,6 @@
 # Decidim::Tunnistamo
 
+[![Build Status](https://github.com/mainio/decidim-module-tunnistamo/actions/workflows/ci_tunnistamo.yml/badge.svg)](https://github.com/mainio/decidim-module-tunnistamo/actions)
 [![codecov](https://codecov.io/gh/mainio/decidim-module-tunnistamo/branch/master/graph/badge.svg)](https://codecov.io/gh/mainio/decidim-module-tunnistamo)
 
 A [Decidim](https://github.com/decidim/decidim) module to add
