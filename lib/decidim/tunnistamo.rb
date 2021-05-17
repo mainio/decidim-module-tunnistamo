@@ -26,6 +26,10 @@ module Decidim
     # In case this is not defined, the default is the organization's domain.
     config_accessor :auto_email_domain
 
+    # After successful user authorization with strong identification
+    # providers (Suomi.fi/school/etc.), forget remember me.
+    config_accessor :strong_identity_providers
+
     # The requested OpenID scopes for the Omniauth strategy. The data returned
     # by the authentication service can differ depending on the defined scopes.
     #

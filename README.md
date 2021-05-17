@@ -126,6 +126,7 @@ Decidim::Tunnistamo.configure do |config|
     end
   end
   config.metadata_collector_class = CustomTunnistamoMetadataCollector
+  config.strong_identity_providers = ["custom_strong_provider"]
 end
 ```
 

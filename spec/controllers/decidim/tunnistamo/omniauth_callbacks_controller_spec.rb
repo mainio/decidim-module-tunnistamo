@@ -86,6 +86,47 @@ module Decidim
           end
         end
 
+        context "when identify with social media provider" do
+          let(:confirmed_user) { create(:user, :confirmed, organization: organization) }
+          let(:amr) { "google" }
+
+          before do
+            sign_in confirmed_user
+            confirmed_user.remember_me!
+            expect(confirmed_user.remember_created_at?).to eq(true)
+            get(
+              "/users/auth/tunnistamo/callback?code=#{code}&state=#{state}"
+            )
+          end
+
+          it "forgets user's remember me" do
+            authorization = Decidim::Authorization.last
+            expect(authorization.metadata["service"]).to eq("google")
+            expect(authorization.user.remember_created_at).to be_between(1.minute.ago, Time.current)
+          end
+        end
+
+        context "when there is strong providers" do
+          let(:confirmed_user) { create(:user, :confirmed, organization: organization) }
+          let(:amr) { "suomifi" }
+
+          before do
+            allow(Decidim::Tunnistamo).to receive(:strong_identity_providers).and_return(%w(espoo suomifi))
+            sign_in confirmed_user
+            confirmed_user.remember_me!
+            expect(confirmed_user.remember_created_at?).to eq(true)
+            get(
+              "/users/auth/tunnistamo/callback?code=#{code}&state=#{state}"
+            )
+          end
+
+          it "forgets user's remember me" do
+            authorization = Decidim::Authorization.last
+            expect(authorization.metadata["service"]).to eq("suomifi")
+            expect(authorization.user.remember_created_at).to be_nil
+          end
+        end
+
         context "when identity is bound to another user" do
           let(:confirmed_user) { create(:user, :confirmed, organization: organization) }
           let(:another_user) { create(:user, :confirmed, organization: organization) }
