@@ -7,7 +7,37 @@ require "generators/decidim/tunnistamo/install_generator"
 describe Decidim::Tunnistamo::Generators::InstallGenerator do
   let(:options) { {} }
 
+  # rubocop:disable Rspec/SubjectStub
   before { allow(subject).to receive(:options).and_return(options) }
+
+  describe "#append_tunnistamo_sign_out_iframe" do
+    let(:tunnistamo_line) { '<%= render partial: "decidim/tunnistamo/shared/tunnistamo_sign_out" %>' }
+    let(:layout_dir) { Rails.application.root.join("app/views/layouts/decidim") }
+    let(:head_extra_file) { layout_dir.join("_head_extra.html.erb") }
+
+    it "when file does not exist creates file" do
+      expect(File).to receive(:readlines).and_return([])
+      expect(File).to receive(:open).with(anything, "a+") do |&block|
+        file = double
+        expect(file).to receive(:write).with(tunnistamo_line)
+        expect(file).to receive(:write).with("\n")
+        block.call(file)
+      end
+
+      subject.append_tunnistamo_sign_out_iframe
+    end
+
+    it "when the file exist say status identical" do
+      expect(File).to receive(:readlines).and_return([tunnistamo_line])
+      expect(subject).to receive(:say_status).with(
+        :identical,
+        "app/views/layouts/decidim/_head_extra.html.erb",
+        :blue
+      )
+
+      subject.append_tunnistamo_sign_out_iframe
+    end
+  end
 
   describe "#enable_authentication" do
     let(:secrets_yml_template) do
@@ -104,4 +134,5 @@ describe Decidim::Tunnistamo::Generators::InstallGenerator do
       end
     end
   end
+  # rubocop:enable Rspec/SubjectStub
 end
