@@ -37,6 +37,13 @@ module Decidim
           # Add the authorization for the user
           return fail_authorize unless authorize_user(current_user)
 
+          if strong_identity_provider?
+            current_user.forget_me!
+            cookies.delete :remember_user_token, domain: current_organization.host
+            cookies.delete :remember_admin_token, domain: current_organization.host
+            cookies.update response.cookies
+          end
+
           # Show the success message and redirect back to the authorizations
           flash[:notice] = t(
             "authorizations.create.success",
@@ -84,13 +91,13 @@ module Decidim
           scope: "decidim.tunnistamo.omniauth_callbacks"
         )
 
-        redirect_path = stored_location_for(resource || :user) || decidim.root_path
         if session.delete("decidim-tunnistamo.signed_in")
-          params = "?post_logout_redirect_uri=#{CGI.escape(redirect_path)}"
-
-          return redirect_to user_tunnistamo_omniauth_logout_path + params
+          return redirect_to(
+            decidim_tunnistamo.user_tunnistamo_omniauth_logout_path
+          )
         end
 
+        redirect_path = stored_location_for(resource || :user) || decidim.root_path
         redirect_to redirect_path
       end
 
@@ -116,6 +123,15 @@ module Decidim
 
       def verified_email
         authenticator.verified_email
+      end
+
+      def strong_identity_provider?
+        return false unless Decidim::Tunnistamo&.strong_identity_providers
+
+        identity_provider = oauth_hash.dig(:extra, :raw_info, :amr) || {}
+        return false unless identity_provider
+
+        Decidim::Tunnistamo.strong_identity_providers.include?(identity_provider)
       end
     end
   end

@@ -1,5 +1,6 @@
 # Decidim::Tunnistamo
 
+[![Build Status](https://github.com/mainio/decidim-module-tunnistamo/actions/workflows/ci_tunnistamo.yml/badge.svg)](https://github.com/mainio/decidim-module-tunnistamo/actions)
 [![codecov](https://codecov.io/gh/mainio/decidim-module-tunnistamo/branch/master/graph/badge.svg)](https://codecov.io/gh/mainio/decidim-module-tunnistamo)
 
 A [Decidim](https://github.com/decidim/decidim) module to add
@@ -53,6 +54,7 @@ default: &default
     # ...
     tunnistamo:
       enabled: false
+      server_uri: <%= ENV["OMNIAUTH_TUNNISTAMO_SERVER_URI"] %>
       client_id: <%= ENV["OMNIAUTH_TUNNISTAMO_CLIENT_ID"] %>
       client_secret: <%= ENV["OMNIAUTH_TUNNISTAMO_CLIENT_SECRET"] %>
       icon: account-login
@@ -62,6 +64,7 @@ development:
     # ...
     tunnistamo:
       enabled: true
+      server_uri: <%= ENV["OMNIAUTH_TUNNISTAMO_SERVER_URI"] %>
       client_id: <%= ENV["OMNIAUTH_TUNNISTAMO_CLIENT_ID"] %>
       client_secret: <%= ENV["OMNIAUTH_TUNNISTAMO_CLIENT_SECRET"] %>
       icon: account-login
@@ -123,6 +126,7 @@ Decidim::Tunnistamo.configure do |config|
     end
   end
   config.metadata_collector_class = CustomTunnistamoMetadataCollector
+  config.strong_identity_providers = ["custom_strong_provider"]
 end
 ```
 

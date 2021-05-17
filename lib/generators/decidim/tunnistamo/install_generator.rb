@@ -10,6 +10,18 @@ module Decidim
 
         desc "Modifies the secrets.yml configuration file for Tunnistamo."
 
+        class_option(
+          :test_initializer,
+          desc: "Copies the test initializer instead of the actual one (for test dummy app).",
+          type: :boolean,
+          default: false,
+          hide: true
+        )
+
+        def copy_initializer
+          copy_file "tunnistamo_initializer_test.rb", "config/initializers/tunnistamo.rb" if options[:test_initializer]
+        end
+
         def enable_authentication
           secrets_path = Rails.application.root.join("config", "secrets.yml")
           secrets = YAML.safe_load(File.read(secrets_path), [], [], true)
@@ -28,7 +40,10 @@ module Decidim
         end
 
         def append_tunnistamo_sign_out_iframe
-          head_extra_file = Rails.application.root.join("app/views/layouts/decidim/_head_extra.html.erb")
+          layout_dir = Rails.application.root.join("app/views/layouts/decidim")
+          FileUtils.mkdir_p(layout_dir) unless File.directory?(layout_dir)
+
+          head_extra_file = layout_dir.join("_head_extra.html.erb")
           unless File.exist?(head_extra_file)
             FileUtils.touch(head_extra_file)
             say_status :create, "app/views/layouts/decidim/_head_extra.html.erb", :green

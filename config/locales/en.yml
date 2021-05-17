@@ -26,3 +26,8 @@ en:
             success: You have been successfully authorized through Tunnistamo
           destroy:
             success: Authorization sucessfully reset.
+    verifications:
+      authorizations:
+        first_login:
+          actions:
+            tunnistamo_idp: Tunnistamo identity

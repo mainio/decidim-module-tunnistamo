@@ -7,27 +7,35 @@ require "generators/decidim/tunnistamo/install_generator"
 describe Decidim::Tunnistamo::Generators::InstallGenerator do
   let(:options) { {} }
 
+  # rubocop:disable Rspec/SubjectStub
   before { allow(subject).to receive(:options).and_return(options) }
 
-  describe "#copy_initializer" do
-    it "copies the initializer file" do
-      expect(subject).to receive(:copy_file).with(
-        "tunnistamo_initializer.rb",
-        "config/initializers/tunnistamo.rb"
-      )
-      subject.copy_initializer
+  describe "#append_tunnistamo_sign_out_iframe" do
+    let(:tunnistamo_line) { '<%= render partial: "decidim/tunnistamo/shared/tunnistamo_sign_out" %>' }
+    let(:layout_dir) { Rails.application.root.join("app/views/layouts/decidim") }
+    let(:head_extra_file) { layout_dir.join("_head_extra.html.erb") }
+
+    it "when file does not exist creates file" do
+      expect(File).to receive(:readlines).and_return([])
+      expect(File).to receive(:open).with(anything, "a+") do |&block|
+        file = double
+        expect(file).to receive(:write).with(tunnistamo_line)
+        expect(file).to receive(:write).with("\n")
+        block.call(file)
+      end
+
+      subject.append_tunnistamo_sign_out_iframe
     end
 
-    context "with the test_initializer option set to true" do
-      let(:options) { { test_initializer: true } }
+    it "when the file exist say status identical" do
+      expect(File).to receive(:readlines).and_return([tunnistamo_line])
+      expect(subject).to receive(:say_status).with(
+        :identical,
+        "app/views/layouts/decidim/_head_extra.html.erb",
+        :blue
+      )
 
-      it "copies the test initializer file" do
-        expect(subject).to receive(:copy_file).with(
-          "tunnistamo_initializer_test.rb",
-          "config/initializers/tunnistamo.rb"
-        )
-        subject.copy_initializer
-      end
+      subject.append_tunnistamo_sign_out_iframe
     end
   end
 
@@ -74,10 +82,15 @@ describe Decidim::Tunnistamo::Generators::InstallGenerator do
     let(:secrets_yml_modified) do
       default = "    tunnistamo:\n"
       default += "      enabled: false\n"
+      default += "      server_uri: <%= ENV[\"OMNIAUTH_TUNNISTAMO_SERVER_URI\"] %>\n"
+      default += "      client_id: <%= ENV[\"OMNIAUTH_TUNNISTAMO_CLIENT_ID\"] %>\n"
+      default += "      client_secret: <%= ENV[\"OMNIAUTH_TUNNISTAMO_CLIENT_SECRET\"] %>\n"
       default += "      icon: account-login\n"
       development = "    tunnistamo:\n"
       development += "      enabled: true\n"
-      development += "      mode: test\n"
+      development += "      server_uri: <%= ENV[\"OMNIAUTH_TUNNISTAMO_SERVER_URI\"] %>\n"
+      development += "      client_id: <%= ENV[\"OMNIAUTH_TUNNISTAMO_CLIENT_ID\"] %>\n"
+      development += "      client_secret: <%= ENV[\"OMNIAUTH_TUNNISTAMO_CLIENT_SECRET\"] %>\n"
       development += "      icon: account-login\n"
 
       secrets_yml_template.gsub(
@@ -121,4 +134,5 @@ describe Decidim::Tunnistamo::Generators::InstallGenerator do
       end
     end
   end
+  # rubocop:enable Rspec/SubjectStub
 end

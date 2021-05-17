@@ -54,11 +54,6 @@ module Decidim
             provider: oauth_data[:provider],
             uid: user_identifier
           )
-          unless identity.user
-            identity.destroy!
-            identity = nil
-          end
-
           return identity if identity
 
           # Check that the identity is not already bound to another user.
@@ -132,7 +127,7 @@ module Decidim
 
           @user_full_name ||= begin
             first_name = oauth_raw_info[:given_name] || oauth_raw_info[:first_name]
-            last_name = oauth_raw_info[:last_name]
+            last_name = oauth_raw_info[:last_name] || oauth_raw_info[:family_name]
 
             "#{first_name} #{last_name}"
           end

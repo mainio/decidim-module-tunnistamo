@@ -17,7 +17,7 @@ describe Decidim::Tunnistamo::Verification::Engine do
   it "registers the verification workflow" do
     expect(Decidim::Verifications).to receive(
       :register_workflow
-    ).with(:tunnistamo_nids) do |&block|
+    ).with(:tunnistamo_idp) do |&block|
       workflow = double
       expect(workflow).to receive(:engine=).with(described_class)
       expect(workflow).to receive(:expires_in=).with(0.minutes)

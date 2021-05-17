@@ -25,3 +25,8 @@ fi:
             success: Sinut on onnistuneesti tunnistettu Tunnistamon avulla
           destroy:
             success: Varmennus tyhjennetty onnistuneesti.
+    verifications:
+      authorizations:
+        first_login:
+          actions:
+            tunnistamo_idp: Tunnistamo-tunnistus
