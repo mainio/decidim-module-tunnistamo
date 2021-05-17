@@ -10,6 +10,14 @@ module Decidim
 
         desc "Modifies the secrets.yml configuration file for Tunnistamo."
 
+        class_option(
+          :test_initializer,
+          desc: "Copies the test initializer instead of the actual one (for test dummy app).",
+          type: :boolean,
+          default: false,
+          hide: true
+        )
+
         def copy_initializer
           copy_file "tunnistamo_initializer_test.rb", "config/initializers/tunnistamo.rb" if options[:test_initializer]
         end
