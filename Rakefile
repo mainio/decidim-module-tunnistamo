@@ -5,7 +5,7 @@ require "decidim/dev/common_rake"
 desc "Generates a dummy app for testing"
 task test_app: "decidim:generate_external_test_app" do
   Dir.chdir("spec/decidim_dummy_app") do
-    system("bundle exec rails generate decidim:tunnistamo:install")
+    system("bundle exec rails generate decidim:tunnistamo:install --test-initializer true")
   end
 end
 

@@ -10,6 +10,10 @@ module Decidim
 
         desc "Modifies the secrets.yml configuration file for Tunnistamo."
 
+        def copy_initializer
+          copy_file "tunnistamo_initializer_test.rb", "config/initializers/tunnistamo.rb" if options[:test_initializer]
+        end
+
         def enable_authentication
           secrets_path = Rails.application.root.join("config", "secrets.yml")
           secrets = YAML.safe_load(File.read(secrets_path), [], [], true)
