@@ -64,20 +64,44 @@ describe Decidim::Tunnistamo::Authentication::Authenticator do
   end
 
   describe "#user_params_from_oauth_hash" do
-    it "returns the expected hash" do
-      signature = ::Decidim::OmniauthRegistrationForm.create_signature(
-        oauth_provider,
-        oauth_uid
-      )
+    shared_examples_for "expected hash" do
+      it "returns the expected hash" do
+        signature = ::Decidim::OmniauthRegistrationForm.create_signature(
+          oauth_provider,
+          oauth_uid
+        )
 
-      expect(subject.user_params_from_oauth_hash).to include(
-        provider: oauth_provider,
-        uid: oauth_uid,
-        name: "Marja Mainio",
-        oauth_signature: signature,
-        avatar_url: nil,
-        raw_data: oauth_hash
-      )
+        expect(subject.user_params_from_oauth_hash).to include(
+          provider: oauth_provider,
+          uid: oauth_uid,
+          name: "Marja Mainio",
+          oauth_signature: signature,
+          avatar_url: nil,
+          raw_data: oauth_hash
+        )
+      end
+    end
+
+    it_behaves_like "expected hash"
+
+    context "when oauth data info doesnt include name" do
+      let(:oauth_info) do
+        {
+          image: oauth_image
+        }
+      end
+      let(:oauth_raw_info) do
+        {
+          name: "Marja Mirja Mainio",
+          given_name: "Marja",
+          family_name: "Mainio",
+          birthdate: "1985-07-15",
+          amr: "google"
+
+        }
+      end
+
+      it_behaves_like "expected hash"
     end
 
     context "when oauth data is empty" do

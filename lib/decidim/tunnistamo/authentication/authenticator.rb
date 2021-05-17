@@ -127,7 +127,7 @@ module Decidim
 
           @user_full_name ||= begin
             first_name = oauth_raw_info[:given_name] || oauth_raw_info[:first_name]
-            last_name = oauth_raw_info[:last_name]
+            last_name = oauth_raw_info[:last_name] || oauth_raw_info[:family_name]
 
             "#{first_name} #{last_name}"
           end
