@@ -126,7 +126,7 @@ module Decidim
       end
 
       def strong_identity_provider?
-        return false unless Decidim::Tunnistamo.respond_to?(:strong_identity_providers)
+        return false unless Decidim::Tunnistamo&.strong_identity_providers
 
         identity_provider = oauth_hash.dig(:extra, :raw_info, :amr) || {}
         return false unless identity_provider
