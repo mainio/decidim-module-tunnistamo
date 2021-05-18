@@ -100,6 +100,15 @@ module Decidim
           authorization
         end
 
+        def strong_identity_provider?
+          return false unless Decidim::Tunnistamo&.strong_identity_providers
+
+          identity_provider = oauth_hash.dig(:extra, :raw_info, :amr) || {}
+          return false unless identity_provider
+
+          Decidim::Tunnistamo.strong_identity_providers.include?(identity_provider)
+        end
+
         protected
 
         attr_reader :organization, :oauth_hash

@@ -37,7 +37,7 @@ module Decidim
           # Add the authorization for the user
           return fail_authorize unless authorize_user(current_user)
 
-          if strong_identity_provider?
+          if authenticator.strong_identity_provider?
             current_user.forget_me!
             cookies.delete :remember_user_token, domain: current_organization.host
             cookies.delete :remember_admin_token, domain: current_organization.host
@@ -123,15 +123,6 @@ module Decidim
 
       def verified_email
         authenticator.verified_email
-      end
-
-      def strong_identity_provider?
-        return false unless Decidim::Tunnistamo&.strong_identity_providers
-
-        identity_provider = oauth_hash.dig(:extra, :raw_info, :amr) || {}
-        return false unless identity_provider
-
-        Decidim::Tunnistamo.strong_identity_providers.include?(identity_provider)
       end
     end
   end
