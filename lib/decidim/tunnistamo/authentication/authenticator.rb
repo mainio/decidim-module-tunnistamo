@@ -103,15 +103,21 @@ module Decidim
         def strong_identity_provider?
           return false unless Decidim::Tunnistamo&.strong_identity_providers
 
-          identity_provider = oauth_hash.dig(:extra, :raw_info, :amr) || {}
+          identity_provider = oauth_raw_info.dig(:amr)
           return false unless identity_provider
 
-          Decidim::Tunnistamo.strong_identity_providers.include?(identity_provider)
+          strong_identity_providers_array.include?(identity_provider)
         end
 
         protected
 
         attr_reader :organization, :oauth_hash
+
+        def strong_identity_providers_array
+          return Decidim::Tunnistamo.strong_identity_providers if Decidim::Tunnistamo.strong_identity_providers.is_a?(Array)
+
+          [Decidim::Tunnistamo.strong_identity_providers]
+        end
 
         def oauth_data
           @oauth_data ||= oauth_hash.slice(:provider, :uid, :info)
