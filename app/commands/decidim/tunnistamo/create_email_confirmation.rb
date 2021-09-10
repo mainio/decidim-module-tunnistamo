@@ -15,7 +15,7 @@ module Decidim
         code = rand(100_000..999_999)
         user.update(tunnistamo_email_code: code)
 
-        ::Decidim::Tunnistamo::EmailConfirmationJob.perform_now(user, form.email, code)
+        ::Decidim::Tunnistamo::EmailConfirmationJob.perform_now(user, form.email)
 
         broadcast(:ok)
       end

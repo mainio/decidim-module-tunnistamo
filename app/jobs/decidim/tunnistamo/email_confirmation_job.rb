@@ -3,11 +3,11 @@
 module Decidim
   module Tunnistamo
     class EmailConfirmationJob < ApplicationJob
-      queue_as :email_confirmation
+      queue_as :tunnistamo_email_confirmation
 
-      def perform(user, email, code)
+      def perform(user, email)
         return unless user
-        return unless code
+        return unless email
 
         user.update(tunnistamo_email_sent_to: email)
         user.update(tunnistamo_email_code_sent_at: Time.current)

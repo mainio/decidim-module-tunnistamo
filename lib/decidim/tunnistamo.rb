@@ -61,6 +61,11 @@ module Decidim
       Decidim::Tunnistamo::Verification::MetadataCollector
     end
 
+    # Enables email confirmation process after successful login
+    config_accessor :confirm_emails do
+      false
+    end
+
     def self.configured?
       return false unless Rails.application.secrets.omniauth.has_key?(:tunnistamo)
 

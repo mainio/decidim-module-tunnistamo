@@ -5,6 +5,8 @@ module Decidim
     class EmailConfirmationsController < Decidim::ApplicationController
       include Decidim::FormFactory
 
+      skip_before_action :store_current_location
+
       def new
         @form = ::Decidim::Tunnistamo::EmailConfirmationForm.new(email: current_user.email)
       end
@@ -32,9 +34,9 @@ module Decidim
       def complete
         @form = form(::Decidim::Tunnistamo::CodeConfirmationForm).from_params(params)
 
-        ::Decidim::Tunnistamo::ConfirmEmail.call(@form, current_user) do
+        ::Decidim::Tunnistamo::ConfirmEmail.call(@form, current_user) do |new_email|
           on(:ok) do
-            flash[:notice] = "Success"
+            flash[:notice] = "Success #{new_email}"
             redirect_to decidim.root_path
           end
 

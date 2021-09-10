@@ -12,21 +12,21 @@ module Decidim
       routes do
         resources :email_confirmations, only: [:new, :create]
 
+        match(
+          "/email_confirmations/preview",
+          to: "email_confirmations#preview",
+          as: "preview_email_confirmation",
+          via: [:get]
+        )
+
+        match(
+          "/email_confirmations/complete",
+          to: "email_confirmations#complete",
+          as: "complete_email_confirmation",
+          via: [:post]
+        )
+
         devise_scope :user do
-          match(
-            "/email_confirmations/preview",
-            to: "email_confirmations#preview",
-            as: "preview_email_confirmation",
-            via: [:get]
-          )
-
-          match(
-            "/email_confirmations/complete",
-            to: "email_confirmations#complete",
-            as: "complete_email_confirmation",
-            via: [:post]
-          )
-
           # Manually map the omniauth routes for Devise because the default
           # routes are mounted by core Decidim. This is because we want to map
           # these routes to the local callbacks controller instead of the
