@@ -1,0 +1,33 @@
+<%= decidim_form_for(@form, url: email_confirmations_path, class: "form grid-container") do |form| %>
+  <div class="row">
+    <div class="columns large-offset-2 large-8">
+      <div class="row column">
+        <h1>Vahvista sähköpostiosoitteesi</h1>
+      </div>
+
+      <div class="row column">
+        <p>
+          Tämän palvelun käyttäminen edellyttää vahvistetun sähköpostiosoitteen liittämistä käyttäjätiliisi. Ole hyvä ja syötä alla olevaan kenttään voimassaoleva sähköpostiosoitteesi
+        </p>
+        <% if true %>
+          <p>
+            Mikäli sähköpostiosoitteesi välitettiin kirjautumisesi yhteydessä, tarkista, että se on oikein ja siirry seuraavaan vaiheeseen.
+          </p>
+        <% end %>
+      </div>
+
+      <div class="row column">
+        <div class="field">
+          <%= form.email_field :email, label: "iimeili", placeholder: "foo" %>
+        </div>
+      </div>
+
+      <div class="row column">
+        <div class="actions">
+          <%= form.submit "Send code", class: "button expanded", data: { disable: true } %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
