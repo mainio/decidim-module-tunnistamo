@@ -2,27 +2,32 @@
   <div class="row">
     <div class="columns large-offset-2 large-8">
       <div class="row column">
-        <h1>Syötä tarkastuskoodi</h1>
+        <h1><%= t(".title") %></h1>
       </div>
 
       <div class="row column">
         <p>
-          Syöttämääsi sähköpostiosoitteeseen on lähetetty tarkastuskoodi. Syötä tämä tarkastuskoodi alla näkyvään kenttään
-          siirtyäksesi käyttämään palvelua.
+          <%= t(".description") %>
         </p>
-        <p>Tarkastuskoodi on lähetetty osoitteeseen <b><%= current_user.tunnistamo_email_sent_to %></b></p>
-        <p>Jos kirjoitit osoitteen väärin, <a href="<%= new_email_confirmation_path %>">siirry takaisin edelliseen viheeseen.</a></p>
+        <p>
+          <%= "#{t(".help_1")}:"  %>
+          <b><%= current_user.tunnistamo_email_sent_to %></b>
+        </p>
+        <p>
+          <%= t(".help_2") %>
+          <a href="<%= new_email_confirmation_path %>"><%= t(".help_3") %></a>
+        </p>
       </div>
 
       <div class="row column">
         <div class="field">
-          <%= form.number_field :code, label: "koodi" %>
+          <%= form.number_field :code, label: t(".code") %>
         </div>
       </div>
 
       <div class="row column">
         <div class="actions">
-          <%= form.submit "Send code", class: "button expanded", data: { disable: true } %>
+          <%= form.submit t(".submit"), class: "button expanded", data: { disable: true } %>
         </div>
       </div>
     </div>

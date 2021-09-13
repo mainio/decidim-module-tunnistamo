@@ -12,6 +12,32 @@ fi:
             client_id: Asiakkaan tunniste (Client ID)
             client_secret: Asiakkaan salausavain (Client secret)
     tunnistamo:
+      email_confirmation_mailer:
+        send_code:
+          alternatively: 'Alternatively, you can also confirm your email address using the button below:'
+          content: Confirm your email address by entering the verification code below in the field provided on the service.
+          details: 'You verification code is:'
+          verify_email: Verify email address
+          welcome: 'Welcome %{name}!'
+      email_confirmations:
+        complete:
+          success: '%{email} successfully confirmed'
+          invalid: Couldn't confirm email
+        new:
+          additional_check: Mikäli sähköpostiosoitteesi välitettiin kirjautumisesi yhteydessä, tarkista, että se on oikein ja siirry seuraavaan vaiheeseen.
+          email: Sähköposti
+          description: Tämän palvelun käyttäminen edellyttää vahvistetun sähköpostiosoitteen liittämistä käyttäjätiliisi. Ole hyvä ja syötä alla olevaan kenttään voimassaoleva sähköpostiosoitteesi
+          placeholder: Placeholder
+          submit: Lähetä tarkastuskoodi
+          title: Vahvista sähköpostiosoitteesi
+        preview:
+          code: Koodi
+          description: Syöttämääsi sähköpostiosoitteeseen on lähetetty tarkastuskoodi. Syötä tämä tarkastuskoodi alla näkyvään kenttään siirtyäksesi käyttämään palvelua.
+          help_1: 'Tarkastuskoodi on lähetetty osoitteeseen: <b> %{email}</b>'
+          help_2: Jos kirjoitit osoitteen väärin,
+          help_3: siirry takaisin edelliseen vaiheeseen.
+          submit: Vahvista sähköpostiosoite
+          title: Syötä tarkastuskoodi
       omniauth_callbacks:
         failure:
           already_authorized: Toinen käyttäjä on tunnistanut itsensä jo samalla henkilöllisyydellä.

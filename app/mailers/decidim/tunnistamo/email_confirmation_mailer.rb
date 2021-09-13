@@ -10,8 +10,10 @@ module Decidim
 
       def send_code(user)
         with_user(user) do
+          @user = user
           @organization = user.organization
           @code = user.tunnistamo_email_code
+          @prefix = ::Decidim::Tunnistamo.code_prefix || "CODE"
 
           mail(to: user.tunnistamo_email_sent_to, subject: "Email verification code")
         end

@@ -34,14 +34,14 @@ module Decidim
       def complete
         @form = form(::Decidim::Tunnistamo::CodeConfirmationForm).from_params(params)
 
-        ::Decidim::Tunnistamo::ConfirmEmail.call(@form, current_user) do |new_email|
-          on(:ok) do
-            flash[:notice] = "Success #{new_email}"
+        ::Decidim::Tunnistamo::ConfirmEmail.call(@form, current_user) do
+          on(:ok) do |confirmed_email|
+            flash[:notice] = t("decidim.tunnistamo.email_confirmations.complete.success", email: confirmed_email)
             redirect_to decidim.root_path
           end
 
           on(:invalid) do
-            flash.now[:alert] = "update error"
+            flash.now[:alert] = t("decidim.tunnistamo.email_confirmations.complete.invalid")
             render :preview
           end
         end

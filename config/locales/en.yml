@@ -1,4 +1,3 @@
----
 en:
   decidim:
     authorization_handlers:
@@ -13,6 +12,32 @@ en:
             client_id: Client ID
             client_secret: Client secret
     tunnistamo:
+      email_confirmation_mailer:
+        send_code:
+          alternatively: 'Alternatively, you can also confirm your email address using the button below:'
+          content: Confirm your email address by entering the verification code below in the field provided on the service.
+          details: 'You verification code is:'
+          verify_email: Verify email address
+          welcome: 'Welcome %{name}!'
+      email_confirmations:
+        complete:
+          success: '%{email} successfully confirmed'
+          invalid: Couldn't confirm email
+        new:
+          additional_check: If your email address was provided when you signed in, check that it is correct and go to the next step.
+          email: Email
+          description: To use this service, a verified email address must be associated with your user account. Please enter your valid email address in the field below
+          placeholder: Placeholder
+          submit: Send verification code
+          title: Verify your email address
+        preview:
+          code: Code
+          description: A verification code has been sent to the email address you entered. Enter this verification code in the field below to access the service.
+          help_1: 'Code is sent to address'
+          help_2: If you entered wrong address
+          help_3: go back to previous step
+          submit: Verify the email address
+          title: Enter the verification code
       omniauth_callbacks:
         failure:
           already_authorized: Another user has already authorized themselves with the same identity.
