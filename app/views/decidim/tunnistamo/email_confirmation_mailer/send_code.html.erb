@@ -16,4 +16,16 @@
 
 <%#= link_to t(".verify_email"), decidim_tunnistamo.complete_email_confirmation_path(code: @code), method: :post, class: "button" %>
 
-<%= link_to t(".verify_email"), confirmation_url(@user, confirmation_token: @user.confirmation_token, host: @organization.host) %>
+<table class="button expanded radius">
+  <tr>
+    <td>
+      <table>
+        <tr>
+          <td>
+            <%= link_to t(".verify_email"), confirmation_url(@user, confirmation_token: @confirmation_token, host: @organization.host), target: :blank %>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>

@@ -111,7 +111,7 @@ module Decidim
       # Private: Create form params from omniauth hash
       # Since we are using trusted omniauth data we are generating a valid signature.
       def user_params_from_oauth_hash
-        authenticator.user_params_from_oauth_hash
+        authenticator.user_params_from_oauth_hash.merge(email_confirmed: false)
       end
 
       def authenticator
