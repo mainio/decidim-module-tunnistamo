@@ -42,13 +42,14 @@ module Decidim
       attr_reader :form, :user
 
       def email_taken?
-        find_user = Decidim::User.find_by(email: user.tunnistamo_email_sent_to)
+        find_user = Decidim::User.find_by(email: user.tunnistamo_email_sent_to, organization: current_organization)
         return true if find_user && find_user.id != user.id
 
         false
       end
 
       def update_authorization(old_user, new_user)
+        Decidim::Identity.find_by(provider: "tunnistamo", user: old_user, organization: current_organization).update(user: new_user)
         Decidim::Authorization.find_by(name: "tunnistamo_idp", user: old_user).update(user: new_user)
       end
     end
