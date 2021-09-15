@@ -2,7 +2,7 @@
 
 module Decidim
   module Tunnistamo
-    module RegistrationFormOverride
+    module AddEmailConfirmedToRegistrationForm
       extend ActiveSupport::Concern
 
       included do

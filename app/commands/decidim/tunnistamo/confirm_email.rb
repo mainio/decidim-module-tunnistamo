@@ -14,17 +14,16 @@ module Decidim
         return broadcast(:invalid) if form.code != user.tunnistamo_email_code
 
         if email_taken?
-          new_user = Decidim::User.find_by(email: user.tunnistamo_email_sent_to)
-          update_authorization(user, new_user)
-          new_user.tunnistamo_email_confirmed_at = Time.current
-          new_user.save!
-          bypass_sign_in(new_user)
+          existing_user = Decidim::User.find_by(email: user.tunnistamo_email_sent_to)
+          update_authorization(user, existing_user)
+          existing_user.confirm
+          existing_user.save!
+          bypass_sign_in(existing_user)
           user.destroy
-          return broadcast(:ok, new_user.email)
+          return broadcast(:ok, existing_user.email)
         end
 
         user.email = user.tunnistamo_email_sent_to
-        user.tunnistamo_email_confirmed_at = Time.current
 
         if user.valid?
           user.skip_confirmation_notification!
@@ -48,9 +47,9 @@ module Decidim
         false
       end
 
-      def update_authorization(old_user, new_user)
-        Decidim::Identity.find_by(provider: "tunnistamo", user: old_user, organization: current_organization).update(user: new_user)
-        Decidim::Authorization.find_by(name: "tunnistamo_idp", user: old_user).update(user: new_user)
+      def update_authorization(temp_user, existing_user)
+        Decidim::Identity.find_by(provider: "tunnistamo", user: temp_user, organization: current_organization).update(user: existing_user)
+        Decidim::Authorization.find_by(name: "tunnistamo_idp", user: temp_user).update(user: existing_user)
       end
     end
   end

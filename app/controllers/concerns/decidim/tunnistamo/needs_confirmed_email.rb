@@ -13,7 +13,7 @@ module Decidim
 
       def email_confirmed
         return unless request.format.html?
-        return if current_user.tunnistamo_email_confirmed_at
+        return if current_user.confirmed_at
         return unless current_user.tos_accepted?
         return if current_user.managed
         return unless from_tunnistamo?

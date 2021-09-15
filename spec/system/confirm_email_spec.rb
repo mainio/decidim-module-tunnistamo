@@ -30,7 +30,7 @@ describe "Email confirmation", type: :system do
         expect(page).to have_content("#{email} successfully confirmed")
         confirmed_user = Decidim::User.find(current_user.id)
         expect(confirmed_user.tunnistamo_email_sent_to).to eq(email)
-        expect(confirmed_user.tunnistamo_email_confirmed_at).to be_between(1.minute.ago, Time.current)
+        expect(confirmed_user.confirmed_at).to be_between(1.minute.ago, Time.current)
       end
     end
 
@@ -45,7 +45,7 @@ describe "Email confirmation", type: :system do
         expect(page).to have_content("#{change_email} successfully confirmed")
         confirmed_user = Decidim::User.find(current_user.id)
         expect(confirmed_user.tunnistamo_email_sent_to).to eq(change_email)
-        expect(confirmed_user.tunnistamo_email_confirmed_at).to be_between(1.minute.ago, Time.current)
+        expect(confirmed_user.confirmed_at).to be_between(1.minute.ago, Time.current)
       end
     end
 
@@ -75,6 +75,6 @@ describe "Email confirmation", type: :system do
   end
 
   def code_from_email
-    Nokogiri::HTML(last_email_body).css("span#code").first.children.first.content.inspect
+    Nokogiri::HTML(last_email_body).css("span#code").first.children.first.content
   end
 end
