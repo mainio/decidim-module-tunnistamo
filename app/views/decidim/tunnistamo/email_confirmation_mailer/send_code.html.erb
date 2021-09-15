@@ -17,7 +17,8 @@
       <table>
         <tr>
           <td>
-            <%= link_to t(".verify_email"), confirmation_url(@user, confirmation_token: @confirmation_token, host: @organization.host), target: :blank %>
+            <%#= link_to t(".verify_email"), confirmation_url(@user, confirmation_token: @confirmation_token, host: @organization.host), target: :blank %>
+            <%= link_to t(".verify_email"), confirm_with_token_url(@user, confirmation_token: @confirmation_token, host: @organization.host), target: :blank %>
           </td>
         </tr>
       </table>

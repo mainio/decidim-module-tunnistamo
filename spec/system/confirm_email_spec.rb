@@ -4,8 +4,8 @@ require "spec_helper"
 
 describe "Email confirmation", type: :system do
   let(:organization) { create(:organization) }
-  let(:current_user) { create(:user, email: email, organization: organization) }
-  let(:email) { Faker::Internet.email }
+  let(:current_user) { create(:user, unconfirmed_email: unconfirmed_email, organization: organization) }
+  let(:unconfirmed_email) { Faker::Internet.email }
 
   before do
     allow(Decidim::Tunnistamo).to receive(:confirm_emails).and_return(true)
@@ -27,9 +27,9 @@ describe "Email confirmation", type: :system do
         click_button "Send verification code"
         fill_in :code_confirmation_code, with: code_from_email
         click_button "Verify the email address"
-        expect(page).to have_content("#{email} successfully confirmed")
+        expect(page).to have_content("#{unconfirmed_email} successfully confirmed")
         confirmed_user = Decidim::User.find(current_user.id)
-        expect(confirmed_user.tunnistamo_email_sent_to).to eq(email)
+        expect(confirmed_user.tunnistamo_email_sent_to).to eq(unconfirmed_email)
         expect(confirmed_user.confirmed_at).to be_between(1.minute.ago, Time.current)
       end
     end
@@ -64,14 +64,15 @@ describe "Email confirmation", type: :system do
       end
     end
 
-    # describe "email verification link" do
-    #   it "verifies email" do
-    #     click_button "Send verification code"
-    #     visit last_email_first_link
-    #     expect(page).to have_content("Your email address has been successfully confirmed")
-    #     expect(current_user.confirmed_at).to be_between(1.minute.ago, Time.current)
-    #   end
-    # end
+    describe "email verification link" do
+      it "verifies email" do
+        click_button "Send verification code"
+        visit last_email_first_link
+        expect(page).to have_content("#{unconfirmed_email} successfully confirmed")
+        find_user = Decidim::User.find(current_user.id)
+        expect(find_user.confirmed_at).to be_between(1.minute.ago, Time.current)
+      end
+    end
   end
 
   def code_from_email

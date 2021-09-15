@@ -28,6 +28,13 @@ module Decidim
           via: [:post]
         )
 
+        match(
+          "/email_confirmations/:user_id/confirm_with_token",
+          to: "email_confirmations#confirm_with_token",
+          as: "confirm_with_token",
+          via: [:get]
+        )
+
         devise_scope :user do
           # Manually map the omniauth routes for Devise because the default
           # routes are mounted by core Decidim. This is because we want to map

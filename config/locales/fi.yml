@@ -23,11 +23,12 @@ fi:
         complete:
           success: '%{email} successfully confirmed'
           invalid: Couldn't confirm email
+        create:
+          invalid: Couldn't confirm email
         new:
           additional_check: Mikäli sähköpostiosoitteesi välitettiin kirjautumisesi yhteydessä, tarkista, että se on oikein ja siirry seuraavaan vaiheeseen.
           email: Sähköposti
           description: Tämän palvelun käyttäminen edellyttää vahvistetun sähköpostiosoitteen liittämistä käyttäjätiliisi. Ole hyvä ja syötä alla olevaan kenttään voimassaoleva sähköpostiosoitteesi
-          placeholder: Placeholder
           submit: Lähetä tarkastuskoodi
           title: Vahvista sähköpostiosoitteesi
         preview:

@@ -23,11 +23,12 @@ sv:
         complete:
           success: '%{email} successfully confirmed'
           invalid: Couldn't confirm email
+        create:
+          invalid: Couldn't confirm email
         new:
           additional_check: If your email address was provided when you signed in, check that it is correct and go to the next step.
           email: Email
           description: To use this service, a verified email address must be associated with your user account. Please enter your valid email address in the field below
-          placeholder: Placeholder
           submit: Send verification code
           title: Verify your email address
         preview:

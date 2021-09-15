@@ -15,6 +15,7 @@ module Decidim
           return if form.email_confirmed
 
           @user.confirmed_at = nil
+          @user.unconfirmed_email = authenticator.digged_email
           @user.skip_confirmation_notification!
           @user.save!
           @user.send(:generate_confirmation_token!)
