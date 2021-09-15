@@ -18,6 +18,7 @@ sv:
           content: Confirm your email address by entering the verification code below in the field provided on the service.
           details: 'You verification code is:'
           verify_email: Verify email address
+          code_prefix: TURKU
           welcome: 'Welcome %{name}!'
       email_confirmations:
         complete:

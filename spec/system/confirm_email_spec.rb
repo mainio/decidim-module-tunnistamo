@@ -76,6 +76,7 @@ describe "Email confirmation", type: :system do
   end
 
   def code_from_email
-    Nokogiri::HTML(last_email_body).css("span#code").first.children.first.content
+    content = Nokogiri::HTML(last_email_body).css("div#code").first.children.first.content
+    content.scan(/\d+/).first
   end
 end

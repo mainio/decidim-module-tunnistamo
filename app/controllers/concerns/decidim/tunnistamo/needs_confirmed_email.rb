@@ -16,8 +16,6 @@ module Decidim
         return if current_user.confirmed_at
         return unless current_user.tos_accepted?
         return if current_user.managed
-        return unless from_tunnistamo?
-
         return if tunnistamo_email_confirmation_allowed_paths?
 
         tunnistamo_redirect_to_confirm_email

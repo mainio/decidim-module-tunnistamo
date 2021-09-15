@@ -66,11 +66,6 @@ module Decidim
       false
     end
 
-    # Email confirmation code prefix (shown in email)
-    config_accessor :code_prefix do
-      "CODE"
-    end
-
     def self.configured?
       return false unless Rails.application.secrets.omniauth.has_key?(:tunnistamo)
 

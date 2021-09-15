@@ -15,7 +15,7 @@ module Decidim
           @user.save(validate: false)
           @organization = user.organization
           @code = user.tunnistamo_email_code
-          @prefix = ::Decidim::Tunnistamo.code_prefix || "CODE"
+          @prefix = t("decidim.tunnistamo.email_confirmation_mailer.send_code.code_prefix")
 
           mail(to: user.tunnistamo_email_sent_to, subject: "Email verification code")
         end

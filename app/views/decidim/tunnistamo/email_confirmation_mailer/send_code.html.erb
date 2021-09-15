@@ -2,11 +2,15 @@
 
 <p><%= t(".content") %></p>
 
-<p><%= t(".details") %></p>
+<p style="text-align:center; margin-top: 10px"><%= t(".details") %></p>
 
-<div style="display: flex; justify-content: center; margin: 2rem 0; font-size: 32px;">
-  <span style="padding: .5rem; border: 2px solid #000; background-color: #ccc;"><%= "#{@prefix}-" %></span>
-  <span style="padding: .5rem; border: 2px solid #000;" id="code"><%= @code %></span>
+<div style="text-align:center; font-size: 28px; margin-bottom: 10px">
+  <div style="display: inline; border: 2px solid #000; padding: 2px; background-color: #ccc;">
+    <%= "#{@prefix}-" %>
+  </div>
+  <div id="code" style="display: inline; border: 2px solid #000; padding: 2px;">
+    <%= @code %>
+  </div>
 </div>
 
 <p><%= t(".alternatively") %></p>
@@ -17,7 +21,6 @@
       <table>
         <tr>
           <td>
-            <%#= link_to t(".verify_email"), confirmation_url(@user, confirmation_token: @confirmation_token, host: @organization.host), target: :blank %>
             <%= link_to t(".verify_email"), confirm_with_token_url(@user, confirmation_token: @confirmation_token, host: @organization.host), target: :blank %>
           </td>
         </tr>

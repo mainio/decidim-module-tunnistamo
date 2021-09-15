@@ -4,6 +4,7 @@ require "decidim/dev/common_rake"
 
 def install_module(path)
   Dir.chdir(path) do
+    system("bundle exec rails generate decidim:tunnistamo:install --test-initializer true")
     system("bundle exec rake decidim_tunnistamo:install:migrations")
     system("bundle exec rake db:migrate")
   end
@@ -11,10 +12,6 @@ end
 
 desc "Generates a dummy app for testing"
 task test_app: "decidim:generate_external_test_app" do
-  Dir.chdir("spec/decidim_dummy_app") do
-    system("bundle exec rails generate decidim:tunnistamo:install --test-initializer true")
-  end
-
   ENV["RAILS_ENV"] = "test"
   install_module("spec/decidim_dummy_app")
 end
