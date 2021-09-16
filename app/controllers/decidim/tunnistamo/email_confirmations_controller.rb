@@ -39,28 +39,28 @@ module Decidim
 
         ::Decidim::Tunnistamo::ConfirmToken.call(@form) do
           on(:ok) do |confirmed_email|
-            flash[:notice] = t("decidim.tunnistamo.email_confirmations.complete.success", email: confirmed_email)
+            flash[:notice] = t("decidim.tunnistamo.email_confirmations.confirm_with_token.success", email: confirmed_email)
             redirect_to after_sign_in_path_for current_user
           end
 
           on(:invalid) do
-            flash.now[:alert] = t("decidim.tunnistamo.email_confirmations.complete.invalid")
+            flash.now[:alert] = t("decidim.tunnistamo.email_confirmations.confirm_with_token.invalid")
             redirect_to new_email_confirmation_path
           end
         end
       end
 
-      def complete
+      def confirm_with_code
         @form = form(::Decidim::Tunnistamo::CodeConfirmationForm).from_params(params)
 
         ::Decidim::Tunnistamo::ConfirmCode.call(@form, current_user) do
           on(:ok) do |confirmed_email|
-            flash[:notice] = t("decidim.tunnistamo.email_confirmations.complete.success", email: confirmed_email)
-            redirect_to decidim.root_path
+            flash[:notice] = t("decidim.tunnistamo.email_confirmations.confirm_with_code.success", email: confirmed_email)
+            redirect_to after_sign_in_path_for current_user
           end
 
           on(:invalid) do
-            flash.now[:alert] = t("decidim.tunnistamo.email_confirmations.complete.invalid")
+            flash.now[:alert] = t("decidim.tunnistamo.email_confirmations.confirm_with_code.invalid")
             render :preview
           end
         end

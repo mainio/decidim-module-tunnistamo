@@ -14,7 +14,7 @@ module Decidim
 
         six_digits = "%06d"
         code = format(six_digits, rand(0..999_999))
-        user.update(tunnistamo_email_code: code, unconfirmed_email: form.email)
+        user.update(tunnistamo_email_code: code, unconfirmed_email: form.email, tunnistamo_failed_confirmation_attempts: 0)
 
         ::Decidim::Tunnistamo::EmailConfirmationJob.perform_now(user, form.email)
 

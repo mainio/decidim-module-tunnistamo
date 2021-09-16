@@ -34,6 +34,25 @@ describe "Email confirmation", type: :system do
       end
     end
 
+    describe "invalid code" do
+      let(:wrong_code) do
+        six_digits = "%06d"
+        invalid_code = format(six_digits, rand(0..999_999))
+        invalid_code = format(six_digits, rand(0..999_999)) while invalid_code == code_from_email
+        invalid_code
+      end
+
+      it "doesnt verify the user" do
+        click_button "Send verification code"
+        fill_in :code_confirmation_code, with: wrong_code
+        click_button "Verify the email address"
+        expect(page).to have_content("Couldn't confirm email")
+        find_user = Decidim::User.find(current_user.id)
+        expect(find_user.confirmed_at).to eq(nil)
+        expect(find_user.tunnistamo_failed_confirmation_attempts).to eq(1)
+      end
+    end
+
     describe "change email" do
       let(:change_email) { Faker::Internet.email }
 

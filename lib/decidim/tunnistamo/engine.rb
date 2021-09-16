@@ -22,9 +22,9 @@ module Decidim
         )
 
         match(
-          "/email_confirmations/complete",
-          to: "email_confirmations#complete",
-          as: "complete_email_confirmation",
+          "/email_confirmations/confirm_with_code",
+          to: "email_confirmations#confirm_with_code",
+          as: "confirm_with_code",
           via: [:post]
         )
 

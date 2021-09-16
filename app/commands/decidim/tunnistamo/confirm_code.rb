@@ -13,6 +13,10 @@ module Decidim
       end
 
       def call
+        unless form.code_valid?
+          user.update(tunnistamo_failed_confirmation_attempts: user.tunnistamo_failed_confirmation_attempts + 1)
+          return broadcast(:invalid)
+        end
         return broadcast(:invalid) if form.invalid?
 
         if email_taken?
