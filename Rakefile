@@ -13,6 +13,9 @@ end
 desc "Generates a dummy app for testing"
 task test_app: "decidim:generate_external_test_app" do
   ENV["RAILS_ENV"] = "test"
+  ENV["OMNIAUTH_TUNNISTAMO_SERVER_URI"] = "https://auth.tunnistamo-test.fi"
+  ENV["OMNIAUTH_TUNNISTAMO_CLIENT_ID"] = "client_id"
+  ENV["OMNIAUTH_TUNNISTAMO_CLIENT_SECRET"] = "client_secret"
   install_module("spec/decidim_dummy_app")
 end
 
