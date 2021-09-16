@@ -39,5 +39,4 @@ end
 
 group :test do
   gem "codecov", require: false
-  gem "dotenv-rails", "~> 2.7"
 end
