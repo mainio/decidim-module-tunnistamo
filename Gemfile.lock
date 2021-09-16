@@ -379,6 +379,10 @@ GEM
     doorkeeper (5.5.1)
       railties (>= 5)
     doorkeeper-i18n (4.0.1)
+    dotenv (2.7.6)
+    dotenv-rails (2.7.6)
+      dotenv (= 2.7.6)
+      railties (>= 3.2)
     em-http-request (1.1.7)
       addressable (>= 2.3.4)
       cookiejar (!= 0.3.1)
@@ -886,6 +890,7 @@ DEPENDENCIES
   decidim (~> 0.24.0)
   decidim-dev (~> 0.24.0)
   decidim-tunnistamo!
+  dotenv-rails (~> 2.7)
   faker (~> 2.14)
   letter_opener_web (~> 1.4)
   listen (~> 3.1)
