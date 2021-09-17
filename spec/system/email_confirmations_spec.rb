@@ -12,7 +12,7 @@ describe "Email confirmation", type: :system do
   end
 
   context "when user is logged in" do
-    let!(:identity) { create(:identity, user: current_user, provider: "tunnistamo", uid: "12345") }
+    let!(:identity) { create(:identity, user: current_user, provider: "tunnistamo", uid: SecureRandom.uuid) }
     let!(:authorization) { Decidim::Authorization.create(name: "tunnistamo_idp", user: current_user, granted_at: Time.current) }
 
     before do
@@ -57,7 +57,7 @@ describe "Email confirmation", type: :system do
       let(:change_email) { Faker::Internet.email }
 
       it "verifies new email address" do
-        fill_in :email_confirmation_email, with: change_email
+        fill_in :ask_email_email, with: change_email
         click_button "Send verification code"
         fill_in :code_confirmation_code, with: code_from_email
         click_button "Verify the email address"
@@ -73,7 +73,7 @@ describe "Email confirmation", type: :system do
       let(:reserved_email) { "tunnistamo@example.org" }
 
       it "deletes current user and logins as existing user" do
-        fill_in :email_confirmation_email, with: reserved_email
+        fill_in :ask_email_email, with: reserved_email
         click_button "Send verification code"
         fill_in :code_confirmation_code, with: code_from_email
         click_button "Verify the email address"
@@ -90,6 +90,45 @@ describe "Email confirmation", type: :system do
         expect(page).to have_content("#{unconfirmed_email} successfully confirmed")
         find_user = Decidim::User.find(current_user.id)
         expect(find_user.confirmed_at).to be_between(1.minute.ago, Time.current)
+      end
+    end
+
+    context "and confirmed" do
+      let(:current_user) { create(:user, :confirmed, organization: organization) }
+
+      describe "email confirmation paths redirects to root path" do
+        after do
+          expect(page).to have_current_path decidim.root_path
+        end
+
+        it "redirects from new" do
+          visit decidim_tunnistamo.new_email_confirmation_path
+        end
+
+        it "fedirects from preview" do
+          visit decidim_tunnistamo.preview_email_confirmation_path
+        end
+      end
+    end
+  end
+
+  context "when user is not logged" do
+    before do
+      switch_to_host(organization.host)
+    end
+
+    describe "redirect to sign in path" do
+      after do
+        expect(page).to have_content("You need to sign in or sign up before continuing")
+        expect(page).to have_current_path decidim.new_user_session_path
+      end
+
+      it "new redirects" do
+        visit decidim_tunnistamo.new_email_confirmation_path
+      end
+
+      it "preview redirects" do
+        visit decidim_tunnistamo.preview_email_confirmation_path
       end
     end
   end

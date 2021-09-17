@@ -6,7 +6,7 @@ module Decidim
       attribute :code
 
       validate :max_attemps
-      validate :email_not_expired
+      validate :code_not_expired
       validate :code_valid?
 
       def max_attemps
@@ -20,7 +20,7 @@ module Decidim
         false
       end
 
-      def email_not_expired
+      def code_not_expired
         return true if current_user.tunnistamo_email_code_sent_at > Time.current - 30.minutes
 
         errors.add(

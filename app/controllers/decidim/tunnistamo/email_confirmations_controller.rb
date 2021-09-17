@@ -5,19 +5,19 @@ module Decidim
     class EmailConfirmationsController < Decidim::ApplicationController
       include Decidim::FormFactory
 
-      # before_action :user_logged?, expect: [:confirm_with_token]
-      # before_action :user_confirmed? TODO: Redirect out from here if user is already confirmed
+      before_action :authenticate_user!, except: [:confirm_with_token]
+      before_action :user_confirmed?
 
       skip_before_action :store_current_location, :tunnistamo_email_confirmed
 
       def new
-        @form = ::Decidim::Tunnistamo::EmailConfirmationForm.new(email: current_user.unconfirmed_email)
+        @form = ::Decidim::Tunnistamo::AskEmailForm.new(email: current_user.unconfirmed_email)
       end
 
       def create
-        @form = form(::Decidim::Tunnistamo::EmailConfirmationForm).from_params(params)
+        @form = form(::Decidim::Tunnistamo::AskEmailForm).from_params(params)
 
-        ::Decidim::Tunnistamo::CreateEmailConfirmation.call(@form, current_user) do
+        ::Decidim::Tunnistamo::SendConfirmationEmail.call(@form, current_user) do
           on(:ok) do
             redirect_to preview_email_confirmation_path, email: @form.email
           end
@@ -40,7 +40,7 @@ module Decidim
         ::Decidim::Tunnistamo::ConfirmToken.call(@form) do
           on(:ok) do |confirmed_email|
             flash[:notice] = t("decidim.tunnistamo.email_confirmations.confirm_with_token.success", email: confirmed_email)
-            redirect_to after_sign_in_path_for current_user
+            redirect_to after_sign_in_path_for current_user || Decidim::User
           end
 
           on(:invalid) do
@@ -68,8 +68,8 @@ module Decidim
 
       private
 
-      def user_logged?
-        redirect_to decidim.root_path unless current_user
+      def user_confirmed?
+        redirect_to decidim.root_path if current_user&.confirmed_at
       end
     end
   end

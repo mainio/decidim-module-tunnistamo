@@ -2,7 +2,7 @@
 
 module Decidim
   module Tunnistamo
-    class EmailConfirmationJob < ApplicationJob
+    class SendConfirmationEmailJob < ApplicationJob
       queue_as :tunnistamo_email_confirmation
 
       def perform(user, email)

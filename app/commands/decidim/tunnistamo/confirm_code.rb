@@ -21,7 +21,7 @@ module Decidim
 
         if email_taken?
           existing_user = Decidim::User.find_by(email: user.tunnistamo_email_sent_to)
-          switch_user_and_delete_temp_user(existing_user)
+          switch_user_and_delete_temp_user!(existing_user)
           return broadcast(:ok, existing_user.email)
         end
 
