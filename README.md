@@ -135,7 +135,7 @@ end
 For the workflow configuration options, please refer to the
 [decidim-verifications documentation](https://github.com/decidim/decidim/tree/master/decidim-verifications).
 
-If you want to enable email verification process for new identities:
+If you want to enable email verification process for unconfirmed users:
 
 ```ruby
 Decidim::Tunnistamo.configure do |config|
