@@ -21,6 +21,9 @@ en:
           verify_email: Verify email address
           welcome: 'Welcome %{name}!'
       email_confirmations:
+        ask_email_form:
+          errors:
+            email_taken: The email address you entered is already marked for another user on this service. Please use a different email address or contact the service administrators.
         code_confirmation_form:
           errors:
             code_expired: Code is expired. Please go to previous step and re-enter your email.

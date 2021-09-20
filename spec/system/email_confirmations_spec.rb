@@ -22,7 +22,7 @@ describe "Email confirmation", type: :system do
     end
 
     # Action mailer test helpers: decidim-dev/lib/decidim/dev/test/rspec_support/action_mailer.rb
-    describe "unchanged email" do
+    describe "email address from tunnistamo" do
       it "verifies email address" do
         click_button "Send verification code"
         fill_in :code_confirmation_code, with: code_from_email
@@ -70,7 +70,7 @@ describe "Email confirmation", type: :system do
 
     describe "confirm another users email" do
       let!(:existing_user) { create(:user, email: reserved_email, organization: organization) }
-      let(:reserved_email) { "tunnistamo@example.org" }
+      let(:reserved_email) { ::Faker::Internet.unique.email }
 
       it "deletes current user and logins as existing user" do
         fill_in :ask_email_email, with: reserved_email

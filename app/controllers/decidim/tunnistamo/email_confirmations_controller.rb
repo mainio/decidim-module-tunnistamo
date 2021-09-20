@@ -11,7 +11,7 @@ module Decidim
       skip_before_action :store_current_location, :tunnistamo_email_confirmed
 
       def new
-        @form = ::Decidim::Tunnistamo::AskEmailForm.new(email: current_user.unconfirmed_email)
+        @form = ::Decidim::Tunnistamo::AskEmailForm.new(email: unverified_email)
       end
 
       def create
@@ -67,6 +67,10 @@ module Decidim
       end
 
       private
+
+      def unverified_email
+        current_user.unconfirmed_email || current_user.email
+      end
 
       def user_confirmed?
         redirect_to decidim.root_path if current_user&.confirmed_at

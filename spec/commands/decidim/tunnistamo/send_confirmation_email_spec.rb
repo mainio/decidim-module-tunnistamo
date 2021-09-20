@@ -34,5 +34,10 @@ module Decidim::Tunnistamo
         expect(user.unconfirmed_email).to be_nil
       end
     end
+
+    context "when there is conflicting identity" do
+      let!(:identity) { create(:identity, user: another_user, provider: "tunnistamo", organization: organization) }
+      let(:another_user) { create(:user, :confirmed, organization: organization, email: email) }
+    end
   end
 end

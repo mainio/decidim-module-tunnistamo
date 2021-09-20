@@ -38,10 +38,6 @@ module Decidim::Tunnistamo
     context "when there is existing user with same email" do
       let!(:existing_user) { create(:user, email: email, organization: organization) }
 
-      # TODO: What should happen if conflicting identities or authorizations
-      # let!(:another_identity) { create(:identity, user: existing_user, provider: "tunnistamo", uid: SecureRandom.uuid) }
-      # let!(:another_authorization) { Decidim::Authorization.create(name: "tunnistamo_idp", user: existing_user, granted_at: Time.current) }
-
       it "switches authorization and identity to existing user and deletes current user" do
         expect { subject.call }.to broadcast(:ok, email)
         expect(Decidim::User.count).to eq(1)
@@ -50,6 +46,28 @@ module Decidim::Tunnistamo
         expect(existing_user.confirmed_at).to be_between(1.minute.ago, Time.current)
         expect(Decidim::Identity.last.user).to eq(existing_user)
         expect(Decidim::Authorization.last.user).to eq(existing_user)
+      end
+
+      context "and existing user has identity" do
+        let!(:identity) { create(:identity, user: existing_user, provider: "tunnistamo", organization: organization) }
+      end
+    end
+
+    context "when there is existing identity with same email" do
+      let!(:identity) { create(:identity, user: another_user, provider: "tunnistamo", organization: organization) }
+      let(:another_user) { create(:user, :confirmed, organization: organization, email: email) }
+
+      it "doesnt confirm user" do
+        expect { subject.call }.to broadcast(:invalid)
+      end
+    end
+
+    context "when there is existing authorization with same email" do
+      let!(:authorization) { create(:authorization, name: "tunnistamo_idp", user: another_user, organization: organization, granted_at: 1.day.ago) }
+      let(:another_user) { create(:user, :confirmed, organization: organization, email: email) }
+
+      it "doesnt confirm user" do
+        expect { subject.call }.to broadcast(:invalid)
       end
     end
 
