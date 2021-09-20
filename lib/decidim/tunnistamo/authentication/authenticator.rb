@@ -109,6 +109,10 @@ module Decidim
           strong_identity_providers_array.include?(identity_provider)
         end
 
+        def email_confirmed?
+          Decidim::Tunnistamo.confirm_emails ? false : true
+        end
+
         protected
 
         attr_reader :organization, :oauth_hash

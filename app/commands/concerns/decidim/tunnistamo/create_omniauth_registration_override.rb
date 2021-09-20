@@ -12,7 +12,6 @@ module Decidim
         def create_or_find_user
           create_or_find_user_orig_tunnistamo
 
-          return unless Decidim::Tunnistamo.confirm_emails
           return if form.email_confirmed
 
           @user.confirmed_at = nil
