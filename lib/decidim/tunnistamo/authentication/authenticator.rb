@@ -33,6 +33,7 @@ module Decidim
             provider: oauth_data[:provider],
             uid: user_identifier,
             name: user_full_name,
+            email_confirmed: email_confirmed?,
             # The nickname is automatically "parametrized" by Decidim core from
             # the name string, i.e. it will be in correct format.
             nickname: oauth_nickname,
