@@ -68,9 +68,10 @@ describe "Omniauth login", type: :system do
           click_button "Send verification code"
           fill_in :code_confirmation_code, with: code_from_email
           click_button "Verify the email address"
-          expect(page).to have_content("#{email} successfully confirmed")
+          expect(page).to have_content("Email successfully confirmed")
           expect(Decidim::User.count).to eq(2)
           confirmed_user = Decidim::User.last
+          expect(confirmed_user.email).to eq(email)
           expect(confirmed_user.tunnistamo_email_sent_to).to eq(email)
           expect(confirmed_user.confirmed_at).to be_between(1.minute.ago, Time.current)
           expect(Decidim::Identity.count).to eq(2)
@@ -103,9 +104,10 @@ describe "Omniauth login", type: :system do
           click_button "Send verification code"
           fill_in :code_confirmation_code, with: code_from_email
           click_button "Verify the email address"
-          expect(page).to have_content("#{email} successfully confirmed")
+          expect(page).to have_content("Email successfully confirmed")
           expect(Decidim::User.count).to eq(2)
           confirmed_user = Decidim::User.last
+          expect(confirmed_user.email).to eq(email)
           expect(confirmed_user.tunnistamo_email_sent_to).to eq(email)
           expect(confirmed_user.confirmed_at).to be_between(1.minute.ago, Time.current)
           expect(Decidim::Authorization.count).to eq(2)
@@ -138,7 +140,7 @@ describe "Omniauth login", type: :system do
         end
 
         after do
-          expect(page).to have_content("#{email} successfully confirmed")
+          expect(page).to have_content("Email successfully confirmed")
           expect(page).to have_current_path process_path
           user = Decidim::User.find_by(email: email)
           expect(user.confirmed_at).to be_between(1.minute.ago, Time.current)

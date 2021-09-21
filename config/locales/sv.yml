@@ -14,40 +14,47 @@ sv:
     tunnistamo:
       email_confirmation_mailer:
         send_code:
-          alternatively: 'Alternatively, you can also confirm your email address using the button below:'
-          content: Confirm your email address by entering the verification code below in the field provided on the service.
-          details: 'You verification code is:'
-          verify_email: Verify email address
+          alternatively: 'Alternativt kan du också bekräfta din e -postadress med knappen nedan:'
+          content: Bekräfta din e -postadress genom att ange verifieringskoden nedan i fältet som tillhandahålls på tjänsten.
+          details: 'Din verifieringskod är:'
+          verify_email: Verifiera e-postadressen
           code_prefix: TURKU
-          welcome: 'Welcome %{name}!'
+          welcome: 'Välkommen %{name}!'
       email_confirmations:
+        ask_email_form:
+          errors:
+            email_taken: E -postadressen du angav är redan markerad för en annan användare på denna tjänst. Använd en annan e -postadress eller kontakta tjänstens administratörer.
         code_confirmation_form:
           errors:
-            code_expired: Code is expired. Please go to previous step and re-enter your email.
-            code_invalid: Code doesn't match. Please check that you entered code correctly.
-            maximum_attempts: Maxium attemps reached. Please go to previous step and re-enter your email.
+            code_expired: Koden har gått ut. Gå till föregående steg och ange din e-post igen.
+            code_invalid: Koden matchar inte. Kontrollera att du har angett koden korrekt.
+            maximum_attempts: Maximala försök uppnådda. Gå till föregående steg och ange din e-post igen.
+        token_confirmation_form:
+          errors:
+            code_expired: Koden har gått ut. Gå till föregående steg och ange din e-post igen.
+            user_confirmed: Användaren är redan bekräftad.
         confirm_with_code:
-          success: '%{email} successfully confirmed'
-          invalid: Couldn't confirm email
+          success: E -postmeddelandet har bekräftats.
+          invalid: Det gick inte att bekräfta e -postmeddelandet.
         confirm_with_token:
-          success: '%{email} successfully confirmed'
-          invalid: Couldn't confirm email
+          success: E -postmeddelandet har bekräftats.
+          invalid: Det gick inte att bekräfta e -postmeddelandet.
         create:
-          invalid: Couldn't confirm email
+          invalid: Det gick inte att bekräfta e -postmeddelandet.
         new:
-          additional_check: If your email address was provided when you signed in, check that it is correct and go to the next step.
-          email: Email
-          description: To use this service, a verified email address must be associated with your user account. Please enter your valid email address in the field below
-          submit: Send verification code
-          title: Verify your email address
+          additional_check: Om din e -postadress angavs när du loggade in, kontrollera att den är korrekt och gå till nästa steg.
+          email: E-post
+          description: För att kunna använda denna tjänst måste en verifierad e -postadress vara kopplad till ditt användarkonto. Ange din giltiga e -postadress i fältet nedan.
+          submit: Skicka verifieringskod
+          title: Verifiera din e-postadress
         preview:
-          code: Code
-          description: A verification code has been sent to the email address you entered. Enter this verification code in the field below to access the service.
-          help_1: 'Code is sent to address'
-          help_2: If you entered wrong address
-          help_3: go back to previous step
-          submit: Verify the email address
-          title: Enter the verification code
+          code: Koda
+          description: En verifieringskod har skickats till den e -postadress du angav. Ange denna verifieringskod i fältet nedan för att komma åt tjänsten.
+          help_1: Koden skickas till adressen
+          help_2: Om du har angett fel adress
+          help_3: gå tillbaka till föregående steg
+          submit: Verifiera e -postadressen
+          title: Ange verifieringskoden
       omniauth_callbacks:
         failure:
           already_authorized: En annan användare har redan godkänt sig med samma identitet.

@@ -16,7 +16,7 @@ en:
         send_code:
           alternatively: 'Alternatively, you can also confirm your email address using the button below:'
           content: Confirm your email address by entering the verification code below in the field provided on the service.
-          details: 'You verification code is:'
+          details: 'Your verification code is:'
           code_prefix: TURKU
           verify_email: Verify email address
           welcome: 'Welcome %{name}!'
@@ -28,29 +28,29 @@ en:
           errors:
             code_expired: Code is expired. Please go to previous step and re-enter your email.
             code_invalid: Code doesn't match. Please check that you entered code correctly.
-            maximum_attempts: Maxium attemps reached. Please go to previous step and re-enter your email.
+            maximum_attempts: Maximum attempts reached. Please go to previous step and re-enter your email.
         token_confirmation_form:
           errors:
             code_expired: Code is expired. Please go to previous step and re-enter your email.
             user_confirmed: User is already confirmed.
         confirm_with_code:
-          success: '%{email} successfully confirmed'
-          invalid: Couldn't confirm email
+          success: Email successfully confirmed.
+          invalid: Couldn't confirm email.
         confirm_with_token:
-          success: '%{email} successfully confirmed'
-          invalid: Couldn't confirm email
+          success: Email successfully confirmed.
+          invalid: Couldn't confirm email.
         create:
-          invalid: Couldn't confirm email
+          invalid: Couldn't confirm email.
         new:
           additional_check: If your email address was provided when you signed in, check that it is correct and go to the next step.
           email: Email
-          description: To use this service, a verified email address must be associated with your user account. Please enter your valid email address in the field below
+          description: To use this service, a verified email address must be associated with your user account. Please enter your valid email address in the field below.
           submit: Send verification code
           title: Verify your email address
         preview:
           code: Code
           description: A verification code has been sent to the email address you entered. Enter this verification code in the field below to access the service.
-          help_1: 'Code is sent to address'
+          help_1: Code is sent to address
           help_2: If you entered wrong address
           help_3: go back to previous step
           submit: Verify the email address

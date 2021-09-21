@@ -5,11 +5,11 @@ module Decidim
     class CodeConfirmationForm < Form
       attribute :code
 
-      validate :max_attemps
+      validate :max_attempts
       validate :code_not_expired
       validate :code_valid?
 
-      def max_attemps
+      def max_attempts
         return true if current_user.tunnistamo_failed_confirmation_attempts <= Decidim::User.maximum_attempts
 
         errors.add(

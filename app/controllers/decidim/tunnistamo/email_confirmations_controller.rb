@@ -38,8 +38,8 @@ module Decidim
         @form = form(::Decidim::Tunnistamo::TokenConfirmationForm).from_params(params)
 
         ::Decidim::Tunnistamo::ConfirmToken.call(@form) do
-          on(:ok) do |confirmed_email|
-            flash[:notice] = t("decidim.tunnistamo.email_confirmations.confirm_with_token.success", email: confirmed_email)
+          on(:ok) do
+            flash[:notice] = t("decidim.tunnistamo.email_confirmations.confirm_with_token.success")
             redirect_to after_sign_in_path_for current_user || Decidim::User
           end
 
@@ -54,8 +54,8 @@ module Decidim
         @form = form(::Decidim::Tunnistamo::CodeConfirmationForm).from_params(params)
 
         ::Decidim::Tunnistamo::ConfirmCode.call(@form, current_user) do
-          on(:ok) do |confirmed_email|
-            flash[:notice] = t("decidim.tunnistamo.email_confirmations.confirm_with_code.success", email: confirmed_email)
+          on(:ok) do
+            flash[:notice] = t("decidim.tunnistamo.email_confirmations.confirm_with_code.success")
             redirect_to after_sign_in_path_for current_user
           end
 

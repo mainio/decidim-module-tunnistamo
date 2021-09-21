@@ -14,26 +14,33 @@ fi:
     tunnistamo:
       email_confirmation_mailer:
         send_code:
-          alternatively: 'Alternatively, you can also confirm your email address using the button below:'
-          content: Confirm your email address by entering the verification code below in the field provided on the service.
-          details: 'You verification code is:'
+          alternatively: 'Vaihtoehtoisesti, voit vahvistaa sähköpostiosoitteesi käyttämällä alla olevaa nappia.'
+          content: Vahvista sähköpostiosoitteesi syöttämällä alla oleva vahvistuskoodi palvelussa olevaan kenttään.
+          details: 'Sinuns vahvistuskoodisi on:'
           code_prefix: TURKU
-          verify_email: Verify email address
-          welcome: 'Welcome %{name}!'
+          verify_email: Vahvista sähköpostiosoite
+          welcome: 'Tervetuloa %{name}!'
       email_confirmations:
+        ask_email_form:
+          errors:
+            email_taken: Syöttämäsi sähköpostiosoite on jo merkitty toiselle käyttäjälle tässä palvelussa. Ole hyvä ja käytä jotain toista sähköpostiosoitetta tai ota yhteyttä palvelun ylläpitäjiin.
         code_confirmation_form:
           errors:
-            code_expired: Code is expired. Please go to previous step and re-enter your email.
-            code_invalid: Code doesn't match. Please check that you entered code correctly.
-            maximum_attempts: Maxium attemps reached. Please go to previous step and re-enter your email.
+            code_expired: Koodi on vanhentunut. Mene edelliseen vaiheeseen ja syötä sähköpostiosoitteesi uudelleen.
+            code_invalid: Koodi ei täsmää. Tarkista että syötit koodin oikein.
+            maximum_attempts: Yritysten maksimimäärä tuli täyteen. Mene edelliseen vaiheeseen ja syötä sähköpostiosoitteesi uudelleen.
+        token_confirmation_form:
+          errors:
+            code_expired: Tunniste on vanhentunut. Mene edelliseen vaiheeseen ja syötä sähköpostiosoitteesi uudelleen.
+            user_confirmed: Käyttäjä on jo vahvistettu.
         confirm_with_code:
-          success: '%{email} successfully confirmed'
-          invalid: Couldn't confirm email
+          success: Sähköpostin vahvistaminen onnistui.
+          invalid: Sähköpostin vahvistaminen epäonnistui.
         confirm_with_token:
-          success: '%{email} successfully confirmed'
-          invalid: Couldn't confirm email
+          success: Sähköpostin vahvistaminen onnistui.
+          invalid: Sähköpostin vahvistaminen epäonnistui.
         create:
-          invalid: Couldn't confirm email
+          invalid: Sähköpostin vahvistaminen epäonnistui.
         new:
           additional_check: Mikäli sähköpostiosoitteesi välitettiin kirjautumisesi yhteydessä, tarkista, että se on oikein ja siirry seuraavaan vaiheeseen.
           email: Sähköposti
@@ -43,7 +50,7 @@ fi:
         preview:
           code: Koodi
           description: Syöttämääsi sähköpostiosoitteeseen on lähetetty tarkastuskoodi. Syötä tämä tarkastuskoodi alla näkyvään kenttään siirtyäksesi käyttämään palvelua.
-          help_1: 'Tarkastuskoodi on lähetetty osoitteeseen: <b> %{email}</b>'
+          help_1: Tarkastuskoodi on lähetetty osoitteeseen
           help_2: Jos kirjoitit osoitteen väärin,
           help_3: siirry takaisin edelliseen vaiheeseen.
           submit: Vahvista sähköpostiosoite

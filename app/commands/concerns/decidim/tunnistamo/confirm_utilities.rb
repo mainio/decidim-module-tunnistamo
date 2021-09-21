@@ -5,12 +5,12 @@ module Decidim
     module ConfirmUtilities
       private
 
-      def switch_user_and_delete_temp_user!(existing_user)
-        update_identity_and_authorization!(user, existing_user)
+      def switch_user_and_delete_temp_user!(existing_user, temp_user)
+        update_identity_and_authorization!(temp_user, existing_user)
         existing_user.confirm
         existing_user.save!
         bypass_sign_in(existing_user)
-        user.destroy
+        temp_user.destroy
       end
 
       def email_taken?

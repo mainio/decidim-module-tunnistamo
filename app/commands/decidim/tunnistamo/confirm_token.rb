@@ -12,7 +12,6 @@ module Decidim
         @user = form.user
       end
 
-      # TODO: Clean this mess
       def call
         return broadcast(:invalid) if form.invalid?
 
@@ -20,7 +19,7 @@ module Decidim
           return broadcast(:invalid) if form.conflicting_identity_or_authorization
 
           existing_user = Decidim::User.find_by(email: user.tunnistamo_email_sent_to)
-          switch_user_and_delete_temp_user(existing_user)
+          switch_user_and_delete_temp_user(existing_user, user)
           return broadcast(:ok, existing_user.email)
         end
 

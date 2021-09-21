@@ -27,8 +27,9 @@ describe "Email confirmation", type: :system do
         click_button "Send verification code"
         fill_in :code_confirmation_code, with: code_from_email
         click_button "Verify the email address"
-        expect(page).to have_content("#{unconfirmed_email} successfully confirmed")
+        expect(page).to have_content("Email successfully confirmed")
         confirmed_user = Decidim::User.find(current_user.id)
+        expect(confirmed_user.email).to eq(unconfirmed_email)
         expect(confirmed_user.tunnistamo_email_sent_to).to eq(unconfirmed_email)
         expect(confirmed_user.confirmed_at).to be_between(1.minute.ago, Time.current)
       end
@@ -50,6 +51,18 @@ describe "Email confirmation", type: :system do
         find_user = Decidim::User.find(current_user.id)
         expect(find_user.confirmed_at).to eq(nil)
         expect(find_user.tunnistamo_failed_confirmation_attempts).to eq(1)
+        expect(page).not_to have_content("Maximum attempts reached. Please go to previous step and re-enter your email")
+      end
+
+      it "reaches maximum attempts" do
+        click_button "Send verification code"
+        21.times.each do
+          fill_in :code_confirmation_code, with: wrong_code
+          click_button "Verify the email address"
+        end
+        expect(page).to have_content("Maximum attempts reached. Please go to previous step and re-enter your email")
+        find_user = Decidim::User.find(current_user.id)
+        expect(find_user.confirmed_at).to eq(nil)
       end
     end
 
@@ -61,8 +74,9 @@ describe "Email confirmation", type: :system do
         click_button "Send verification code"
         fill_in :code_confirmation_code, with: code_from_email
         click_button "Verify the email address"
-        expect(page).to have_content("#{change_email} successfully confirmed")
+        expect(page).to have_content("Email successfully confirmed")
         confirmed_user = Decidim::User.find(current_user.id)
+        expect(confirmed_user.email).to eq(change_email)
         expect(confirmed_user.tunnistamo_email_sent_to).to eq(change_email)
         expect(confirmed_user.confirmed_at).to be_between(1.minute.ago, Time.current)
       end
@@ -77,9 +91,10 @@ describe "Email confirmation", type: :system do
         click_button "Send verification code"
         fill_in :code_confirmation_code, with: code_from_email
         click_button "Verify the email address"
-        expect(page).to have_content("#{reserved_email} successfully confirmed")
+        expect(page).to have_content("Email successfully confirmed")
         expect(Decidim::User.where(id: current_user).count).to eq(0)
         expect(Decidim::User.count).to eq(1)
+        expect(Decidim::User.last.email).to eq(reserved_email)
       end
     end
 
@@ -87,9 +102,10 @@ describe "Email confirmation", type: :system do
       it "verifies email" do
         click_button "Send verification code"
         visit last_email_first_link
-        expect(page).to have_content("#{unconfirmed_email} successfully confirmed")
+        expect(page).to have_content("Email successfully confirmed")
         find_user = Decidim::User.find(current_user.id)
         expect(find_user.confirmed_at).to be_between(1.minute.ago, Time.current)
+        expect(find_user.email).to eq(unconfirmed_email)
       end
     end
 
