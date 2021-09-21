@@ -80,12 +80,7 @@ module Decidim
         end
 
         describe "POST confirm_with_token" do
-          let(:params) do
-            {
-              user_id: user.id,
-              confirmation_token: user.confirmation_token
-            }
-          end
+          let(:params) { { confirmation_token: user.confirmation_token } }
 
           before do
             user.update(tunnistamo_email_code_sent_at: Time.current, tunnistamo_email_sent_to: email)
@@ -101,12 +96,7 @@ module Decidim
       end
 
       context "when user is not logged in POST confirm_with_token" do
-        let(:params) do
-          {
-            user_id: user.id,
-            confirmation_token: user.confirmation_token
-          }
-        end
+        let(:params) { { confirmation_token: user.confirmation_token } }
 
         context "and confirmation email is sent just now" do
           before do
@@ -132,29 +122,6 @@ module Decidim
             expect(Decidim::User.last.confirmed_at).to be(nil)
             expect(flash[:alert]).to be_present
           end
-        end
-      end
-
-      context "when trying user_id doesnt match with token" do
-        let!(:another_user) { create(:user, organization: organization) }
-
-        let(:params) do
-          {
-            user_id: user.id,
-            confirmation_token: another_user.confirmation_token
-          }
-        end
-
-        before do
-          another_user.update(tunnistamo_email_code_sent_at: Time.current, tunnistamo_email_sent_to: Faker::Internet.unique.email)
-        end
-
-        it "doesnt confirm users" do
-          post :confirm_with_token, params: params
-
-          expect(Decidim::User.first.confirmed_at).to be(nil)
-          expect(Decidim::User.last.confirmed_at).to be(nil)
-          expect(flash[:alert]).to be_present
         end
       end
     end

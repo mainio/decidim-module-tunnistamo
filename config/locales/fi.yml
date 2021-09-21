@@ -17,7 +17,6 @@ fi:
           alternatively: 'Vaihtoehtoisesti, voit vahvistaa sähköpostiosoitteesi käyttämällä alla olevaa nappia.'
           content: Vahvista sähköpostiosoitteesi syöttämällä alla oleva vahvistuskoodi palvelussa olevaan kenttään.
           details: 'Sinuns vahvistuskoodisi on:'
-          code_prefix: TURKU
           verify_email: Vahvista sähköpostiosoite
           welcome: 'Tervetuloa %{name}!'
       email_confirmations:
@@ -41,6 +40,7 @@ fi:
           invalid: Sähköpostin vahvistaminen epäonnistui.
         create:
           invalid: Sähköpostin vahvistaminen epäonnistui.
+          success: Vahvistuskoodi on lähetetty sähköpostiisi, ole hyvä ja syötä se allaolevaan kenttään.
         new:
           additional_check: Mikäli sähköpostiosoitteesi välitettiin kirjautumisesi yhteydessä, tarkista, että se on oikein ja siirry seuraavaan vaiheeseen.
           email: Sähköposti

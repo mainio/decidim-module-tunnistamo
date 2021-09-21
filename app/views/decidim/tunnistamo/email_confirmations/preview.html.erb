@@ -1,4 +1,4 @@
-<%= decidim_form_for(@form, url: confirm_with_code_path, class: "form grid-container") do |form| %>
+<%= decidim_form_for(@form, url: confirm_with_code_email_confirmations_path, class: "form grid-container") do |form| %>
   <div class="row margin-vertical-1">
     <div class="columns large-offset-2 large-8">
       <div class="row column">
@@ -17,6 +17,12 @@
           <%= t(".help_2") %>
           <a href="<%= new_email_confirmation_path %>"><%= t(".help_3") %></a>
         </p>
+      </div>
+
+      <span style="margin: 0 0 1rem 0;" class="register__separator"></span>
+
+      <div style="margin-bottom: 1rem;" class="row column">
+        <%= t("forms.required_explanation") %>
       </div>
 
       <div class="row column">

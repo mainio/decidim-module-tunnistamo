@@ -5,11 +5,10 @@ module Decidim
     class ConfirmToken < Rectify::Command
       include Decidim::Tunnistamo::ConfirmUtilities
 
-      attr_reader :form, :user
+      attr_reader :form
 
       def initialize(form)
         @form = form
-        @user = form.user
       end
 
       def call
@@ -24,7 +23,6 @@ module Decidim
         end
 
         user.unconfirmed_email = user.tunnistamo_email_sent_to
-        user.skip_confirmation_notification! # TODO: is this needed here?
         user.save!
         ::Decidim::User.confirm_by_token(form.confirmation_token)
 
@@ -37,6 +35,10 @@ module Decidim
       end
 
       private
+
+      def user
+        @user ||= form.user
+      end
 
       # We have to get user again because confirm_by_token doesn't update current user object
       def updated_user

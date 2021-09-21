@@ -17,7 +17,6 @@ en:
           alternatively: 'Alternatively, you can also confirm your email address using the button below:'
           content: Confirm your email address by entering the verification code below in the field provided on the service.
           details: 'Your verification code is:'
-          code_prefix: TURKU
           verify_email: Verify email address
           welcome: 'Welcome %{name}!'
       email_confirmations:
@@ -41,6 +40,7 @@ en:
           invalid: Couldn't confirm email.
         create:
           invalid: Couldn't confirm email.
+          success: Confirmation code has been sent to your email, please enter it in field below.
         new:
           additional_check: If your email address was provided when you signed in, check that it is correct and go to the next step.
           email: Email

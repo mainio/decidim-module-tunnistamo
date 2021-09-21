@@ -12,28 +12,13 @@ module Decidim
       end
 
       routes do
-        resources :email_confirmations, only: [:new, :create]
-
-        match(
-          "/email_confirmations/preview",
-          to: "email_confirmations#preview",
-          as: "preview_email_confirmation",
-          via: [:get]
-        )
-
-        match(
-          "/email_confirmations/confirm_with_code",
-          to: "email_confirmations#confirm_with_code",
-          as: "confirm_with_code",
-          via: [:post]
-        )
-
-        match(
-          "/email_confirmations/:user_id/confirm_with_token",
-          to: "email_confirmations#confirm_with_token",
-          as: "confirm_with_token",
-          via: [:get]
-        )
+        resources :email_confirmations, only: [:new, :create] do
+          collection do
+            get :preview
+            get :confirm_with_token
+            post :confirm_with_code
+          end
+        end
 
         devise_scope :user do
           # Manually map the omniauth routes for Devise because the default

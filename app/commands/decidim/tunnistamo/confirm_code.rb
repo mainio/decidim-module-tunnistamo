@@ -30,15 +30,11 @@ module Decidim
 
         user.email = user.tunnistamo_email_sent_to
 
-        if user.valid?
-          user.skip_confirmation_notification!
-          user.save!
-          user.confirm
+        user.skip_confirmation_notification!
+        user.save!
+        user.confirm
 
-          broadcast(:ok, user.email)
-        else
-          broadcast(:invalid)
-        end
+        broadcast(:ok, user.email)
       end
     end
   end

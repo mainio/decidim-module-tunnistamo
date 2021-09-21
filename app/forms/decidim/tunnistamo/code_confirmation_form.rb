@@ -5,6 +5,7 @@ module Decidim
     class CodeConfirmationForm < Form
       attribute :code
 
+      validates :code, presence: true
       validate :max_attempts
       validate :code_not_expired
       validate :code_valid?

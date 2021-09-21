@@ -122,7 +122,7 @@ describe "Email confirmation", type: :system do
         end
 
         it "fedirects from preview" do
-          visit decidim_tunnistamo.preview_email_confirmation_path
+          visit decidim_tunnistamo.preview_email_confirmations_path
         end
       end
     end
@@ -144,7 +144,7 @@ describe "Email confirmation", type: :system do
       end
 
       it "preview redirects" do
-        visit decidim_tunnistamo.preview_email_confirmation_path
+        visit decidim_tunnistamo.preview_email_confirmations_path
       end
     end
   end

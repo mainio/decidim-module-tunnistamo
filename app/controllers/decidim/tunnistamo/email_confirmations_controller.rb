@@ -19,7 +19,8 @@ module Decidim
 
         ::Decidim::Tunnistamo::SendConfirmationEmail.call(@form, current_user) do
           on(:ok) do
-            redirect_to preview_email_confirmation_path, email: @form.email
+            flash[:notice] = t("decidim.tunnistamo.email_confirmations.create.success")
+            redirect_to preview_email_confirmations_path, email: @form.email
           end
 
           on(:invalid) do

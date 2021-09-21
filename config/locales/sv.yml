@@ -18,7 +18,6 @@ sv:
           content: Bekräfta din e -postadress genom att ange verifieringskoden nedan i fältet som tillhandahålls på tjänsten.
           details: 'Din verifieringskod är:'
           verify_email: Verifiera e-postadressen
-          code_prefix: TURKU
           welcome: 'Välkommen %{name}!'
       email_confirmations:
         ask_email_form:
@@ -41,6 +40,7 @@ sv:
           invalid: Det gick inte att bekräfta e -postmeddelandet.
         create:
           invalid: Det gick inte att bekräfta e -postmeddelandet.
+          success: En verifieringskod har skickats till din e -post. Ange den i fältet nedan.
         new:
           additional_check: Om din e -postadress angavs när du loggade in, kontrollera att den är korrekt och gå till nästa steg.
           email: E-post

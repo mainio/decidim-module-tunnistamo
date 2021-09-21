@@ -3,18 +3,15 @@
 module Decidim
   module Tunnistamo
     class TokenConfirmationForm < Form
-      attribute :user_id
       attribute :confirmation_token
 
       validates :confirmation_token, presence: true
-      validates :user_id, presence: true
+      validates :user, presence: true
 
       validate :code_not_expired
 
       def user
         @user ||= Decidim::User.find_by(
-          id: user_id,
-          organization: current_organization,
           confirmation_token: confirmation_token
         )
       end

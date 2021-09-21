@@ -30,12 +30,6 @@ module Decidim
       def tunnistamo_redirect_to_confirm_email
         redirect_to decidim_tunnistamo.new_email_confirmation_path
       end
-
-      def from_tunnistamo?
-        return true if Decidim::Authorization.find_by(name: "tunnistamo_idp", user: current_user)
-
-        false
-      end
     end
   end
 end
