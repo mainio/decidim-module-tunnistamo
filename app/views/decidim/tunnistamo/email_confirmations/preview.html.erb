@@ -25,9 +25,9 @@
         <%= t("forms.required_explanation") %>
       </div>
 
-      <div class="row column">
+      <div class="tunnistamo-verification-code">
         <div class="field">
-          <%= form.text_field :code, label: t(".code") %>
+          <%= form.text_field :code, prefix: { value: "#{current_organization.reference_prefix}-", small: 2, medium: 1 } %>
         </div>
       </div>
 
