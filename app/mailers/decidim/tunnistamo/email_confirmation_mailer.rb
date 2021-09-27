@@ -17,7 +17,7 @@ module Decidim
           @code = user.tunnistamo_email_code
           @prefix = @organization.reference_prefix
 
-          mail(to: user.tunnistamo_email_sent_to, subject: "Email verification code")
+          mail(to: user.tunnistamo_email_sent_to, subject: t(".subject"))
         end
       end
     end

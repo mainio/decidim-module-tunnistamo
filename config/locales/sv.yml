@@ -17,6 +17,7 @@ sv:
           alternatively: 'Alternativt kan du också bekräfta din e -postadress med knappen nedan:'
           content: Bekräfta din e -postadress genom att ange verifieringskoden nedan i fältet som tillhandahålls på tjänsten.
           details: 'Din verifieringskod är:'
+          subject: E-postverifiering
           verify_email: Verifiera e-postadressen
           welcome: 'Välkommen %{name}!'
       email_confirmations:

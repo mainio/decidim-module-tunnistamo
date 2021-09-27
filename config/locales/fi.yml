@@ -16,7 +16,8 @@ fi:
         send_code:
           alternatively: 'Vaihtoehtoisesti, voit vahvistaa sähköpostiosoitteesi käyttämällä alla olevaa nappia.'
           content: Vahvista sähköpostiosoitteesi syöttämällä alla oleva vahvistuskoodi palvelussa olevaan kenttään.
-          details: 'Sinuns vahvistuskoodisi on:'
+          details: 'Sinun vahvistuskoodisi on:'
+          subject: Sähköpostin vahvistaminen
           verify_email: Vahvista sähköpostiosoite
           welcome: 'Tervetuloa %{name}!'
       email_confirmations:

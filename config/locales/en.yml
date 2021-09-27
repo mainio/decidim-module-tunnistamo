@@ -17,6 +17,7 @@ en:
           alternatively: 'Alternatively, you can also confirm your email address using the button below:'
           content: Confirm your email address by entering the verification code below in the field provided on the service.
           details: 'Your verification code is:'
+          subject: Email verification
           verify_email: Verify email address
           welcome: 'Welcome %{name}!'
       email_confirmations:
