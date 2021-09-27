@@ -8,8 +8,8 @@ describe "Omniauth login", type: :system do
   context "when omniauth login" do
     let(:omniauth_hash) do
       OmniAuth::AuthHash.new(
-        provider: :tunnistamo,
-        uid: "123545",
+        provider: provider,
+        uid: auth_uid,
         info: {
           email: email,
           name: tunnistamo_user_name
@@ -18,6 +18,8 @@ describe "Omniauth login", type: :system do
     end
     let(:tunnistamo_user_name) { "Tunnistamo User" }
     let(:email) { ::Faker::Internet.email }
+    let(:auth_uid) { "123545" }
+    let(:provider) { :tunnistamo }
 
     before do
       OmniAuth.config.test_mode = true
@@ -42,7 +44,7 @@ describe "Omniauth login", type: :system do
       end
 
       context "when there is another identity" do
-        let!(:identity) { create(:identity, user: another_user, provider: "tunnistamo", organization: organization) }
+        let!(:identity) { create(:identity, user: another_user, provider: provider, organization: organization) }
         let(:another_user) { create(:user, :confirmed, organization: organization, email: another_email) }
         let(:another_email) { ::Faker::Internet.unique.email }
 
@@ -75,6 +77,30 @@ describe "Omniauth login", type: :system do
           expect(confirmed_user.tunnistamo_email_sent_to).to eq(email)
           expect(confirmed_user.confirmed_at).to be_between(1.minute.ago, Time.current)
           expect(Decidim::Identity.count).to eq(2)
+        end
+      end
+
+      context "when existing identity" do
+        let!(:identity) { create(:identity, user: user, provider: provider, uid: auth_uid, organization: organization) }
+        let(:user) { create(:user, email: email, organization: organization, accepted_tos_version: nil) }
+        let(:change_email) { ::Faker::Internet.unique.email }
+
+        context "and devise's confirmation sent at is expired" do
+          before do
+            Decidim::User.last.update(confirmation_sent_at: 2.years.ago)
+          end
+
+          it "can verify different email address" do
+            tunnistamo_login
+            fill_in :ask_email_email, with: change_email
+            click_button "Send verification code"
+            fill_in :code_confirmation_code, with: code_from_email
+            click_button "Verify the email address"
+            expect(page).to have_content("Email successfully confirmed")
+            expect(Decidim::Identity.count).to eq(1)
+            expect(Decidim::Identity.last.user.email).to eq(change_email)
+            expect(Decidim::Identity.last.user.confirmed_at).to be_between(1.minute.ago, Time.current)
+          end
         end
       end
 

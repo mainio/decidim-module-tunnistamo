@@ -2,6 +2,7 @@
 
 require "spec_helper"
 
+# These tests uses action mailer test helpers: decidim-dev/lib/decidim/dev/test/rspec_support/action_mailer.rb
 describe "Email confirmation", type: :system do
   let(:organization) { create(:organization) }
   let(:current_user) { create(:user, unconfirmed_email: unconfirmed_email, organization: organization) }
@@ -21,7 +22,6 @@ describe "Email confirmation", type: :system do
       visit decidim.root_path
     end
 
-    # Action mailer test helpers: decidim-dev/lib/decidim/dev/test/rspec_support/action_mailer.rb
     describe "email address from tunnistamo" do
       it "verifies email address" do
         click_button "Send verification code"

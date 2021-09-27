@@ -25,6 +25,11 @@ module Decidim
           return verify_user_confirmed_orig_tunnistamo(user) unless ::Decidim::Tunnistamo.confirm_emails
           return true if user.confirmed?
 
+          # If confirmation sent at is expired, user cant confirm new email (other than unconfirmed email from tunnistamo).
+          # This is because Decidim's omniauth_registrations_controller.rb checks Devise's active_for_authentication?
+          # after CreateOmniauthRegistration.
+          user.update(confirmation_sent_at: Time.current) unless user.active_for_authentication?
+
           false
         end
       end
