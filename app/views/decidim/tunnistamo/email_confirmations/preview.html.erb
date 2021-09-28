@@ -27,7 +27,7 @@
 
       <div class="tunnistamo-verification-code">
         <div class="field">
-          <%= form.text_field :code, prefix: tunnistamo_prefix_hash %>
+          <%= form.group_text_field(:code, prefix: "#{current_organization.reference_prefix}-" ) %>
         </div>
       </div>
 

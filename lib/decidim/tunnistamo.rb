@@ -10,6 +10,8 @@ require_relative "tunnistamo/mail_interceptors"
 
 module Decidim
   module Tunnistamo
+    autoload :FormBuilder, "decidim/tunnistamo/form_builder"
+
     include ActiveSupport::Configurable
 
     @configured = false
