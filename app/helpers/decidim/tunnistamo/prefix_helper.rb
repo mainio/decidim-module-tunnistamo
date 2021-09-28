@@ -11,17 +11,17 @@ module Decidim
 
       def prefix_columns_medium
         @prefix_columns_medium ||= begin
-          prefix_columns_in_range(min: 1, max: 4, divider: 4)
+          prefix_columns_in_range(divider: 4)
         end
       end
 
       def prefix_columns_small
         @prefix_columns_small ||= begin
-          prefix_columns_in_range(min: 2, max: 6, divider: 2)
+          prefix_columns_in_range(divider: 1)
         end
       end
 
-      def prefix_columns_in_range(min: 1, max: 4, divider: 4)
+      def prefix_columns_in_range(min: 2, max: 6, divider: 4)
         columns = reference_prefix_length / divider
 
         columns = min if columns < min
