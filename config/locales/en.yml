@@ -1,4 +1,8 @@
 en:
+  activemodel:
+    attributes:
+      tunnistamo_code_confirmation:
+        code: Confirmation code
   decidim:
     authorization_handlers:
       tunnistamo_idp:

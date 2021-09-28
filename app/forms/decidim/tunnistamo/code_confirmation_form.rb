@@ -3,6 +3,8 @@
 module Decidim
   module Tunnistamo
     class CodeConfirmationForm < Form
+      mimic :tunnistamo_code_confirmation
+
       attribute :code
 
       validates :code, presence: true

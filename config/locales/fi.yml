@@ -1,4 +1,8 @@
 fi:
+  activemodel:
+    attributes:
+      tunnistamo_code_confirmation:
+        code: Tarkastuskoodi
   decidim:
     authorization_handlers:
       tunnistamo_idp:
