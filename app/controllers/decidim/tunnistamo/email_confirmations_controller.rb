@@ -5,6 +5,8 @@ module Decidim
     class EmailConfirmationsController < Decidim::ApplicationController
       include Decidim::FormFactory
 
+      helper Decidim::Tunnistamo::PrefixHelper
+
       before_action :authenticate_user!, except: [:confirm_with_token]
       before_action :user_confirmed?
 
