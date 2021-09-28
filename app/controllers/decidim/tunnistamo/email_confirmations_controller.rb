@@ -70,7 +70,12 @@ module Decidim
       private
 
       def unverified_email
-        current_user.unconfirmed_email || current_user.email
+        @unverified_email ||= begin
+          email = current_user.unconfirmed_email || current_user.email
+          return if email.match?(/tunnistamo-(\w+)@#{current_organization.host}/)
+
+          email
+        end
       end
 
       def user_confirmed?
