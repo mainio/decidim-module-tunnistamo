@@ -23,10 +23,10 @@ describe "Email confirmation", type: :system do
     end
 
     describe "email address from tunnistamo" do
-      it "verifies email address" do
-        click_button "Send verification code"
-        fill_in :code_confirmation_code, with: code_from_email
-        click_button "Verify the email address"
+      it "confirms email address" do
+        click_button "Send confirmation code"
+        fill_in :tunnistamo_code_confirmation_code, with: code_from_email
+        click_button "Confirm the email address"
         expect(page).to have_content("Email successfully confirmed")
         confirmed_user = Decidim::User.find(current_user.id)
         expect(confirmed_user.email).to eq(unconfirmed_email)
@@ -43,11 +43,11 @@ describe "Email confirmation", type: :system do
         invalid_code
       end
 
-      it "doesnt verify the user" do
-        click_button "Send verification code"
-        fill_in :code_confirmation_code, with: wrong_code
-        click_button "Verify the email address"
-        expect(page).to have_content("Couldn't confirm email")
+      it "does not confirm the user" do
+        click_button "Send confirmation code"
+        fill_in :tunnistamo_code_confirmation_code, with: wrong_code
+        click_button "Confirm the email address"
+        expect(page).to have_content("Could not confirm email")
         find_user = Decidim::User.find(current_user.id)
         expect(find_user.confirmed_at).to eq(nil)
         expect(find_user.tunnistamo_failed_confirmation_attempts).to eq(1)
@@ -55,10 +55,10 @@ describe "Email confirmation", type: :system do
       end
 
       it "reaches maximum attempts" do
-        click_button "Send verification code"
+        click_button "Send confirmation code"
         21.times.each do
-          fill_in :code_confirmation_code, with: wrong_code
-          click_button "Verify the email address"
+          fill_in :tunnistamo_code_confirmation_code, with: wrong_code
+          click_button "Confirm the email address"
         end
         expect(page).to have_content("Maximum attempts reached. Please go to previous step and re-enter your email")
         find_user = Decidim::User.find(current_user.id)
@@ -69,11 +69,11 @@ describe "Email confirmation", type: :system do
     describe "change email" do
       let(:change_email) { Faker::Internet.email }
 
-      it "verifies new email address" do
+      it "confirms new email address" do
         fill_in :ask_email_email, with: change_email
-        click_button "Send verification code"
-        fill_in :code_confirmation_code, with: code_from_email
-        click_button "Verify the email address"
+        click_button "Send confirmation code"
+        fill_in :tunnistamo_code_confirmation_code, with: code_from_email
+        click_button "Confirm the email address"
         expect(page).to have_content("Email successfully confirmed")
         confirmed_user = Decidim::User.find(current_user.id)
         expect(confirmed_user.email).to eq(change_email)
@@ -88,9 +88,9 @@ describe "Email confirmation", type: :system do
 
       it "deletes current user and logins as existing user" do
         fill_in :ask_email_email, with: reserved_email
-        click_button "Send verification code"
-        fill_in :code_confirmation_code, with: code_from_email
-        click_button "Verify the email address"
+        click_button "Send confirmation code"
+        fill_in :tunnistamo_code_confirmation_code, with: code_from_email
+        click_button "Confirm the email address"
         expect(page).to have_content("Email successfully confirmed")
         expect(Decidim::User.where(id: current_user).count).to eq(0)
         expect(Decidim::User.count).to eq(1)
@@ -98,9 +98,9 @@ describe "Email confirmation", type: :system do
       end
     end
 
-    describe "email verification link" do
-      it "verifies email" do
-        click_button "Send verification code"
+    describe "email confirmation link" do
+      it "confirms email" do
+        click_button "Send confirmation code"
         visit last_email_first_link
         expect(page).to have_content("Email successfully confirmed")
         find_user = Decidim::User.find(current_user.id)

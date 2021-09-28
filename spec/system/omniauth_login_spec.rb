@@ -29,7 +29,7 @@ describe "Omniauth login", type: :system do
     end
 
     context "when confirm emails is not enabled" do
-      it "confirms user without email verification process" do
+      it "confirms user without email confirmation process" do
         tunnistamo_login
         visit decidim.account_path
         expect(page).to have_field("user_email", with: email)
@@ -53,9 +53,9 @@ describe "Omniauth login", type: :system do
 
           before { tunnistamo_login }
 
-          describe "verificaition of email address" do
+          describe "confirmation of email address" do
             before do
-              click_button "Send verification code"
+              click_button "Send confirmation code"
             end
 
             it "shows that email is already taken" do
@@ -64,12 +64,12 @@ describe "Omniauth login", type: :system do
           end
         end
 
-        it "adds another identity and verifies email normally" do
+        it "adds another identity and confirms email normally" do
           tunnistamo_login
           expect(Decidim::User.last.confirmed_at).to eq(nil)
-          click_button "Send verification code"
-          fill_in :code_confirmation_code, with: code_from_email
-          click_button "Verify the email address"
+          click_button "Send confirmation code"
+          fill_in :tunnistamo_code_confirmation_code, with: code_from_email
+          click_button "Confirm the email address"
           expect(page).to have_content("Email successfully confirmed")
           expect(Decidim::User.count).to eq(2)
           confirmed_user = Decidim::User.last
@@ -90,12 +90,12 @@ describe "Omniauth login", type: :system do
             Decidim::User.last.update(confirmation_sent_at: 2.years.ago)
           end
 
-          it "can verify different email address" do
+          it "can confirm different email address" do
             tunnistamo_login
             fill_in :ask_email_email, with: change_email
-            click_button "Send verification code"
-            fill_in :code_confirmation_code, with: code_from_email
-            click_button "Verify the email address"
+            click_button "Send confirmation code"
+            fill_in :tunnistamo_code_confirmation_code, with: code_from_email
+            click_button "Confirm the email address"
             expect(page).to have_content("Email successfully confirmed")
             expect(Decidim::Identity.count).to eq(1)
             expect(Decidim::Identity.last.user.email).to eq(change_email)
@@ -114,9 +114,9 @@ describe "Omniauth login", type: :system do
         context "when another user with tunnistamo authorization has same email" do
           let(:another_email) { email }
 
-          describe "verificaition of email address" do
+          describe "confirmation of email address" do
             before do
-              click_button "Send verification code"
+              click_button "Send confirmation code"
             end
 
             it "shows that email is already taken" do
@@ -125,11 +125,11 @@ describe "Omniauth login", type: :system do
           end
         end
 
-        it "adds another authorization and verifies email normally" do
+        it "adds another authorization and confirms email normally" do
           expect(Decidim::User.last.confirmed_at).to eq(nil)
-          click_button "Send verification code"
-          fill_in :code_confirmation_code, with: code_from_email
-          click_button "Verify the email address"
+          click_button "Send confirmation code"
+          fill_in :tunnistamo_code_confirmation_code, with: code_from_email
+          click_button "Confirm the email address"
           expect(page).to have_content("Email successfully confirmed")
           expect(Decidim::User.count).to eq(2)
           confirmed_user = Decidim::User.last
@@ -173,13 +173,13 @@ describe "Omniauth login", type: :system do
         end
 
         it "submitting the code" do
-          click_button "Send verification code"
-          fill_in :code_confirmation_code, with: code_from_email
-          click_button "Verify the email address"
+          click_button "Send confirmation code"
+          fill_in :tunnistamo_code_confirmation_code, with: code_from_email
+          click_button "Confirm the email address"
         end
 
         it "cliking email link" do
-          click_button "Send verification code"
+          click_button "Send confirmation code"
           visit last_email_first_link
         end
       end
