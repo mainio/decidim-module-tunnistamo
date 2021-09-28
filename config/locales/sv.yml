@@ -14,16 +14,16 @@ sv:
     tunnistamo:
       email_confirmation_mailer:
         send_code:
-          alternatively: 'Alternativt kan du också bekräfta din e -postadress med knappen nedan:'
-          content: Bekräfta din e -postadress genom att ange verifieringskoden nedan i fältet som tillhandahålls på tjänsten.
-          details: 'Din verifieringskod är:'
-          subject: E-postverifiering
-          verify_email: Verifiera e-postadressen
+          alternatively: 'Alternativt kan du också bekräfta din e-postadress med knappen nedan:'
+          content: Bekräfta din e-postadress genom att ange bekräftelsekoden nedan i fältet som tillhandahålls på tjänsten.
+          details: 'Din bekräftelsekod är:'
+          subject: E-post bekräftelse
+          verify_email: Bekräfta e-postadressen
           welcome: 'Välkommen %{name}!'
       email_confirmations:
         ask_email_form:
           errors:
-            email_taken: E -postadressen du angav är redan markerad för en annan användare på denna tjänst. Använd en annan e -postadress eller kontakta tjänstens administratörer.
+            email_taken: E-postadressen du angav är redan markerad för en annan användare på denna tjänst. Använd en annan e-postadress eller kontakta tjänstens administratörer.
         code_confirmation_form:
           errors:
             code_expired: Koden har gått ut. Gå till föregående steg och ange din e-post igen.
@@ -34,28 +34,28 @@ sv:
             code_expired: Koden har gått ut. Gå till föregående steg och ange din e-post igen.
             user_confirmed: Användaren är redan bekräftad.
         confirm_with_code:
-          success: E -postmeddelandet har bekräftats.
-          invalid: Det gick inte att bekräfta e -postmeddelandet.
+          success: E-postmeddelandet har bekräftats.
+          invalid: Det gick inte att bekräfta e-postmeddelandet.
         confirm_with_token:
-          success: E -postmeddelandet har bekräftats.
-          invalid: Det gick inte att bekräfta e -postmeddelandet.
+          success: E-postmeddelandet har bekräftats.
+          invalid: Det gick inte att bekräfta e-postmeddelandet.
         create:
-          invalid: Det gick inte att bekräfta e -postmeddelandet.
-          success: En verifieringskod har skickats till din e -post. Ange den i fältet nedan.
+          invalid: Det gick inte att bekräfta e-postmeddelandet.
+          success: Bekräftelsekoden har skickats till din e-post, ange den i fältet nedan.
         new:
-          additional_check: Om din e -postadress angavs när du loggade in, kontrollera att den är korrekt och gå till nästa steg.
+          additional_check: Om din e-postadress angavs när du loggade in, kontrollera att den är korrekt och gå till nästa steg.
           email: E-post
-          description: För att kunna använda denna tjänst måste en verifierad e -postadress vara kopplad till ditt användarkonto. Ange din giltiga e -postadress i fältet nedan.
-          submit: Skicka verifieringskod
-          title: Verifiera din e-postadress
+          description: För att kunna använda denna tjänst måste en bekräftad e-postadress vara kopplad till ditt användarkonto. Ange din giltiga e-postadress i fältet nedan.
+          submit: Skicka bekräftelsekod
+          title: Bekräfta din e-postadress
         preview:
           code: Koda
-          description: En verifieringskod har skickats till den e -postadress du angav. Ange denna verifieringskod i fältet nedan för att komma åt tjänsten.
+          description: En bekräftelsekod har skickats till den e -postadress du angav. Ange denna bekräftelsekod i fältet nedan för att komma åt tjänsten.
           help_1: Koden skickas till adressen
           help_2: Om du har angett fel adress
           help_3: gå tillbaka till föregående steg
-          submit: Verifiera e -postadressen
-          title: Ange verifieringskoden
+          submit: Bekräfta e-postadressen
+          title: Ange bekräftelsekoden
       omniauth_callbacks:
         failure:
           already_authorized: En annan användare har redan godkänt sig med samma identitet.

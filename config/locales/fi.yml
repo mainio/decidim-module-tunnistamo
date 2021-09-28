@@ -15,8 +15,8 @@ fi:
       email_confirmation_mailer:
         send_code:
           alternatively: 'Vaihtoehtoisesti, voit vahvistaa sähköpostiosoitteesi käyttämällä alla olevaa nappia.'
-          content: Vahvista sähköpostiosoitteesi syöttämällä alla oleva vahvistuskoodi palvelussa olevaan kenttään.
-          details: 'Sinun vahvistuskoodisi on:'
+          content: Vahvista sähköpostiosoitteesi syöttämällä alla oleva tarkastuskoodi palvelussa olevaan kenttään.
+          details: 'Sinun tarkastuskoodisi on:'
           subject: Sähköpostin vahvistaminen
           verify_email: Vahvista sähköpostiosoite
           welcome: 'Tervetuloa %{name}!'
@@ -26,8 +26,8 @@ fi:
             email_taken: Syöttämäsi sähköpostiosoite on jo merkitty toiselle käyttäjälle tässä palvelussa. Ole hyvä ja käytä jotain toista sähköpostiosoitetta tai ota yhteyttä palvelun ylläpitäjiin.
         code_confirmation_form:
           errors:
-            code_expired: Koodi on vanhentunut. Mene edelliseen vaiheeseen ja syötä sähköpostiosoitteesi uudelleen.
-            code_invalid: Koodi ei täsmää. Tarkista että syötit koodin oikein.
+            code_expired: Tarkastuskoodi on vanhentunut. Mene edelliseen vaiheeseen ja syötä sähköpostiosoitteesi uudelleen.
+            code_invalid: Tarkastuskoodi ei täsmää. Tarkasta, että syötit koodin oikein.
             maximum_attempts: Yritysten maksimimäärä tuli täyteen. Mene edelliseen vaiheeseen ja syötä sähköpostiosoitteesi uudelleen.
         token_confirmation_form:
           errors:
@@ -41,9 +41,9 @@ fi:
           invalid: Sähköpostin vahvistaminen epäonnistui.
         create:
           invalid: Sähköpostin vahvistaminen epäonnistui.
-          success: Vahvistuskoodi on lähetetty sähköpostiisi, ole hyvä ja syötä se allaolevaan kenttään.
+          success: Tarkastuskoodi on lähetetty sähköpostiisi, ole hyvä ja syötä se allaolevaan kenttään.
         new:
-          additional_check: Mikäli sähköpostiosoitteesi välitettiin kirjautumisesi yhteydessä, tarkista, että se on oikein ja siirry seuraavaan vaiheeseen.
+          additional_check: Mikäli sähköpostiosoitteesi välitettiin kirjautumisesi yhteydessä, tarkasta, että se on oikein ja siirry seuraavaan vaiheeseen.
           email: Sähköposti
           description: Tämän palvelun käyttäminen edellyttää vahvistetun sähköpostiosoitteen liittämistä käyttäjätiliisi. Ole hyvä ja syötä alla olevaan kenttään voimassaoleva sähköpostiosoitteesi
           submit: Lähetä tarkastuskoodi
