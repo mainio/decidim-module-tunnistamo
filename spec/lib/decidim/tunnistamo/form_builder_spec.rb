@@ -65,6 +65,30 @@ describe Decidim::Tunnistamo::FormBuilder do
       end
     end
 
+    context "when the resource has errors" do
+      before do
+        resource.errors.add(:name, "Please choose a different name")
+        resource.errors.add(:name, "Your name cannot possibly be John")
+      end
+
+      it "marks the label as invalid" do
+        expect(parsed_label["class"]).not_to be(nil)
+        expect(parsed_label["class"].split(" ")).to include("is-invalid-label")
+      end
+
+      it "marks the input as invalid" do
+        input = parsed_group.css("input")[0]
+        expect(input["class"]).to eq("input-group-field is-invalid-input")
+      end
+
+      it "adds the visible errors below the group field" do
+        errors = parsed.css(".form-error")
+        expect(errors.length).to eq(2)
+        expect(errors[1].text).to eq("Please choose a different name, Your name cannot possibly be John")
+        expect(errors[1]["class"]).to eq("form-error is-visible")
+      end
+    end
+
     context "with the prefix option" do
       let(:output) do
         builder.group_text_field :name, prefix: "PREFIX-"
