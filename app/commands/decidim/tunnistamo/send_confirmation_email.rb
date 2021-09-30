@@ -13,6 +13,7 @@ module Decidim
         return broadcast(:invalid) unless form.email
 
         user.update(tunnistamo_email_code: create_code, unconfirmed_email: form.email, tunnistamo_failed_confirmation_attempts: 0)
+        user.send(:generate_confirmation_token!) unless user.confirmation_token
 
         ::Decidim::Tunnistamo::SendConfirmationEmailJob.perform_now(user, form.email)
 
