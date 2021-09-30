@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/mainio/omniauth-tunnistamo.git
-  revision: c8c7f0d89adc87b9cf2f0de2660cbebf003a211d
+  revision: 49210ebe8993b8b53538d0aab0be3fa97fe8deaa
   specs:
     omniauth-tunnistamo (0.1.1)
       omniauth_openid_connect (~> 0.3, >= 0.3.5)
@@ -61,7 +61,7 @@ GEM
       tzinfo (~> 1.1)
     acts_as_list (0.9.19)
       activerecord (>= 3.0)
-    addressable (2.7.0)
+    addressable (2.8.0)
       public_suffix (>= 2.0.2, < 5.0)
     aes_key_wrap (1.1.0)
     anchored (1.1.0)
@@ -88,7 +88,7 @@ GEM
       html_tokenizer (~> 0.0.6)
       parser (>= 2.4)
       smart_properties
-    bindata (2.4.9)
+    bindata (2.4.10)
     bindex (0.8.1)
     bootsnap (1.7.5)
       msgpack (~> 1.0)
@@ -137,7 +137,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.12.2)
-    concurrent-ruby (1.1.8)
+    concurrent-ruby (1.1.9)
     cookiejar (0.3.3)
     crack (0.4.5)
       rexml
@@ -542,7 +542,7 @@ GEM
       mime-types-data (~> 3.2015)
     mime-types-data (3.2021.0225)
     mini_magick (4.11.0)
-    mini_mime (1.1.0)
+    mini_mime (1.1.1)
     minitest (5.14.4)
     mixlib-cli (2.1.8)
     mixlib-config (3.0.9)
@@ -637,7 +637,7 @@ GEM
       rack (>= 1.0, < 3)
     rack-cors (1.1.1)
       rack (>= 2.0.0)
-    rack-oauth2 (1.16.0)
+    rack-oauth2 (1.18.0)
       activesupport
       attr_required
       httpclient
