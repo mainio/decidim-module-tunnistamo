@@ -77,6 +77,11 @@ module Decidim
         super
       end
 
+      # Disable authorization redirect for the first login
+      def first_login_and_not_authorized?(_user)
+        false
+      end
+
       private
 
       def authorize_user(user)

@@ -7,6 +7,7 @@ module Decidim
 
       included do
         attribute :email_confirmed, Virtus::Attribute::Boolean, default: true
+        attribute :unconfirmed_email, String, default: ""
       end
     end
   end

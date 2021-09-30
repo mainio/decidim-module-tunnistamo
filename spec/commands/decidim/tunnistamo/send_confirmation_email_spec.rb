@@ -12,6 +12,18 @@ module Decidim::Tunnistamo
     let(:form) { double(email: email, invalid?: false) }
     let(:email) { Faker::Internet.email }
 
+    context "when user doesnt have confirmation token" do
+      before do
+        user.update!(confirmation_token: nil)
+      end
+
+      it "creates new token" do
+        expect(user.confirmation_token).to be_nil
+        subject.call
+        expect(user.confirmation_token).not_to be_nil
+      end
+    end
+
     context "when the form is valid" do
       it "broadcasts ok" do
         expect { subject.call }.to broadcast(:ok)
@@ -33,11 +45,6 @@ module Decidim::Tunnistamo
         expect(user.tunnistamo_email_code).to be_nil
         expect(user.unconfirmed_email).to be_nil
       end
-    end
-
-    context "when there is conflicting identity" do
-      let!(:identity) { create(:identity, user: another_user, provider: "tunnistamo", organization: organization) }
-      let(:another_user) { create(:user, :confirmed, organization: organization, email: email) }
     end
   end
 end

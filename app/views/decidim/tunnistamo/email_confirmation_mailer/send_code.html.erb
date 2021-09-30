@@ -15,16 +15,18 @@
 
 <p><%= t(".alternatively") %></p>
 
-<table class="button expanded radius">
-  <tr>
-    <td>
-      <table>
-        <tr>
-          <td>
-            <%= link_to t(".verify_email"), confirm_with_token_email_confirmations_url(confirmation_token: @confirmation_token, host: @organization.host), target: :blank %>
-          </td>
-        </tr>
-      </table>
-    </td>
-  </tr>
-</table>
+<% if @confirmation_token %>
+  <table class="button expanded radius">
+    <tr>
+      <td>
+        <table>
+          <tr>
+            <td>
+              <%= link_to t(".verify_email"), confirm_with_token_email_confirmations_url(confirmation_token: @confirmation_token, host: @organization.host), target: :blank %>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+<% end %>
