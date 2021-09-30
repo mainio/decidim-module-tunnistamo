@@ -2,7 +2,7 @@
 
 module Decidim
   module Tunnistamo
-    module AddEmailConfirmedToRegistrationForm
+    module OmniauthRegistrationFormExtensions
       extend ActiveSupport::Concern
 
       included do

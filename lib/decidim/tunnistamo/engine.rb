@@ -8,7 +8,7 @@ module Decidim
       config.to_prepare do
         Decidim::ApplicationController.include Decidim::Tunnistamo::NeedsConfirmedEmail
         Decidim::CreateOmniauthRegistration.include Decidim::Tunnistamo::CreateOmniauthRegistrationOverride
-        Decidim::OmniauthRegistrationForm.include Decidim::Tunnistamo::AddEmailConfirmedToRegistrationForm
+        Decidim::OmniauthRegistrationForm.include Decidim::Tunnistamo::OmniauthRegistrationFormExtensions
       end
 
       routes do
