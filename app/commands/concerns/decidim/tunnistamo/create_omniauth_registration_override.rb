@@ -6,8 +6,8 @@ module Decidim
       extend ActiveSupport::Concern
 
       included do
-        alias_method :create_or_find_user_orig_tunnistamo, :create_or_find_user unless respond_to?(:create_or_find_user_orig_tunnistamo)
-        alias_method :verify_user_confirmed_orig_tunnistamo, :verify_user_confirmed unless respond_to?(:verify_user_confirmed_orig_tunnistamo)
+        alias_method :create_or_find_user_orig_tunnistamo, :create_or_find_user unless private_method_defined?(:create_or_find_user_orig_tunnistamo)
+        alias_method :verify_user_confirmed_orig_tunnistamo, :verify_user_confirmed unless private_method_defined?(:verify_user_confirmed_orig_tunnistamo)
 
         def create_or_find_user
           create_or_find_user_orig_tunnistamo
