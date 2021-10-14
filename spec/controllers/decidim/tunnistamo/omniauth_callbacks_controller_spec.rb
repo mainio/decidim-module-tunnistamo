@@ -46,9 +46,25 @@ module Decidim
         let(:state) { SecureRandom.hex(16) }
 
         context "when user isn't signed in" do
+          let(:session) { nil }
+
           before do
+            request_args = {}
+            if session
+              # Do a mock request in order to create a session
+              get "/"
+              session.each do |key, val|
+                request.session[key.to_s] = val
+              end
+              request_args[:env] = {
+                "rack.session" => request.session,
+                "rack.session.options" => request.session.options
+              }
+            end
+
             get(
-              "/users/auth/tunnistamo/callback?code=#{code}&state=#{state}"
+              "/users/auth/tunnistamo/callback?code=#{code}&state=#{state}",
+              **request_args
             )
           end
 
@@ -61,17 +77,53 @@ module Decidim
             expect(authorization.metadata["given_name"]).to eq(given_name)
             expect(authorization.metadata["family_name"]).to eq(family_name)
           end
+
+          # Decidim core would want to redirect to the verifications path on the
+          # first sign in but we don't want that to happen as the user is already
+          # authorized during the sign in process.
+          it "redirects to the root path by default after a successful registration and first sign in" do
+            user = User.last
+
+            expect(user.sign_in_count).to eq(1)
+            expect(response).to redirect_to("/")
+          end
+
+          context "when the session has a pending redirect" do
+            let(:session) { { user_return_to: "/processes" } }
+
+            it "redirects to the stored location by default after a successful registration and first sign in" do
+              user = User.last
+
+              expect(user.sign_in_count).to eq(1)
+              expect(response).to redirect_to("/processes")
+            end
+          end
         end
 
         context "when user is signed in" do
+          let(:session) { nil }
           let!(:confirmed_user) do
             create(:user, :confirmed, organization: organization)
           end
 
           before do
+            request_args = {}
+            if session
+              # Do a mock request in order to create a session
+              get "/"
+              session.each do |key, val|
+                request.session[key.to_s] = val
+              end
+              request_args[:env] = {
+                "rack.session" => request.session,
+                "rack.session.options" => request.session.options
+              }
+            end
+
             sign_in confirmed_user
             get(
-              "/users/auth/tunnistamo/callback?code=#{code}&state=#{state}"
+              "/users/auth/tunnistamo/callback?code=#{code}&state=#{state}",
+              **request_args
             )
           end
 
@@ -83,6 +135,18 @@ module Decidim
 
             expect(authorization).not_to be_nil
             expect(authorization.user).to eq(confirmed_user)
+          end
+
+          it "redirects to the root path" do
+            expect(response).to redirect_to("/")
+          end
+
+          context "when the session has a pending redirect" do
+            let(:session) { { user_return_to: "/processes" } }
+
+            it "redirects to the stored location" do
+              expect(response).to redirect_to("/processes")
+            end
           end
         end
 
