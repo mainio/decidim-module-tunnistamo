@@ -51,7 +51,7 @@ module Decidim
           )
           return redirect_to(
             stored_location_for(resource || :user) ||
-            decidim_verifications.authorizations_path
+            decidim.root_path
           )
         end
 
