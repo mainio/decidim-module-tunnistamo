@@ -13,7 +13,7 @@ module Decidim
 
         def verified_email
           @verified_email ||= begin
-            return generate_email if ::Decidim::Tunnistamo.confirm_emails
+            return generate_email unless email_confirmed?
 
             digged_email || generate_email
           end
