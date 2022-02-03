@@ -44,6 +44,16 @@ describe Decidim::Tunnistamo::Authentication::Authenticator do
       it "returns the email from SAML attributes" do
         expect(subject.verified_email).to eq("user@example.org")
       end
+
+      context "and confirm_emails is forced" do
+        before do
+          allow(Decidim::Tunnistamo).to receive(:confirm_emails).and_return(true)
+        end
+
+        it "returns the generated email" do
+          expect(subject.verified_email).to match(/tunnistamo-[a-z0-9]{32}@[0-9]+.lvh.me/)
+        end
+      end
     end
 
     context "when email is not available in the SAML attributes" do
