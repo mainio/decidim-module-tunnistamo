@@ -5,10 +5,12 @@ module Decidim
     class Engine < ::Rails::Engine
       isolate_namespace Decidim::Tunnistamo
 
-      config.to_prepare do
-        Decidim::ApplicationController.include Decidim::Tunnistamo::NeedsConfirmedEmail
-        Decidim::CreateOmniauthRegistration.include Decidim::Tunnistamo::CreateOmniauthRegistrationOverride
-        Decidim::OmniauthRegistrationForm.include Decidim::Tunnistamo::OmniauthRegistrationFormExtensions
+      initializer "customizations", after: "decidim.action_controller" do
+        config.to_prepare do
+          Decidim::ApplicationController.include Decidim::Tunnistamo::NeedsConfirmedEmail
+          Decidim::CreateOmniauthRegistration.include Decidim::Tunnistamo::CreateOmniauthRegistrationOverride
+          Decidim::OmniauthRegistrationForm.include Decidim::Tunnistamo::OmniauthRegistrationFormExtensions
+        end
       end
 
       routes do
