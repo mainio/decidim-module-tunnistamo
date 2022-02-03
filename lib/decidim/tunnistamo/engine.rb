@@ -5,7 +5,7 @@ module Decidim
     class Engine < ::Rails::Engine
       isolate_namespace Decidim::Tunnistamo
 
-      initializer "customizations", after: "decidim.action_controller" do
+      initializer "decidim_tunnistamo_customizations", after: "decidim.action_controller" do
         config.to_prepare do
           Decidim::ApplicationController.include Decidim::Tunnistamo::NeedsConfirmedEmail
           Decidim::CreateOmniauthRegistration.include Decidim::Tunnistamo::CreateOmniauthRegistrationOverride
