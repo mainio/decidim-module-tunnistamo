@@ -1,4 +1,12 @@
 GIT
+  remote: https://github.com/mainio/omniauth-tunnistamo.git
+  revision: bfad30355b00196049878ff49c00de059a0979b3
+  branch: develop
+  specs:
+    omniauth-tunnistamo (0.1.1)
+      omniauth_openid_connect (~> 0.3, >= 0.3.5)
+
+GIT
   remote: https://github.com/omniauth/omniauth_openid_connect.git
   revision: 1a96ab857cc2f7166579b3da11ef95bd5646395d
   branch: master
@@ -14,12 +22,6 @@ PATH
     decidim-tunnistamo (0.25.0)
       decidim-core (~> 0.25.0)
       omniauth-tunnistamo (~> 0.1.0)
-
-PATH
-  remote: /home/elahdenpera/gems/omniauth-tunnistamo
-  specs:
-    omniauth-tunnistamo (0.1.1)
-      omniauth_openid_connect (~> 0.3, >= 0.3.5)
 
 GEM
   remote: https://rubygems.org/

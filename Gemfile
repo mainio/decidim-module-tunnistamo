@@ -18,8 +18,7 @@ DECIDIM_VERSION = "0.25.2"
 gem "decidim", DECIDIM_VERSION
 gem "decidim-tunnistamo", path: "."
 
-# gem "omniauth-tunnistamo", github: "mainio/omniauth-tunnistamo"
-gem "omniauth-tunnistamo", path: "/home/elahdenpera/gems/omniauth-tunnistamo"
+gem "omniauth-tunnistamo", github: "mainio/omniauth-tunnistamo", branch: "develop"
 
 gem "bootsnap", "~> 1.4"
 gem "puma", ">= 5.0.0"
