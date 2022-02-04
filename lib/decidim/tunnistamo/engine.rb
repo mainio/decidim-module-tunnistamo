@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "omniauth/rails_csrf_protection/token_verifier"
+
 module Decidim
   module Tunnistamo
     class Engine < ::Rails::Engine
@@ -81,6 +83,8 @@ module Decidim
 
       initializer "decidim_tunnistamo.setup", before: "devise.omniauth" do
         next unless Decidim::Tunnistamo.configured?
+
+        OmniAuth.config.request_validation_phase = ::OmniAuth::RailsCsrfProtection::TokenVerifier.new
 
         # Configure the SAML OmniAuth strategy for Devise
         ::Devise.setup do |config|
