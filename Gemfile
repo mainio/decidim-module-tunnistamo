@@ -10,9 +10,6 @@ base_path = ""
 base_path = "../" if File.basename(__dir__) == "development_app"
 require_relative "#{base_path}lib/decidim/tunnistamo/version"
 
-gem "omniauth", ">= 2.0.0"
-gem "omniauth_openid_connect", github: "omniauth/omniauth_openid_connect", branch: "master"
-
 DECIDIM_VERSION = "0.25.2"
 
 gem "decidim", DECIDIM_VERSION
