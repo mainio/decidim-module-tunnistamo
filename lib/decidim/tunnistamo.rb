@@ -10,6 +10,8 @@ require_relative "tunnistamo/mail_interceptors"
 
 module Decidim
   module Tunnistamo
+    autoload :FormBuilder, "decidim/tunnistamo/form_builder"
+
     include ActiveSupport::Configurable
 
     @configured = false
@@ -59,6 +61,11 @@ module Decidim
     # the OAuth attributes passed from the authorization endpoint.
     config_accessor :metadata_collector_class do
       Decidim::Tunnistamo::Verification::MetadataCollector
+    end
+
+    # Enables email confirmation process after successful login
+    config_accessor :confirm_emails do
+      false
     end
 
     def self.configured?

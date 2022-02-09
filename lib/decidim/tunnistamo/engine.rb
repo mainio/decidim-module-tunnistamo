@@ -1,11 +1,29 @@
 # frozen_string_literal: true
 
+require "omniauth/rails_csrf_protection/token_verifier"
+
 module Decidim
   module Tunnistamo
     class Engine < ::Rails::Engine
       isolate_namespace Decidim::Tunnistamo
 
+      initializer "decidim_tunnistamo_customizations", after: "decidim.action_controller" do
+        config.to_prepare do
+          Decidim::ApplicationController.include Decidim::Tunnistamo::NeedsConfirmedEmail
+          Decidim::CreateOmniauthRegistration.include Decidim::Tunnistamo::CreateOmniauthRegistrationOverride
+          Decidim::OmniauthRegistrationForm.include Decidim::Tunnistamo::OmniauthRegistrationFormExtensions
+        end
+      end
+
       routes do
+        resources :email_confirmations, only: [:new, :create] do
+          collection do
+            get :preview
+            get :confirm_with_token
+            post :confirm_with_code
+          end
+        end
+
         devise_scope :user do
           # Manually map the omniauth routes for Devise because the default
           # routes are mounted by core Decidim. This is because we want to map
@@ -65,6 +83,8 @@ module Decidim
 
       initializer "decidim_tunnistamo.setup", before: "devise.omniauth" do
         next unless Decidim::Tunnistamo.configured?
+
+        OmniAuth.config.request_validation_phase = ::OmniAuth::RailsCsrfProtection::TokenVerifier.new
 
         # Configure the SAML OmniAuth strategy for Devise
         ::Devise.setup do |config|

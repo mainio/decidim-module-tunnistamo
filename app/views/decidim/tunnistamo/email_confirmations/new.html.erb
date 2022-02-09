@@ -1,0 +1,33 @@
+<%= decidim_form_for(@form, url: email_confirmations_path, class: "form grid-container") do |form| %>
+  <div class="row margin-vertical-1">
+    <div class="columns large-offset-2 large-8">
+      <div class="row column">
+        <h1><%= t(".title") %></h1>
+      </div>
+
+      <div class="row column">
+        <p>
+          <%= t(".description") %>
+        </p>
+        <% if true %>
+          <p>
+            <%= t(".additional_check") %>
+          </p>
+        <% end %>
+      </div>
+
+      <div class="row column">
+        <div class="field">
+          <%= form.email_field :email, label: t(".email") %>
+        </div>
+      </div>
+
+      <div class="row column">
+        <div class="actions">
+          <%= form.submit t(".submit"), class: "button expanded", data: { disable: true } %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+

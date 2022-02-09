@@ -1,0 +1,42 @@
+<%= decidim_form_for(@form, url: confirm_with_code_email_confirmations_path, class: "form grid-container") do |form| %>
+  <div class="row margin-vertical-1">
+    <div class="columns large-offset-2 large-8">
+      <div class="row column">
+        <h1><%= t(".title") %></h1>
+      </div>
+
+      <div class="row column">
+        <p>
+          <%= t(".description") %>
+        </p>
+        <p>
+          <%= "#{t(".help_1")}:"  %>
+          <b><%= current_user.tunnistamo_email_sent_to %></b>
+        </p>
+        <p>
+          <%= t(".help_2") %>
+          <a href="<%= new_email_confirmation_path %>"><%= t(".help_3") %></a>
+        </p>
+      </div>
+
+      <span style="margin: 0 0 1rem 0;" class="register__separator"></span>
+
+      <div style="margin-bottom: 1rem;" class="row column">
+        <%= t("forms.required_explanation") %>
+      </div>
+
+      <div class="tunnistamo-verification-code">
+        <div class="field">
+          <%= form.group_text_field(:code, prefix: "#{current_organization.reference_prefix}-" ) %>
+        </div>
+      </div>
+
+      <div class="row column">
+        <div class="actions">
+          <%= form.submit t(".submit"), class: "button expanded", data: { disable: true } %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+

@@ -8,29 +8,38 @@ module Decidim
       let(:organization) { create(:organization) }
 
       let(:uid) { SecureRandom.uuid }
+      let(:email) { nil }
       let(:name) { "#{given_name} #{family_name}" }
       let(:given_name) { "Jack" }
       let(:family_name) { "Bauer" }
       let(:amr) { "google" }
 
+      let(:oauth_hash) do
+        {
+          provider: "tunnistamo",
+          uid: uid,
+          info: {
+            email: email,
+            name: name,
+            given_name: given_name,
+            family_name: family_name,
+            amr: amr
+          },
+          extra: {
+            raw_info: {
+              email: email,
+              name: name,
+              given_name: given_name,
+              family_name: family_name,
+              amr: amr
+            }
+          }
+        }
+      end
+
       before do
         OmniAuth.config.test_mode = true
-        OmniAuth.config.add_mock(:tunnistamo,
-                                 uid: uid,
-                                 info: {
-                                   name: name,
-                                   given_name: given_name,
-                                   family_name: family_name,
-                                   amr: amr
-                                 },
-                                 extra: {
-                                   raw_info: {
-                                     name: name,
-                                     given_name: given_name,
-                                     family_name: family_name,
-                                     amr: amr
-                                   }
-                                 })
+        OmniAuth.config.add_mock(:tunnistamo, oauth_hash)
 
         # Make the time validation of the SAML response work properly
         allow(Time).to receive(:now).and_return(
@@ -46,9 +55,25 @@ module Decidim
         let(:state) { SecureRandom.hex(16) }
 
         context "when user isn't signed in" do
+          let(:session) { nil }
+
           before do
+            request_args = {}
+            if session
+              # Do a mock request in order to create a session
+              get "/"
+              session.each do |key, val|
+                request.session[key.to_s] = val
+              end
+              request_args[:env] = {
+                "rack.session" => request.session,
+                "rack.session.options" => request.session.options
+              }
+            end
+
             get(
-              "/users/auth/tunnistamo/callback?code=#{code}&state=#{state}"
+              "/users/auth/tunnistamo/callback?code=#{code}&state=#{state}",
+              **request_args
             )
           end
 
@@ -61,17 +86,96 @@ module Decidim
             expect(authorization.metadata["given_name"]).to eq(given_name)
             expect(authorization.metadata["family_name"]).to eq(family_name)
           end
+
+          # Decidim core would want to redirect to the verifications path on the
+          # first sign in but we don't want that to happen as the user is already
+          # authorized during the sign in process.
+          it "redirects to the root path by default after a successful registration and first sign in" do
+            user = User.last
+
+            expect(user.sign_in_count).to eq(1)
+            expect(response).to redirect_to("/")
+          end
+
+          context "when the session has a pending redirect" do
+            let(:session) { { user_return_to: "/processes" } }
+
+            it "redirects to the stored location by default after a successful registration and first sign in" do
+              user = User.last
+
+              expect(user.sign_in_count).to eq(1)
+              expect(response).to redirect_to("/processes")
+            end
+          end
+        end
+
+        context "when storing the email address" do
+          let(:email) { "oauth.email@example.org" }
+          let(:authenticator) do
+            Decidim::Tunnistamo.authenticator_class.new(organization, oauth_hash)
+          end
+
+          before do
+            allow(Decidim::Tunnistamo).to receive(:authenticator_for).and_return(authenticator)
+          end
+
+          context "when email is confirmed according to the authenticator" do
+            before do
+              allow(authenticator).to receive(:email_confirmed?).and_return(true)
+            end
+
+            it "creates the user account with the confirmed email address" do
+              get(
+                "/users/auth/tunnistamo/callback?code=#{code}&state=#{state}"
+              )
+
+              user = User.last
+              expect(user.email).to eq(email)
+              expect(user.unconfirmed_email).to be(nil)
+            end
+          end
+
+          context "when email is unconfirmed according to the authenticator" do
+            before do
+              allow(authenticator).to receive(:email_confirmed?).and_return(false)
+            end
+
+            it "creates the user account with the confirmed email address" do
+              get(
+                "/users/auth/tunnistamo/callback?code=#{code}&state=#{state}"
+              )
+
+              user = User.last
+              expect(user.email).to match(/tunnistamo-[a-z0-9]{32}@[0-9]+.lvh.me/)
+              expect(user.unconfirmed_email).to eq(email)
+            end
+          end
         end
 
         context "when user is signed in" do
+          let(:session) { nil }
           let!(:confirmed_user) do
             create(:user, :confirmed, organization: organization)
           end
 
           before do
+            request_args = {}
+            if session
+              # Do a mock request in order to create a session
+              get "/"
+              session.each do |key, val|
+                request.session[key.to_s] = val
+              end
+              request_args[:env] = {
+                "rack.session" => request.session,
+                "rack.session.options" => request.session.options
+              }
+            end
+
             sign_in confirmed_user
             get(
-              "/users/auth/tunnistamo/callback?code=#{code}&state=#{state}"
+              "/users/auth/tunnistamo/callback?code=#{code}&state=#{state}",
+              **request_args
             )
           end
 
@@ -83,6 +187,18 @@ module Decidim
 
             expect(authorization).not_to be_nil
             expect(authorization.user).to eq(confirmed_user)
+          end
+
+          it "redirects to the root path" do
+            expect(response).to redirect_to("/")
+          end
+
+          context "when the session has a pending redirect" do
+            let(:session) { { user_return_to: "/processes" } }
+
+            it "redirects to the stored location" do
+              expect(response).to redirect_to("/processes")
+            end
           end
         end
 

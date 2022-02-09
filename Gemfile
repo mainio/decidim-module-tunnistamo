@@ -10,16 +10,17 @@ base_path = ""
 base_path = "../" if File.basename(__dir__) == "development_app"
 require_relative "#{base_path}lib/decidim/tunnistamo/version"
 
-DECIDIM_VERSION = Decidim::Tunnistamo::DECIDIM_VERSION
+DECIDIM_VERSION = "0.25.2"
 
 gem "decidim", DECIDIM_VERSION
 gem "decidim-tunnistamo", path: "."
 
-gem "omniauth-tunnistamo", github: "mainio/omniauth-tunnistamo"
+gem "omniauth-tunnistamo", github: "mainio/omniauth-tunnistamo", branch: "develop"
 
 gem "bootsnap", "~> 1.4"
 gem "puma", ">= 5.0.0"
 gem "uglifier", "~> 4.1"
+gem "webpacker", "6.0.0.rc.5"
 
 group :development, :test do
   gem "byebug", "~> 11.0", platform: :mri

@@ -23,6 +23,7 @@ require_relative "base_spec_helper"
 
 Decidim::Tunnistamo::Test::Runtime.initializer do
   # Silence the OmniAuth logger
+  OmniAuth.config.request_validation_phase = proc {}
   OmniAuth.config.logger = Logger.new("/dev/null")
 
   # Configure the Tunnistamo module

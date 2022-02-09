@@ -13,14 +13,14 @@ module Decidim
 
         def verified_email
           @verified_email ||= begin
-            email = oauth_data.dig(:info, :email)
-            if email
-              email
-            else
-              domain = Decidim::Tunnistamo.auto_email_domain || organization.host
-              "tunnistamo-#{person_identifier_digest}@#{domain}"
-            end
+            return generate_email unless email_confirmed?
+
+            digged_email || generate_email
           end
+        end
+
+        def digged_email
+          @digged_email ||= oauth_data.dig(:info, :email)
         end
 
         # Private: Create form params from omniauth hash
@@ -33,6 +33,8 @@ module Decidim
             provider: oauth_data[:provider],
             uid: user_identifier,
             name: user_full_name,
+            email_confirmed: email_confirmed?,
+            unconfirmed_email: digged_email,
             # The nickname is automatically "parametrized" by Decidim core from
             # the name string, i.e. it will be in correct format.
             nickname: oauth_nickname,
@@ -109,9 +111,20 @@ module Decidim
           strong_identity_providers_array.include?(identity_provider)
         end
 
+        def email_confirmed?
+          Decidim::Tunnistamo.confirm_emails ? false : true
+        end
+
         protected
 
         attr_reader :organization, :oauth_hash
+
+        def generate_email
+          @generate_email ||= begin
+            domain = Decidim::Tunnistamo.auto_email_domain || organization.host
+            "tunnistamo-#{person_identifier_digest}@#{domain}"
+          end
+        end
 
         def strong_identity_providers_array
           return Decidim::Tunnistamo.strong_identity_providers if Decidim::Tunnistamo.strong_identity_providers.is_a?(Array)

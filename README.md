@@ -35,6 +35,8 @@ And then execute:
 
 ```bash
 $ bundle
+$ bundle exec rails decidim_tunnistamo:install:migrations
+$ bundle exec rails db:migrate
 ```
 
 After installation, you can add the configurations and necessary view extensions
@@ -132,6 +134,16 @@ end
 
 For the workflow configuration options, please refer to the
 [decidim-verifications documentation](https://github.com/decidim/decidim/tree/master/decidim-verifications).
+
+If you want to enable email verification process for unconfirmed users:
+
+```ruby
+Decidim::Tunnistamo.configure do |config|
+  # ... keep the default configuration as is ...
+  # Add this extra configuration:
+  config.confirm_emails = true
+end
+```
 
 For the custom metadata collector, please extend the default class as follows:
 

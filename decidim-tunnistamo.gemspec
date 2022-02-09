@@ -26,7 +26,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_dependency "decidim-core", Decidim::Tunnistamo::DECIDIM_VERSION
-  spec.add_dependency "omniauth-tunnistamo", "~> 0.1.0"
+  spec.add_dependency "omniauth-tunnistamo", "~> 0.2.0"
 
   spec.add_development_dependency "decidim-dev", Decidim::Tunnistamo::DECIDIM_VERSION
 end

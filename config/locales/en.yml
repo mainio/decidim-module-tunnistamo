@@ -1,5 +1,8 @@
----
 en:
+  activemodel:
+    attributes:
+      tunnistamo_code_confirmation:
+        code: Confirmation code
   decidim:
     authorization_handlers:
       tunnistamo_idp:
@@ -13,6 +16,50 @@ en:
             client_id: Client ID
             client_secret: Client secret
     tunnistamo:
+      email_confirmation_mailer:
+        send_code:
+          alternatively: 'Alternatively, you can also confirm your email address using the button below:'
+          content: Confirm your email address by entering the confirmation code below in the field provided on the service.
+          details: 'Your confirmation code is:'
+          subject: Email confirmation
+          verify_email: Confirm email address
+          welcome: 'Welcome %{name}!'
+      email_confirmations:
+        ask_email_form:
+          errors:
+            email_taken: The email address you entered is already marked for another user on this service. Please use a different email address or contact the service administrators.
+        code_confirmation_form:
+          errors:
+            code_expired: Code is expired. Please go to previous step and re-enter your email.
+            code_invalid: Code does not match. Please check that you entered code correctly.
+            maximum_attempts: Maximum attempts reached. Please go to previous step and re-enter your email.
+        token_confirmation_form:
+          errors:
+            code_expired: Code is expired. Please go to previous step and re-enter your email.
+            user_confirmed: User is already confirmed.
+        confirm_with_code:
+          success: Email successfully confirmed.
+          invalid: Could not confirm email.
+        confirm_with_token:
+          success: Email successfully confirmed.
+          invalid: Could not confirm email.
+        create:
+          invalid: Could not confirm email.
+          success: Confirmation code has been sent to your email, please enter it in field below.
+        new:
+          additional_check: If your email address was provided when you signed in, check that it is correct and go to the next step.
+          email: Email
+          description: To use this service, a confirmed email address must be associated with your user account. Please enter your valid email address in the field below.
+          submit: Send confirmation code
+          title: Confirm your email address
+        preview:
+          code: Code
+          description: A confirmation code has been sent to the email address you entered. Enter this confirmation code in the field below to access the service.
+          help_1: Code is sent to address
+          help_2: If you entered wrong address
+          help_3: go back to previous step
+          submit: Confirm the email address
+          title: Enter the confirmation code
       omniauth_callbacks:
         failure:
           already_authorized: Another user has already authorized themselves with the same identity.
