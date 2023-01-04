@@ -37,7 +37,7 @@ module Decidim
     #
     # See: https://openid.net/specs/openid-connect-basic-1_0.html#Scopes
     config_accessor :scope do
-      %i[openid email profile]
+      [:openid, :email, :profile]
     end
 
     # Allows customizing the authorization workflow e.g. for adding custom
@@ -118,7 +118,7 @@ module Decidim
         host = "#{protocol}://#{host}"
       end
 
-      return "#{host}:#{port}" if port && ![80, 443].include?(port.to_i)
+      return "#{host}:#{port}" if port && [80, 443].exclude?(port.to_i)
 
       host
     end

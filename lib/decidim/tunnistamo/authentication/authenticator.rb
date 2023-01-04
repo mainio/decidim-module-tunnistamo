@@ -105,7 +105,7 @@ module Decidim
         def strong_identity_provider?
           return false unless Decidim::Tunnistamo&.strong_identity_providers
 
-          identity_provider = oauth_raw_info.dig(:amr)
+          identity_provider = oauth_raw_info[:amr]
           return false unless identity_provider
 
           strong_identity_providers_array.include?(identity_provider)
@@ -167,7 +167,7 @@ module Decidim
 
         def oauth_nickname
           # Fetch the nickname passed form Tunnistamo
-          oauth_data.dig(:info, :nickname) || oauth_raw_info.dig(:nickname)
+          oauth_data.dig(:info, :nickname) || oauth_raw_info[:nickname]
         end
 
         def metadata_collector

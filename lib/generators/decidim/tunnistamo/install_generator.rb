@@ -128,7 +128,7 @@ module Decidim
           def inject_tunnistamo_config
             @final += "    tunnistamo:\n"
             @final += begin
-              if %i(development test).include?(config_branch)
+              if [:development, :test].include?(config_branch)
                 "      enabled: true\n"
               else
                 "      enabled: false\n"

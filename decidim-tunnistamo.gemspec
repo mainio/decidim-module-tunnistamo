@@ -6,7 +6,7 @@ require "decidim/tunnistamo/version"
 
 Gem::Specification.new do |spec|
   spec.name = "decidim-tunnistamo"
-  spec.version = Decidim::Tunnistamo::VERSION
+  spec.version = Decidim::Tunnistamo.version
   spec.required_ruby_version = ">= 2.7"
   spec.authors = ["Antti Hukkanen"]
   spec.email = ["antti.hukkanen@mainiotech.fi"]
@@ -25,8 +25,8 @@ Gem::Specification.new do |spec|
 
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "decidim-core", Decidim::Tunnistamo::DECIDIM_VERSION
+  spec.add_dependency "decidim-core", Decidim::Tunnistamo.decidim_version
   spec.add_dependency "omniauth-tunnistamo", "~> 0.2.0"
 
-  spec.add_development_dependency "decidim-dev", Decidim::Tunnistamo::DECIDIM_VERSION
+  spec.add_development_dependency "decidim-dev", Decidim::Tunnistamo.decidim_version
 end
