@@ -107,6 +107,14 @@ module Decidim
       url_options = conf.action_mailer.default_url_options if !url_options || !url_options[:host]
       url_options ||= {}
 
+      host, port = host_and_port_setting(url_options)
+
+      return "#{host}:#{port}" if port && [80, 443].exclude?(port.to_i)
+
+      host
+    end
+
+    def self.host_and_port_setting(url_options)
       host = url_options[:host]
       port = url_options[:port]
       if host.blank?
@@ -117,10 +125,9 @@ module Decidim
         protocol = url_options[:protocol] || "https"
         host = "#{protocol}://#{host}"
       end
-
-      return "#{host}:#{port}" if port && [80, 443].exclude?(port.to_i)
-
-      host
+      [host, port]
     end
+
+    private_class_method :host_and_port_setting
   end
 end
