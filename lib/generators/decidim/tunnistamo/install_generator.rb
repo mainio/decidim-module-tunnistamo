@@ -106,6 +106,10 @@ module Decidim
             return unless line =~ /^[a-z]+/
 
             # A new root configuration block starts
+            root_configuration(line)
+          end
+
+          def root_configuration(line)
             self.inside_config = false
             self.inside_omniauth = false
 
