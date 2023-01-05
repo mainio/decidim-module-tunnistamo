@@ -62,7 +62,9 @@ module Decidim
 
         label = options.delete(:label)
         label_options = options.delete(:label_options)
-        label_html = custom_label(attribute, label, label_options) {}
+        label_html = custom_label(attribute, label, label_options) do
+          # empty block for label_html
+        end
         group_html = content_tag(:div, class: "input-group") do
           inner = []
           inner << content_tag(:span, options[:prefix], class: "input-group-label") if options[:prefix]

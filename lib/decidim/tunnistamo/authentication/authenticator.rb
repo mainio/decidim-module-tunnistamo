@@ -12,11 +12,12 @@ module Decidim
         end
 
         def verified_email
-          @verified_email ||= begin
-            return generate_email unless email_confirmed?
-
-            digged_email || generate_email
-          end
+          @verified_email ||=
+            if email_confirmed?
+              digged_email || generate_email
+            else
+              generate_email
+            end
         end
 
         def digged_email

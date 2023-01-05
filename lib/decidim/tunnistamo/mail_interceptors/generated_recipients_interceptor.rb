@@ -30,7 +30,7 @@ module Decidim
                               url_options ||= {}
 
                               url_options[:host]
-            end
+                            end
         end
       end
     end

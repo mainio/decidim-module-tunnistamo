@@ -25,7 +25,7 @@ module Decidim
       end
 
       context "when token is missing" do
-        let(:param_token) {}
+        let(:param_token) { nil }
 
         it do
           expect(subject).not_to be_valid

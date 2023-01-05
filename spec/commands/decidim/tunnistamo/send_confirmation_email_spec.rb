@@ -38,7 +38,7 @@ module Decidim::Tunnistamo
     end
 
     context "when email is missing" do
-      let(:email) {}
+      let(:email) { nil }
 
       it "broadcasts invalid" do
         expect { subject.call }.to broadcast(:invalid)

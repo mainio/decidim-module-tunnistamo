@@ -24,7 +24,7 @@ module Decidim
       end
 
       context "when code is missing" do
-        let(:param_code) {}
+        let(:param_code) { nil }
 
         it { is_expected.to be_invalid }
       end

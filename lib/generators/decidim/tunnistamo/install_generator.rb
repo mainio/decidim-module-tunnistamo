@@ -133,7 +133,7 @@ module Decidim
                         "      enabled: true\n"
                       else
                         "      enabled: false\n"
-              end
+                      end
 
             @final += "      server_uri: <%= ENV[\"OMNIAUTH_TUNNISTAMO_SERVER_URI\"] %>\n"
             @final += "      client_id: <%= ENV[\"OMNIAUTH_TUNNISTAMO_CLIENT_ID\"] %>\n"

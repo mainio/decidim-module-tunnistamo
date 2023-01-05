@@ -16,7 +16,7 @@ describe Decidim::Tunnistamo::Generators::InstallGenerator do
     let(:head_extra_file) { layout_dir.join("_head_extra.html.erb") }
 
     it "when file does not exist creates file" do
-      expect(File).to receive(:readlines).and_return([])
+      allow(File).to receive(:readlines).and_return([])
       expect(File).to receive(:open).with(anything, "a+") do |&block|
         file = double
         expect(file).to receive(:write).with(tunnistamo_line)
@@ -28,7 +28,7 @@ describe Decidim::Tunnistamo::Generators::InstallGenerator do
     end
 
     it "when the file exist say status identical" do
-      expect(File).to receive(:readlines).and_return([tunnistamo_line])
+      allow(File).to receive(:readlines).and_return([tunnistamo_line])
       expect(subject).to receive(:say_status).with(
         :identical,
         "app/views/layouts/decidim/_head_extra.html.erb",
@@ -103,8 +103,8 @@ describe Decidim::Tunnistamo::Generators::InstallGenerator do
     end
 
     it "enables the Tunnistamo authentication by modifying the secrets.yml file" do
-      expect(File).to receive(:read).and_return(secrets_yml)
-      expect(File).to receive(:readlines).and_return(secrets_yml.lines)
+      allow(File).to receive(:read).and_return(secrets_yml)
+      allow(File).to receive(:readlines).and_return(secrets_yml.lines)
       expect(File).to receive(:open).with(anything, "w") do |&block|
         file = double
         expect(file).to receive(:puts).with(secrets_yml_modified)
@@ -121,7 +121,7 @@ describe Decidim::Tunnistamo::Generators::InstallGenerator do
 
     context "with Tunnistamo already enabled" do
       it "reports identical status" do
-        expect(YAML).to receive(:safe_load).and_return(
+        allow(YAML).to receive(:safe_load).and_return(
           "default" => { "omniauth" => { "tunnistamo" => {} } }
         )
         expect(subject).to receive(:say_status).with(

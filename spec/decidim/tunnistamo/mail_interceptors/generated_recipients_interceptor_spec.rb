@@ -10,7 +10,7 @@ describe Decidim::Tunnistamo::MailInterceptors::GeneratedRecipientsInterceptor d
 
     before do
       # Doesnt check Rails.application.config.action_controller.default_url_options either
-      expect(described_class).to receive(:email_domain).and_return(nil)
+      allow(described_class).to receive(:email_domain).and_return(nil)
     end
 
     it "does nothing" do

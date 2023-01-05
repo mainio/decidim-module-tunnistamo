@@ -74,9 +74,11 @@ module Decidim
       def unverified_email
         @unverified_email ||= begin
           email = current_user.unconfirmed_email || current_user.email
-          return if email.match?(/tunnistamo-(\w+)@#{current_organization.host}/)
-
-          email
+          if email.match?(/tunnistamo-(\w+)@#{current_organization.host}/)
+            nil
+          else
+            email
+          end
         end
       end
 
