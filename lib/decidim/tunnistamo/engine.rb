@@ -71,6 +71,14 @@ module Decidim
         end
       end
 
+      initializer "decidim_tunnistamo.configure_devise", before: "decidim_core.after_initializers_folder" do
+        next unless Decidim::Tunnistamo.confirm_emails
+
+        # By default in Decidim this is set as 0. We need to have unconfirmed
+        # access so that participant can verify his/her email.
+        Decidim.unconfirmed_access_for = 1000.days
+      end
+
       initializer "decidim_tunnistamo.mount_routes", before: :add_routing_paths do
         # Mount the engine routes to Decidim::Core::Engine because otherwise
         # they would not get mounted properly. Note also that we need to prepend

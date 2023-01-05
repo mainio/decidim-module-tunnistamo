@@ -9,6 +9,7 @@ describe "Email confirmation", type: :system do
   let(:unconfirmed_email) { Faker::Internet.email }
 
   before do
+    allow(Decidim::User).to receive(:allow_unconfirmed_access_for).and_return(1000.days)
     allow(Decidim::Tunnistamo).to receive(:confirm_emails).and_return(true)
   end
 

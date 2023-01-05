@@ -40,6 +40,7 @@ describe "Omniauth login", type: :system do
 
     context "when confirm emails is set to true" do
       before do
+        allow(Decidim::User).to receive(:allow_unconfirmed_access_for).and_return(1000.days)
         allow(Decidim::Tunnistamo).to receive(:confirm_emails).and_return(true)
       end
 

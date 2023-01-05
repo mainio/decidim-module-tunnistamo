@@ -53,11 +53,7 @@ RSpec.configure do |config|
       :get,
       "https://auth.tunnistamo-test.fi/idp"
     ).to_return(status: 200, body: "RESPONSE", headers: {})
-  end
-end
 
-RSpec.configure do |config|
-  config.before do
     # Re-define the password validators due to a bug in the "email included"
     # check which does not work well for domains such as "1.lvh.me" that we are
     # using during tests.
@@ -78,3 +74,9 @@ RSpec.configure do |config|
     )
   end
 end
+
+# RSpec.configure do |config|
+#   config.before do
+
+#   end
+# end
