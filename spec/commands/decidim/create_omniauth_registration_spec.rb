@@ -52,9 +52,9 @@ module Decidim
       it "marks the unconfirmed email for the new user and generates a confirmation token" do
         subject.call
 
-        expect(user.confirmed_at).to be(nil)
+        expect(user.confirmed_at).to be_nil
         expect(user.unconfirmed_email).to eq(actual_email)
-        expect(user.confirmation_token).not_to be(nil)
+        expect(user.confirmation_token).not_to be_nil
       end
 
       context "with an unconfirmed existing user without confirmation token" do
@@ -66,7 +66,7 @@ module Decidim
           expect { subject.call }.not_to change(Decidim::User, :count)
 
           user.reload
-          expect(user.confirmation_token).not_to be(nil)
+          expect(user.confirmation_token).not_to be_nil
         end
       end
     end

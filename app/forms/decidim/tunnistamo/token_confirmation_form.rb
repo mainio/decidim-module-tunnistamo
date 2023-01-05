@@ -28,7 +28,7 @@ module Decidim
       end
 
       def code_not_expired
-        return true if user && user.tunnistamo_email_code_sent_at > Time.current - 30.minutes
+        return true if user && user.tunnistamo_email_code_sent_at > 30.minutes.ago
 
         errors.add(
           :token,

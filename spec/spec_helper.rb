@@ -5,7 +5,7 @@ require "webmock"
 
 require "decidim/tunnistamo/test/runtime"
 
-require "simplecov" if ENV["SIMPLECOV"] || ENV["CODECOV"]
+require "simplecov" if ENV.fetch("SIMPLECOV", nil) || ENV.fetch("CODECOV", nil)
 if ENV["CODECOV"]
   require "codecov"
   SimpleCov.formatter = SimpleCov::Formatter::Codecov

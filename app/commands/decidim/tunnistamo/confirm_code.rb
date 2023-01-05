@@ -2,7 +2,7 @@
 
 module Decidim
   module Tunnistamo
-    class ConfirmCode < Rectify::Command
+    class ConfirmCode < Decidim::Command
       include Decidim::Tunnistamo::ConfirmUtilities
 
       attr_reader :form, :user

@@ -67,7 +67,7 @@ describe "Omniauth login", type: :system do
 
         it "adds another identity and confirms email normally" do
           tunnistamo_login
-          expect(Decidim::User.last.confirmed_at).to eq(nil)
+          expect(Decidim::User.last.confirmed_at).to be_nil
           click_button "Send confirmation code"
           fill_in :tunnistamo_code_confirmation_code, with: code_from_email
           click_button "Confirm the email address"
@@ -127,7 +127,7 @@ describe "Omniauth login", type: :system do
         end
 
         it "adds another authorization and confirms email normally" do
-          expect(Decidim::User.last.confirmed_at).to eq(nil)
+          expect(Decidim::User.last.confirmed_at).to be_nil
           click_button "Send confirmation code"
           fill_in :tunnistamo_code_confirmation_code, with: code_from_email
           click_button "Confirm the email address"
@@ -152,8 +152,8 @@ describe "Omniauth login", type: :system do
 
         it "doesnt confirm user" do
           expect(page).to have_content("Successfully authenticated from Tunnistamo account")
-          expect(Decidim::User.last.tos_accepted?).to eq(true)
-          expect(Decidim::User.last.confirmed_at).to eq(nil)
+          expect(Decidim::User.last.tos_accepted?).to be(true)
+          expect(Decidim::User.last.confirmed_at).to be_nil
         end
       end
 

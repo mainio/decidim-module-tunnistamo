@@ -70,9 +70,7 @@ module Decidim
       # successfully authorized as well.
       def sign_in_and_redirect(resource_or_scope, *args)
         # Add authorization for the user
-        if resource_or_scope.is_a?(::Decidim::User)
-          return fail_authorize unless authorize_user(resource_or_scope)
-        end
+        return fail_authorize if resource_or_scope.is_a?(::Decidim::User) && !authorize_user(resource_or_scope)
 
         super
       end

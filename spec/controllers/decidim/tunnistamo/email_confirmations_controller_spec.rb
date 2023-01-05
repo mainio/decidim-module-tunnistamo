@@ -74,7 +74,7 @@ module Decidim
             it "doesnt confirm the user" do
               post :confirm_with_code, params: params
 
-              expect(Decidim::User.last.confirmed_at).to be(nil)
+              expect(Decidim::User.last.confirmed_at).to be_nil
               expect(flash[:alert]).to be_present
             end
           end
@@ -120,7 +120,7 @@ module Decidim
           it "confirms the user" do
             post :confirm_with_token, params: params
 
-            expect(Decidim::User.last.confirmed_at).to be(nil)
+            expect(Decidim::User.last.confirmed_at).to be_nil
             expect(flash[:alert]).to be_present
           end
         end

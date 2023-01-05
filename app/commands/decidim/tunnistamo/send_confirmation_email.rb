@@ -2,7 +2,7 @@
 
 module Decidim
   module Tunnistamo
-    class SendConfirmationEmail < Rectify::Command
+    class SendConfirmationEmail < Decidim::Command
       def initialize(form, user)
         @form = form
         @user = user

@@ -2,7 +2,7 @@
 
 module Decidim
   module Tunnistamo
-    class ConfirmToken < Rectify::Command
+    class ConfirmToken < Decidim::Command
       include Decidim::Tunnistamo::ConfirmUtilities
 
       attr_reader :form

@@ -26,11 +26,9 @@ module Decidim
         #   "Locally unique and never reassigned identifier within the Issuer
         #   for the End-User, which is intended to be consumed by the Client."
         def person_identifier_digest
-          @person_identifier_digest ||= begin
-            Digest::MD5.hexdigest(
-              "#{raw_info[:sub]}:#{Rails.application.secrets.secret_key_base}"
-            )
-          end
+          @person_identifier_digest ||= Digest::MD5.hexdigest(
+            "#{raw_info[:sub]}:#{Rails.application.secrets.secret_key_base}"
+          )
         end
 
         protected

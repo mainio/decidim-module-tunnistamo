@@ -10,7 +10,7 @@ describe Decidim::Tunnistamo::FormBuilder do
       end
 
       include ActiveModel::Model
-      include Virtus.model
+      include Decidim::AttributeObject::Model
 
       attribute :name, String
     end
@@ -21,7 +21,7 @@ describe Decidim::Tunnistamo::FormBuilder do
     end
   end
   let(:resource) { resource_class.new }
-  let(:helper) { Class.new(ActionView::Base).new(ActionView::LookupContext.new(nil)) }
+  let(:helper) { Class.new(ActionView::Base).new(ActionView::LookupContext.new(nil), {}, []) }
   let(:builder) { described_class.new(:resource, resource, helper, {}) }
 
   let(:parsed) { Nokogiri::HTML(output).css("body") }
@@ -61,7 +61,7 @@ describe Decidim::Tunnistamo::FormBuilder do
       end
 
       it "does not mark the input as required" do
-        expect(parsed_group.css("input")[0]["required"]).to be(nil)
+        expect(parsed_group.css("input")[0]["required"]).to be_nil
       end
     end
 
@@ -72,8 +72,8 @@ describe Decidim::Tunnistamo::FormBuilder do
       end
 
       it "marks the label as invalid" do
-        expect(parsed_label["class"]).not_to be(nil)
-        expect(parsed_label["class"].split(" ")).to include("is-invalid-label")
+        expect(parsed_label["class"]).not_to be_nil
+        expect(parsed_label["class"].split).to include("is-invalid-label")
       end
 
       it "marks the input as invalid" do

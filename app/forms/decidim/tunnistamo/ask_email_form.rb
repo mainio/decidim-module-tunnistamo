@@ -5,7 +5,7 @@ module Decidim
     class AskEmailForm < Form
       attribute :email
 
-      validates :email, presence: true, 'valid_email_2/email': { disposable: true }
+      validates :email, presence: true, "valid_email_2/email": { disposable: true }
       validate :can_take_email?
 
       def can_take_email?

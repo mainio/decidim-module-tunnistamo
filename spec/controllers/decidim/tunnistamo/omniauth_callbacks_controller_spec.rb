@@ -131,7 +131,7 @@ module Decidim
 
               user = User.last
               expect(user.email).to eq(email)
-              expect(user.unconfirmed_email).to be(nil)
+              expect(user.unconfirmed_email).to be_nil
             end
           end
 
@@ -209,7 +209,7 @@ module Decidim
           before do
             sign_in confirmed_user
             confirmed_user.remember_me!
-            expect(confirmed_user.remember_created_at?).to eq(true)
+            expect(confirmed_user.remember_created_at?).to be(true)
             get(
               "/users/auth/tunnistamo/callback?code=#{code}&state=#{state}"
             )
@@ -230,7 +230,7 @@ module Decidim
             allow(Decidim::Tunnistamo).to receive(:strong_identity_providers).and_return(%w(espoo suomifi))
             sign_in confirmed_user
             confirmed_user.remember_me!
-            expect(confirmed_user.remember_created_at?).to eq(true)
+            expect(confirmed_user.remember_created_at?).to be(true)
             get(
               "/users/auth/tunnistamo/callback?code=#{code}&state=#{state}"
             )

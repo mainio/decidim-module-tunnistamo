@@ -29,4 +29,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency "omniauth-tunnistamo", "~> 0.2.0"
 
   spec.add_development_dependency "decidim-dev", Decidim::Tunnistamo.decidim_version
+  spec.metadata["rubygems_mfa_required"] = "true"
 end

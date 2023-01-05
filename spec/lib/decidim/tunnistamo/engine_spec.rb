@@ -45,17 +45,19 @@ describe Decidim::Tunnistamo::Engine do
       config = double
       expect(config).to receive(:omniauth).with(
         :tunnistamo,
-        client_options: {
-          host: "auth.tunnistamo-test.fi",
-          identifier: "client_id",
-          port: 443,
-          redirect_uri: "http://localhost:3000/users/auth/tunnistamo/callback",
-          scheme: "https",
-          secret: "client_secret"
-        },
-        issuer: "https://auth.tunnistamo-test.fi/openid",
-        post_logout_redirect_uri: "http://localhost:3000/users/auth/tunnistamo/post_logout",
-        scope: [:openid, :email, :profile]
+        {
+          client_options: {
+            host: "auth.tunnistamo-test.fi",
+            identifier: "client_id",
+            port: 443,
+            redirect_uri: "http://localhost:3000/users/auth/tunnistamo/callback",
+            scheme: "https",
+            secret: "client_secret"
+          },
+          issuer: "https://auth.tunnistamo-test.fi/openid",
+          post_logout_redirect_uri: "http://localhost:3000/users/auth/tunnistamo/post_logout",
+          scope: [:openid, :email, :profile]
+        }
       )
       block.call(config)
     end

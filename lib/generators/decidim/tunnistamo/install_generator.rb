@@ -24,7 +24,8 @@ module Decidim
 
         def enable_authentication
           secrets_path = Rails.application.root.join("config", "secrets.yml")
-          secrets = YAML.safe_load(File.read(secrets_path), [], [], true)
+          evaluated_secrets = ERB.new(File.read(secrets_path))
+          secrets = YAML.safe_load(evaluated_secrets.result, [], [], true)
 
           if secrets["default"]["omniauth"]["tunnistamo"]
             say_status :identical, "config/secrets.yml", :blue
@@ -108,13 +109,14 @@ module Decidim
             self.inside_config = false
             self.inside_omniauth = false
 
-            if line =~ /^default:/
+            case line
+            when /^default:/
               self.inside_config = true
               self.config_branch = :default
-            elsif line =~ /^development:/
+            when /^development:/
               self.inside_config = true
               self.config_branch = :development
-            elsif line =~ /^test:/
+            when /^test:/
               self.inside_config = true
               self.config_branch = :test
             end
@@ -127,13 +129,12 @@ module Decidim
 
           def inject_tunnistamo_config
             @final += "    tunnistamo:\n"
-            @final += begin
-              if [:development, :test].include?(config_branch)
-                "      enabled: true\n"
-              else
-                "      enabled: false\n"
+            @final += if [:development, :test].include?(config_branch)
+                        "      enabled: true\n"
+                      else
+                        "      enabled: false\n"
               end
-            end
+
             @final += "      server_uri: <%= ENV[\"OMNIAUTH_TUNNISTAMO_SERVER_URI\"] %>\n"
             @final += "      client_id: <%= ENV[\"OMNIAUTH_TUNNISTAMO_CLIENT_ID\"] %>\n"
             @final += "      client_secret: <%= ENV[\"OMNIAUTH_TUNNISTAMO_CLIENT_SECRET\"] %>\n"

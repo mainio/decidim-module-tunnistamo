@@ -50,7 +50,7 @@ describe "Email confirmation", type: :system do
         click_button "Confirm the email address"
         expect(page).to have_content("Could not confirm email")
         find_user = Decidim::User.find(current_user.id)
-        expect(find_user.confirmed_at).to eq(nil)
+        expect(find_user.confirmed_at).to be_nil
         expect(find_user.tunnistamo_failed_confirmation_attempts).to eq(1)
         expect(page).not_to have_content("Maximum attempts reached. Please go to previous step and re-enter your email")
       end
@@ -63,7 +63,7 @@ describe "Email confirmation", type: :system do
         end
         expect(page).to have_content("Maximum attempts reached. Please go to previous step and re-enter your email")
         find_user = Decidim::User.find(current_user.id)
-        expect(find_user.confirmed_at).to eq(nil)
+        expect(find_user.confirmed_at).to be_nil
       end
     end
 
