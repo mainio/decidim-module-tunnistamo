@@ -66,7 +66,6 @@ RSpec.configure do |config|
         :not_enough_unique_characters?,
         :name_included_in_password?,
         :nickname_included_in_password?,
-        # :email_included_in_password?,
         :domain_included_in_password?,
         :password_too_common?,
         :blacklisted?
@@ -74,9 +73,3 @@ RSpec.configure do |config|
     )
   end
 end
-
-# RSpec.configure do |config|
-#   config.before do
-
-#   end
-# end

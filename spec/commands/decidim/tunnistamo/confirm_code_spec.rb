@@ -47,10 +47,6 @@ module Decidim::Tunnistamo
         expect(Decidim::Identity.last.user).to eq(existing_user)
         expect(Decidim::Authorization.last.user).to eq(existing_user)
       end
-
-      # context "and existing user has identity" do
-      #   let!(:identity) { create(:identity, user: existing_user, provider: "tunnistamo", organization: organization) }
-      # end
     end
 
     context "when there is existing identity with same email" do
