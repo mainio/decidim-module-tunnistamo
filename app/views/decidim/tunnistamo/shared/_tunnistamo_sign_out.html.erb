@@ -1,24 +1,26 @@
 <% if session["decidim-tunnistamo.signed_in"] %>
-<script type="text/javascript">
-(function() {
-  $(document).ready(function() {
-    // For re-authorization, sign out from Tunnistamo in order to allow the user
-    // to sign in again.
-    $("#authorizationModal").on("open.zf.reveal", function() {
-      setTimeout(() => {
-        $("#authorizationModal a[href^='/tunnistamo_idp/']").on("click.tunnistamo", function(ev) {
-          var $link = $(".sign-out-link");
+  <% content_for(:js_content) do %>
+    <script type="text/javascript">
+    (function() {
+      $(document).ready(function() {
+        // For re-authorization, sign out from Tunnistamo in order to allow the user
+        // to sign in again.
+        $("#authorizationModal").on("open.zf.reveal", function() {
+          setTimeout(() => {
+            $("#authorizationModal a[href^='/tunnistamo_idp/']").on("click.tunnistamo", function(ev) {
+              var $link = $(".sign-out-link");
 
-          if ($link.length > 0) {
-            ev.preventDefault();
-            ev.stopPropagation();
+              if ($link.length > 0) {
+                ev.preventDefault();
+                ev.stopPropagation();
 
-            $(".sign-out-link")[0].click();
-          }
+                $(".sign-out-link")[0].click();
+              }
+            });
+          }, 500);
         });
-      }, 500);
-    });
-  });
-})(jQuery);
-</script>
+      });
+    })(jQuery);
+    </script>
+  <% end %>
 <% end %>
