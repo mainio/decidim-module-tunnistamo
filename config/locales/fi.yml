@@ -6,8 +6,8 @@ fi:
   decidim:
     authorization_handlers:
       tunnistamo_idp:
-        explanation: Tunnista itsesi Tunnistamo-tunnistuspalvelun avulla.
-        name: Tunnistamo tunnistus
+        explanation: Tunnistaudu Tunnistamo-tunnistuspalvelun avulla.
+        name: Tunnistamo tunnistautuminen
     system:
       organizations:
         omniauth_settings:
@@ -62,11 +62,11 @@ fi:
           title: Syötä tarkastuskoodi
       omniauth_callbacks:
         failure:
-          already_authorized: Toinen käyttäjä on tunnistanut itsensä jo samalla henkilöllisyydellä.
-          conditions: Tunnistuspyyntöä ei käsitelty sallitun aikarajan sisällä. Yritä uudestaan.
-          identity_bound_to_other_user: Toinen käyttäjä on jo tunnistanut itsensä tällä henkilöllisyydellä. Kirjaudu ulos ja kirjaudu uudestaan sisään käyttäen suoraan Tunnistamoa.
-          session_expiration: Tunnistusistunto vanhentui. Yritä uudestaan.
-          success_status: Tunnistus epäonnistui tai peruutettiin. Yritä uudestaan.
+          already_authorized: Toinen käyttäjä on jo tunnistautunut samalla henkilöllisyydellä.
+          conditions: Tunnistautumispyyntöä ei käsitelty sallitun aikarajan sisällä. Yritä uudestaan.
+          identity_bound_to_other_user: Toinen käyttäjä on jo tunnistautunut tällä henkilöllisyydellä. Kirjaudu ulos ja kirjaudu uudestaan sisään käyttäen suoraan Tunnistamoa.
+          session_expiration: Tunnistustautumisistunto vanhentui. Yritä uudestaan.
+          success_status: Tunnistautuminen epäonnistui tai peruutettiin. Yritä uudestaan.
       verification:
         authorizations:
           create:
@@ -77,4 +77,4 @@ fi:
       authorizations:
         first_login:
           actions:
-            tunnistamo_idp: Tunnistamo-tunnistus
+            tunnistamo_idp: Tunnistamo-tunnistautuminen
