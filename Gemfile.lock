@@ -1,10 +1,10 @@
 GIT
   remote: https://github.com/mainio/omniauth-tunnistamo.git
-  revision: 375333b595ad011b436a035e97fda087f6d42f9e
+  revision: cc15427e0e043c03f8580d231fb0814a7b976a20
   branch: develop
   specs:
     omniauth-tunnistamo (0.2.0)
-      omniauth_openid_connect (~> 0.3, >= 0.3.5)
+      omniauth_openid_connect (~> 0.7)
 
 PATH
   remote: .
@@ -386,7 +386,7 @@ GEM
       railties (>= 3.0.0)
     faker (2.23.0)
       i18n (>= 1.8.11, < 2)
-    faraday (2.7.9)
+    faraday (2.7.10)
       faraday-net_http (>= 2.0, < 3.1)
       ruby2_keywords (>= 0.0.4)
     faraday-follow_redirects (0.3.0)
@@ -410,7 +410,7 @@ GEM
       activesupport (>= 4.1, < 7.1)
       railties (>= 4.1, < 7.1)
     gemoji (3.0.1)
-    geocoder (1.8.1)
+    geocoder (1.8.2)
     globalid (1.1.0)
       activesupport (>= 5.0)
     graphql (1.12.24)
@@ -604,7 +604,7 @@ GEM
       actionmailer (>= 3)
       net-smtp
       premailer (~> 1.7, >= 1.7.9)
-    public_suffix (5.0.1)
+    public_suffix (5.0.3)
     puma (5.6.6)
       nio4r (~> 2.0)
     racc (1.7.1)
