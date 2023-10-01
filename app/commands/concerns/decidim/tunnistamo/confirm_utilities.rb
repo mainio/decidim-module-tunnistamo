@@ -31,7 +31,7 @@ module Decidim
 
       def another_user_with_same_email
         @another_user_with_same_email ||= begin
-          another_user = Decidim::User.find_by(email: user.tunnistamo_email_sent_to, organization: form.current_organization)
+          another_user = Decidim::User.unscoped.find_by(email: user.tunnistamo_email_sent_to, organization: form.current_organization)
           if another_user && another_user.id == user.id
             false
           else

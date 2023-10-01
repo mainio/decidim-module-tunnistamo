@@ -7,7 +7,17 @@ module Decidim
     class Engine < ::Rails::Engine
       isolate_namespace Decidim::Tunnistamo
 
-      initializer "decidim_tunnistamo_customizations", after: "decidim.action_controller" do
+      def self.customizations_after_hook
+        if defined?(Decidim::Privacy)
+          "decidim_privacy.add_customizations"
+        else
+          "decidim.action_controller"
+        end
+      end
+
+      # To make this work with the privacy module, ensure that these incldues
+      # happen AFTER the privacy module.
+      initializer "decidim_tunnistamo.customizations", after: customizations_after_hook do
         config.to_prepare do
           Decidim::ApplicationController.include Decidim::Tunnistamo::NeedsConfirmedEmail
           Decidim::CreateOmniauthRegistration.include Decidim::Tunnistamo::CreateOmniauthRegistrationOverride
