@@ -84,14 +84,14 @@ module Decidim
       client_id = secrets[:client_id]
       client_secret = secrets[:client_secret]
 
-      auth_uri = URI.parse(server_uri)
+      auth_uri = URI.parse(server_uri) if server_uri
       {
         issuer: "#{server_uri}/openid",
         scope: scope,
         client_options: {
-          port: auth_uri.port,
-          scheme: auth_uri.scheme,
-          host: auth_uri.host,
+          port: auth_uri&.port,
+          scheme: auth_uri&.scheme,
+          host: auth_uri&.host,
           identifier: client_id,
           secret: client_secret,
           redirect_uri: "#{application_host}/users/auth/tunnistamo/callback"

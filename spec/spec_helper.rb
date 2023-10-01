@@ -5,12 +5,6 @@ require "webmock"
 
 require "decidim/tunnistamo/test/runtime"
 
-require "simplecov" if ENV.fetch("SIMPLECOV", nil) || ENV.fetch("CODECOV", nil)
-if ENV["CODECOV"]
-  require "codecov"
-  SimpleCov.formatter = SimpleCov::Formatter::Codecov
-end
-
 ENV["ENGINE_ROOT"] = File.dirname(__dir__)
 ENV["OMNIAUTH_TUNNISTAMO_SERVER_URI"] = "https://auth.tunnistamo-test.fi"
 ENV["OMNIAUTH_TUNNISTAMO_CLIENT_ID"] = "client_id"
