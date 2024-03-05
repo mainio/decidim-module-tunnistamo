@@ -9,9 +9,9 @@ module Decidim
       validate :can_take_email?
 
       def can_take_email?
-        find_user = find_another_user_with_same_email
-        return true unless find_user
-        return true if !identity_taken?(find_user) && !authorization_taken?(find_user)
+        another_user = find_another_user_with_same_email
+        return true unless another_user
+        return true if !identity_taken?(another_user) && !authorization_taken?(another_user)
 
         errors.add(
           :email,
@@ -24,8 +24,8 @@ module Decidim
       private
 
       def find_another_user_with_same_email
-        find_user = Decidim::User.find_by(email: email, organization: current_organization)
-        return find_user if find_user && find_user.id != current_user.id
+        another_user = UserFinder.find_by(email: email, organization: current_organization)
+        return another_user if another_user && another_user.id != current_user.id
 
         false
       end

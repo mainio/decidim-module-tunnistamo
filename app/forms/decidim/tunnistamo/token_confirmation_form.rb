@@ -11,7 +11,7 @@ module Decidim
       validate :code_not_expired
 
       def user
-        @user ||= Decidim::User.find_by(
+        @user ||= UserFinder.find_by(
           confirmation_token: confirmation_token
         )
       end

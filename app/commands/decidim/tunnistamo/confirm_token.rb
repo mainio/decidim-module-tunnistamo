@@ -17,7 +17,7 @@ module Decidim
         if email_taken?
           return broadcast(:invalid) if form.conflicting_identity_or_authorization
 
-          existing_user = Decidim::User.find_by(email: user.tunnistamo_email_sent_to)
+          existing_user = UserFinder.find_by(email: user.tunnistamo_email_sent_to)
           switch_user_and_delete_temp_user(existing_user, user)
           return broadcast(:ok, existing_user.email)
         end
@@ -42,7 +42,7 @@ module Decidim
 
       # We have to get user again because confirm_by_token doesn't update current user object
       def updated_user
-        @updated_user ||= Decidim::User.find_by(
+        @updated_user ||= UserFinder.find_by(
           id: user.id,
           organization: form.current_organization,
           confirmation_token: form.confirmation_token

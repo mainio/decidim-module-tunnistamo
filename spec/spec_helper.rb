@@ -13,8 +13,6 @@ ENV["OMNIAUTH_TUNNISTAMO_CLIENT_SECRET"] = "client_secret"
 Decidim::Dev.dummy_app_path =
   File.expand_path(File.join(__dir__, "decidim_dummy_app"))
 
-require_relative "base_spec_helper"
-
 Decidim::Tunnistamo::Test::Runtime.initializer do
   # Silence the OmniAuth logger
   OmniAuth.config.request_validation_phase = proc {}
@@ -25,6 +23,8 @@ Decidim::Tunnistamo::Test::Runtime.initializer do
     config.auto_email_domain = "1.lvh.me"
   end
 end
+
+require_relative "base_spec_helper"
 
 Decidim::Tunnistamo::Test::Runtime.load_app
 
@@ -68,9 +68,3 @@ RSpec.configure do |config|
     )
   end
 end
-
-# RSpec.configure do |config|
-#   config.before do
-
-#   end
-# end
