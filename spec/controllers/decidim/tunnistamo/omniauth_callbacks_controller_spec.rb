@@ -133,6 +133,18 @@ module Decidim
               expect(user.email).to eq(email)
               expect(user.unconfirmed_email).to be_nil
             end
+
+            context "when the user is an admin with a pending password change request" do
+              let!(:user) { create(:user, :admin, organization: organization, email: email, sign_in_count: 1, password_updated_at: 1.year.ago) }
+
+              it "redirects to the password change path" do
+                get(
+                  "/users/auth/tunnistamo/callback?code=#{code}&state=#{state}"
+                )
+
+                expect(response).to redirect_to("/change_password")
+              end
+            end
           end
 
           context "when email is unconfirmed according to the authenticator" do
