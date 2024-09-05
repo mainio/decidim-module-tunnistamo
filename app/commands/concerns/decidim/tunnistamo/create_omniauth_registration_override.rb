@@ -6,9 +6,9 @@ module Decidim
       extend ActiveSupport::Concern
 
       included do
-        alias_method :create_or_find_user_orig_tunnistamo, :create_or_find_user unless private_method_defined?(:create_or_find_user_orig_tunnistamo)
         alias_method :verify_user_confirmed_orig_tunnistamo, :verify_user_confirmed unless private_method_defined?(:verify_user_confirmed_orig_tunnistamo)
 
+        # Tunnistamo customization to the create or find user.
         def create_or_find_user
           create_or_find_user_orig_tunnistamo
 
@@ -34,6 +34,40 @@ module Decidim
 
           false
         end
+      end
+
+      # Original method from Decidim to add the unscoped to the user search.
+      def create_or_find_user_orig_tunnistamo
+        @user = User.unscoped.find_or_initialize_by(
+          email: verified_email,
+          organization: organization
+        )
+
+        if @user.persisted?
+          # If user has left the account unconfirmed and later on decides to sign
+          # in with omniauth with an already verified account, the account needs
+          # to be marked confirmed.
+          @user.skip_confirmation! if !@user.confirmed? && @user.email == verified_email
+        else
+          generated_password = SecureRandom.hex
+
+          @user.email = (verified_email || form.email)
+          @user.name = form.name
+          @user.nickname = form.normalized_nickname
+          @user.newsletter_notifications_at = nil
+          @user.password = generated_password
+          @user.password_confirmation = generated_password
+          if form.avatar_url.present?
+            url = URI.parse(form.avatar_url)
+            filename = File.basename(url.path)
+            file = url.open
+            @user.avatar.attach(io: file, filename: filename)
+          end
+          @user.skip_confirmation! if verified_email
+        end
+
+        @user.tos_agreement = "1"
+        @user.save!
       end
     end
   end

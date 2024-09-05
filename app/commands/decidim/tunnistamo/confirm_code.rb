@@ -23,7 +23,7 @@ module Decidim
         if email_taken?
           return broadcast(:invalid) if conflicting_identity_or_authorization
 
-          existing_user = Decidim::User.find_by(email: user.tunnistamo_email_sent_to)
+          existing_user = UserFinder.find_by(email: user.tunnistamo_email_sent_to)
           switch_user_and_delete_temp_user!(existing_user, user)
           return broadcast(:ok, existing_user.email)
         end

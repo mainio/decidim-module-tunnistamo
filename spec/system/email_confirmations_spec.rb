@@ -129,9 +129,11 @@ describe "Email confirmation", type: :system do
     end
   end
 
-  context "when user is not logged" do
+  context "when user is not logged in" do
     before do
       switch_to_host(organization.host)
+      visit decidim.root_path
+      expect(page).to have_content(organization.name)
     end
 
     describe "redirect to sign in path" do

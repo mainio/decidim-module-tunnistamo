@@ -5,12 +5,6 @@ require "webmock"
 
 require "decidim/tunnistamo/test/runtime"
 
-require "simplecov" if ENV.fetch("SIMPLECOV", nil) || ENV.fetch("CODECOV", nil)
-if ENV["CODECOV"]
-  require "codecov"
-  SimpleCov.formatter = SimpleCov::Formatter::Codecov
-end
-
 ENV["ENGINE_ROOT"] = File.dirname(__dir__)
 ENV["OMNIAUTH_TUNNISTAMO_SERVER_URI"] = "https://auth.tunnistamo-test.fi"
 ENV["OMNIAUTH_TUNNISTAMO_CLIENT_ID"] = "client_id"
@@ -18,8 +12,6 @@ ENV["OMNIAUTH_TUNNISTAMO_CLIENT_SECRET"] = "client_secret"
 
 Decidim::Dev.dummy_app_path =
   File.expand_path(File.join(__dir__, "decidim_dummy_app"))
-
-require_relative "base_spec_helper"
 
 Decidim::Tunnistamo::Test::Runtime.initializer do
   # Silence the OmniAuth logger
@@ -31,6 +23,8 @@ Decidim::Tunnistamo::Test::Runtime.initializer do
     config.auto_email_domain = "1.lvh.me"
   end
 end
+
+require_relative "base_spec_helper"
 
 Decidim::Tunnistamo::Test::Runtime.load_app
 
