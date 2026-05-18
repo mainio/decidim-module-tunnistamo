@@ -194,6 +194,7 @@ describe "Omniauth login", type: :system do
   end
 
   def code_from_email
+    expect(page).to have_content("Confirmation code has been sent to your email")
     content = Nokogiri::HTML(last_email_body).css("div#code").first.children.first.content
     content.scan(/\d+/).first
   end
