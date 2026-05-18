@@ -19,6 +19,17 @@ module Decidim
           @user.skip_confirmation_notification!
           @user.save!
           @user.send(:generate_confirmation_token!)
+        rescue ActiveRecord::RecordNotUnique => e
+          @create_retries ||= 0
+
+          # This may happen if the callback endpoint is called twice which
+          # Tunnistamo allows (apparently through a double click). This should
+          # ensure that the user will not get an error even if Tunnistamo sent
+          # the callback request twice (or even 3 times).
+          raise e if @create_retries >= 2
+
+          @create_retries += 1
+          create_or_find_user
         end
 
         def verify_user_confirmed(user)
